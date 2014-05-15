@@ -15,3 +15,6 @@ missing
 .dirstamp
 *~
 *.o
+*.swp
+src/types
+src/bs
