@@ -14,12 +14,12 @@ int binarysearch (int arr[], int length, int key) {
             return mid;
         }
     }
-    return -(low);
+    return -(low+1);
 }
 
 int main() {
-    int sorted[6] = {1, 2, 3, 4, 5, 6};
-    int length = 6;
+    int sorted[5] = {1, 2, 3, 4, 5};
+    int length = 5;
     std::cout << "arr = {";
     for (int i : sorted) {
         std::cout << i << ",";
