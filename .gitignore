@@ -16,5 +16,10 @@ missing
 *~
 *.o
 *.swp
+*.la
+*.lo
+*.log
+*.libs
+*.trs
 src/types
 src/bs
