@@ -10,22 +10,15 @@ void printArray(int arr[], size_t len) {
 }
 
 int* bubble_sort (int arr[], size_t len) {
-    // keep track of the passes over the array. So start with 1 and not 0
+    // keep track of the passes over the array, starting with one.
     for (int i = 1; i < len; i++) {
-        printArray(arr, len);
-        printf("pass=%d\n", i);
-        // loop through but only up to the last bubbled up value. We only need to check and potentially swap those
-        // values that have not already been placed into their final slot.
+        // loop through from the beginning upto the lastest bubbled up position (len - i)
         for (int j = 0; j < len - i; j++) {
-            int right = j+1;
-            printf("%d > %d", arr[j], arr[right]);
-            if (arr[j] > arr[right]) {
-                printf(" swap\n");
+            int next = j+1;
+            if (arr[j] > arr[next]) {
                 int tmp = arr[j];
-                arr[j] = arr[right];
-                arr[right] = tmp;
-            } else {
-                printf("\n");
+                arr[j] = arr[next];
+                arr[next] = tmp;
             }
         }
     }
