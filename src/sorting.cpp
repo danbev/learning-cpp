@@ -9,4 +9,6 @@ int main() {
         printf("%d", sorted[i]);
     }
     printf("\n");
+    int unsorted2[] = {1, 2, 3, 4, 5};
+    bubble_sort(unsorted2, 5);
 }

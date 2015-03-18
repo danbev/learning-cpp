@@ -9,9 +9,15 @@ void printArray(int arr[], size_t len) {
     printf("\n");
 }
 
+/*
+ * Worst case complexity is O(n^2)
+ * When the array is already sorted the complexity is O(n)
+ */
 int* bubble_sort (int arr[], size_t len) {
-    // keep track of the passes over the array, starting with one.
+    // keep track of the passes over the array, starting with one. O(n)
     for (int i = 1; i < len; i++) {
+        bool swapped = false;
+        printArray(arr, len);
         // loop through from the beginning upto the lastest bubbled up position (len - i)
         for (int j = 0; j < len - i; j++) {
             int next = j+1;
@@ -19,7 +25,12 @@ int* bubble_sort (int arr[], size_t len) {
                 int tmp = arr[j];
                 arr[j] = arr[next];
                 arr[next] = tmp;
+                swapped = true;
             }
+        }
+        // if nothing was swapped all the elments are sorted so break.
+        if (!swapped) {
+            break;
         }
     }
     return arr;
