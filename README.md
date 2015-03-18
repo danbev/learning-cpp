@@ -13,7 +13,12 @@ The produces programs are in in the same folder, _src_, as the source files.
 
 #### Manually compiling a program
 Compiling with c++11 and libc:
-clang++ -std=c++11 -stdlib=libc++ types.cpp -o types
+
+    clang++ -std=c++11 -stdlib=libc++ types.cpp -o types
+
+To add multiple object files:
+
+    clang++ -std=c++11 -stdlib=libc++ -lstdc++ -L. sorting.cpp -o sorting sort.o
 
 ### Running tests
 

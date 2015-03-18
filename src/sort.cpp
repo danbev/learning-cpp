@@ -1,6 +1,37 @@
 #include "sort.hpp"
 #include <stdio.h>
 
+void printArray(int arr[], size_t len) {
+    printf("Array:");
+    for (int i = 0; i < len; i++) {
+        printf("%d", arr[i]);
+    }
+    printf("\n");
+}
+
+int* bubble_sort (int arr[], size_t len) {
+    // keep track of the passes over the array. So start with 1 and not 0
+    for (int i = 1; i < len; i++) {
+        printArray(arr, len);
+        printf("pass=%d\n", i);
+        // loop through but only up to the last bubbled up value. We only need to check and potentially swap those
+        // values that have not already been placed into their final slot.
+        for (int j = 0; j < len - i; j++) {
+            int right = j+1;
+            printf("%d > %d", arr[j], arr[right]);
+            if (arr[j] > arr[right]) {
+                printf(" swap\n");
+                int tmp = arr[j];
+                arr[j] = arr[right];
+                arr[right] = tmp;
+            } else {
+                printf("\n");
+            }
+        }
+    }
+    return arr;
+}
+
 int* insertion_sort (int arr[], size_t len) {
     for (int i = 1; i < len; i++) {
         for (int j = i; j > 0 && arr[j] < arr[j-1]; j--) {
@@ -14,26 +45,17 @@ int* insertion_sort (int arr[], size_t len) {
 
 // Works by repeatedly selecting the smallest remaining value.
 int* selection_sort (int arr[], size_t len) {
-    // first loop through the entire array. O(n)
     for (int i = 0; i < len; i++) {
-        // store the min position
         int min = i;
-        // find the min value in the remaining entries of the array. O(n)
         for (int j = i+1; j < len; j++) {
-            // if the current value being checked is less that the stored min, set that value as min
             if (arr[j] < arr[min]) {
                 min = j;
             }
         }
-        // now swap the current items value with the min value found in the array
-        // first store the current value as we need to overwrite it with the found min value
         int tmp = arr[i];
-        // store the found min value in the current position
         arr[i] = arr[min];
-        // store the value that was in the current position with the location where the min value was taken from
         arr[min] = tmp;
     }
-    // O(n * n) = O(n^2)
     return arr;
 }
 
@@ -52,3 +74,4 @@ int* selection_sort_rev(int arr[], size_t len) {
     }
     return arr;
 }
+
