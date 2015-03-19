@@ -17,8 +17,7 @@ int* bubble_sort (int arr[], size_t len) {
     // keep track of the passes over the array, starting with one. O(n)
     for (int i = 1; i < len; i++) {
         bool swapped = false;
-        printArray(arr, len);
-        // loop through from the beginning upto the lastest bubbled up position (len - i)
+        // first pass N-1 comparisions, second pass N-2 comparisions...N*(N-1)/2. 5*(5-1)/2 = 20/2 = 10
         for (int j = 0; j < len - i; j++) {
             int next = j+1;
             if (arr[j] > arr[next]) {
@@ -28,7 +27,6 @@ int* bubble_sort (int arr[], size_t len) {
                 swapped = true;
             }
         }
-        // if nothing was swapped all the elments are sorted so break.
         if (!swapped) {
             break;
         }
@@ -37,7 +35,10 @@ int* bubble_sort (int arr[], size_t len) {
 }
 
 int* insertion_sort (int arr[], size_t len) {
+    // keep track of the passes over the array, starting with one. O(n)
     for (int i = 1; i < len; i++) {
+        // keep a marker j to divide the array into a left and right side. 
+        // the items to the left are sorted and the items to the right are unsorted.
         for (int j = i; j > 0 && arr[j] < arr[j-1]; j--) {
             int tmp = arr[j-1];
             arr[j-1] = arr[j];
