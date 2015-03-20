@@ -34,20 +34,6 @@ int* bubble_sort (int arr[], size_t len) {
     return arr;
 }
 
-int* insertion_sort (int arr[], size_t len) {
-    // keep track of the passes over the array, starting with one. O(n)
-    for (int i = 1; i < len; i++) {
-        // keep a marker j to divide the array into a left and right side. 
-        // the items to the left are sorted and the items to the right are unsorted.
-        for (int j = i; j > 0 && arr[j] < arr[j-1]; j--) {
-            int tmp = arr[j-1];
-            arr[j-1] = arr[j];
-            arr[j] = tmp;
-        }
-    }
-    return arr;
-}
-
 // Works by repeatedly selecting the smallest remaining value.
 int* selection_sort (int arr[], size_t len) {
     for (int i = 0; i < len; i++) {
@@ -76,6 +62,20 @@ int* selection_sort_rev(int arr[], size_t len) {
         int tmp = arr[i];
         arr[i] = arr[max];
         arr[max] = tmp;
+    }
+    return arr;
+}
+
+int* insertion_sort (int arr[], size_t len) {
+    // keep track of the passes over the array, starting with one. O(n)
+    for (int i = 1; i < len; i++) {
+        // keep a marker j to divide the array into a left and right side. 
+        // the items to the left are sorted and the items to the right are unsorted.
+        for (int j = i; j > 0 && arr[j] < arr[j-1]; j--) {
+            int tmp = arr[j-1];
+            arr[j-1] = arr[j];
+            arr[j] = tmp;
+        }
     }
     return arr;
 }
