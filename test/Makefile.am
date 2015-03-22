@@ -19,6 +19,13 @@ sort_test_CXXFLAGS = $(GTEST_CXXFLAGS)
 sort_test_LDFLAGS = $(GTEST_LDFLAGS)
 sort_test_LDADD = $(libsearch) $(GTEST_LIBS) -lgtest_main
 
+check_PROGRAMS += recursive_test
+recursive_test_SOURCES = recursive_test.cpp 
+recursive_test_CPPFLAGS = -I$(top_srcdir)/src/ $(GTEST_CPPFLAGS)
+recursive_test_CXXFLAGS = $(GTEST_CXXFLAGS)
+recursive_test_LDFLAGS = $(GTEST_LDFLAGS)
+recursive_test_LDADD = $(libsearch) $(GTEST_LIBS) -lgtest_main
+
 # Declare libraries and define tests here...
 
 
