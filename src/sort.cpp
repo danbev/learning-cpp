@@ -69,14 +69,50 @@ int* selection_sort_rev(int arr[], size_t len) {
 int* insertion_sort (int arr[], size_t len) {
     // keep track of the passes over the array, starting with one. O(n)
     for (int i = 1; i < len; i++) {
-        // keep a marker j to divide the array into a left and right side. 
-        // the items to the left are sorted and the items to the right are unsorted.
-        for (int j = i; j > 0 && arr[j] < arr[j-1]; j--) {
-            int tmp = arr[j-1];
-            arr[j-1] = arr[j];
-            arr[j] = tmp;
+        // j is our "marker" for the already sorted items. 
+        // On the first pass we are comparing the current item 'i'.
+        // On the next passes we are checking if any of the already sorted items need swapping.
+        for (int j = i; j > 0 && arr[j] < arr[j-1];j--) {
+            int tmp = arr[j];
+            arr[j] = arr[j-1];
+            arr[j-1] = tmp;
         }
     }
     return arr;
 }
+
+void merge(int arr[], size_t len, int low, int mid, int high) {
+    int* s = new int[len];
+    int i, j, k;
+    for (i = mid + 1; i > low; i--) {
+        s[i-1] = arr[i-1];
+    }
+    for (j = mid; j < high; j++) {
+        s[high + mid - j] = arr[j+1];
+    }
+    for (k = low; k <= high; k++) {
+        if (s[i] < s[j]) {
+            arr[k] = s[i++];
+        } else {
+            arr[k] = s[j--];
+        }
+    }
+}
+
+void mergeSort(int arr[], size_t len, int low, int high) {
+    if (low == high) {
+        return;
+    }
+    int mid = low + (high-low) / 2;
+    mergeSort(arr, len, low, mid);
+    mergeSort(arr, len, mid + 1, high);
+    merge(arr, len, low, mid, high);
+}
+
+int* merge_sort(int arr[], size_t len) {
+    mergeSort(arr, len, 0, len - 1);
+    return arr;
+}
+
+
 
