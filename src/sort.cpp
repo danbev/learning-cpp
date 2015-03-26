@@ -81,36 +81,39 @@ int* insertion_sort (int arr[], size_t len) {
     return arr;
 }
 
-void merge(int arr[], size_t len, int low, int mid, int high) {
-    int* s = new int[len];
+void merge(int arr[], size_t len, int aux[], int low, int mid, int high) {
     int i, j, k;
+
     for (i = mid + 1; i > low; i--) {
-        s[i-1] = arr[i-1];
+        aux[i-1] = arr[i-1];
     }
+
     for (j = mid; j < high; j++) {
-        s[high + mid - j] = arr[j+1];
+        aux[high + mid - j] = arr[j+1];
     }
+
     for (k = low; k <= high; k++) {
-        if (s[i] < s[j]) {
-            arr[k] = s[i++];
+        if (aux[i] < aux[j]) {
+            arr[k] = aux[i++];
         } else {
-            arr[k] = s[j--];
+            arr[k] = aux[j--];
         }
     }
 }
 
-void mergeSort(int arr[], size_t len, int low, int high) {
+void mergeSort(int arr[], size_t len, int aux[], int low, int high) {
     if (low == high) {
         return;
     }
     int mid = low + (high-low) / 2;
-    mergeSort(arr, len, low, mid);
-    mergeSort(arr, len, mid + 1, high);
-    merge(arr, len, low, mid, high);
+    mergeSort(arr, len, aux, low, mid);
+    mergeSort(arr, len, aux, mid + 1, high);
+    merge(arr, len, aux, low, mid, high);
 }
 
 int* merge_sort(int arr[], size_t len) {
-    mergeSort(arr, len, 0, len - 1);
+    int* aux = new int[len];
+    mergeSort(arr, len, aux, 0, len - 1);
     return arr;
 }
 
