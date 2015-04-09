@@ -9,6 +9,14 @@ void printArray(int arr[], size_t len) {
     printf("\n");
 }
 
+void printArr(int *p, size_t len) {
+    printf("Array:");
+    for (int i = 0; i < len; i++) {
+        printf("%d", *(p + i));
+    }
+    printf("\n");
+}
+
 /*
  * Worst case complexity is O(n^2)
  * When the array is already sorted the complexity is O(n)
@@ -81,17 +89,37 @@ int* insertion_sort (int arr[], size_t len) {
     return arr;
 }
 
-void merge(int arr[], size_t len, int aux[], int low, int mid, int high) {
-    int i, j, k;
+// So we our going to sort the array in 'h' groups. Say we set h to 4 then every 4th value is part of 
+// one group.
+int* shell_sort (int arr[], size_t len) {
+    int h = 1;
+    while (h < len / 3) {
+        h = 3 * h + 1;
+    }
+    while (h >= 1) {
+        printf("h=%d\n", h);
+        for (int i = h; i < len; i++) {
+            printf("i=%d\n", i);
+            for (int j = i; j >= h && arr[j] < arr[j-h]; j -= h) {
+                int tmp = arr[j];
+                arr[j] = arr[j-h];
+                arr[j-h] = tmp;
+            }
+        }
+        h /= 3;
+    }
+    return arr;
+}
 
+void merge(int arr[], size_t len, int aux[], int low, int mid, int high) {
+    // i = position in left side, j = position in right side, and k = position in arr.
+    int i, j, k;
     for (i = mid + 1; i > low; i--) {
         aux[i-1] = arr[i-1];
     }
-
     for (j = mid; j < high; j++) {
         aux[high + mid - j] = arr[j+1];
     }
-
     for (k = low; k <= high; k++) {
         if (aux[i] < aux[j]) {
             arr[k] = aux[i++];
@@ -112,8 +140,8 @@ void mergeSort(int arr[], size_t len, int aux[], int low, int high) {
 }
 
 int* merge_sort(int arr[], size_t len) {
-    int* aux = new int[len];
-    mergeSort(arr, len, aux, 0, len - 1);
+    int aux[10] = {0};
+    mergeSort(arr, len, aux, 0, len);
     return arr;
 }
 

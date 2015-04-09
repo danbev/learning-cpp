@@ -2,7 +2,7 @@ bin_PROGRAMS = types bs pointer
 types_SOURCES = types.cpp
 bs_SOURCES = bs.cpp
 pointer_SOURCES = pointer.cpp
-AM_CXXFLAGS=-std=c++0x
+AM_CXXFLAGS="-std=c++0x -g -DDEBUG"
 
 nobase_pkginclude_HEADERS = search.hpp sort.hpp recursive.hpp
 lib_LTLIBRARIES = libsearch.la

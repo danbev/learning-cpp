@@ -20,6 +20,10 @@ To add multiple object files:
 
     clang++ -std=c++11 -stdlib=libc++ -lstdc++ -L. sorting.cpp -o sorting sort.o
 
+Mergesort:
+
+    clang++ -std=c++11 -stdlib=libc++ -lstdc++ -L. mergesort.cpp -o mergesort sort.o
+
 ### Running tests
 
     make check
