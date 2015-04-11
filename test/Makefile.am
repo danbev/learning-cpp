@@ -33,6 +33,13 @@ shellsort_test_CXXFLAGS = $(GTEST_CXXFLAGS)
 shellsort_test_LDFLAGS = $(GTEST_LDFLAGS)
 shellsort_test_LDADD = $(libsearch) $(GTEST_LIBS) $(top_builddir)/src/shellsort.o -lgtest_main
 
+check_PROGRAMS += mergesort_test
+mergesort_test_SOURCES = mergesort_test.cpp mergesort.hpp
+mergesort_test_CPPFLAGS = -I$(top_srcdir)/src/ $(GTEST_CPPFLAGS)
+mergesort_test_CXXFLAGS = $(GTEST_CXXFLAGS)
+mergesort_test_LDFLAGS = $(GTEST_LDFLAGS)
+mergesort_test_LDADD = $(libsearch) $(GTEST_LIBS) $(top_builddir)/src/mergesort.o -lgtest_main
+
 # Declare libraries and define tests here...
 
 # Define programs run automatically by "make check"

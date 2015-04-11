@@ -1,8 +1,9 @@
-bin_PROGRAMS = types bs pointer shellsort
+bin_PROGRAMS = types bs pointer shellsort mergesort
 types_SOURCES = types.cpp
 bs_SOURCES = bs.cpp
 pointer_SOURCES = pointer.cpp
 shellsort_SOURCES = shellsort.hpp shellsort.cpp
+mergesort_SOURCES = mergesort.hpp mergesort.cpp
 CFLAGS="-g" 
 CXXFLAGS="-g" 
 LDFLAGS="-g"
