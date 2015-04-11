@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include "sort.hpp"
+
 int* shell_sort (int arr[], size_t len) {
     int h = 1;
     while (h < len / 3) {

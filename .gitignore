@@ -28,3 +28,5 @@ src/sorting
 src/mergesort
 src/shellsort
 src/pointer
+test/recursive_test
+test/shellsort_test

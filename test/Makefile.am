@@ -26,8 +26,14 @@ recursive_test_CXXFLAGS = $(GTEST_CXXFLAGS)
 recursive_test_LDFLAGS = $(GTEST_LDFLAGS)
 recursive_test_LDADD = $(libsearch) $(GTEST_LIBS) -lgtest_main
 
-# Declare libraries and define tests here...
+check_PROGRAMS += shellsort_test
+shellsort_test_SOURCES = shellsort_test.cpp shellsort.hpp
+shellsort_test_CPPFLAGS = -I$(top_srcdir)/src/ $(GTEST_CPPFLAGS)
+shellsort_test_CXXFLAGS = $(GTEST_CXXFLAGS)
+shellsort_test_LDFLAGS = $(GTEST_LDFLAGS)
+shellsort_test_LDADD = $(libsearch) $(GTEST_LIBS) $(top_builddir)/src/shellsort.o -lgtest_main
 
+# Declare libraries and define tests here...
 
 # Define programs run automatically by "make check"
 TESTS = $(check_PROGRAMS)
