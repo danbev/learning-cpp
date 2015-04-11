@@ -28,3 +28,44 @@ Mergesort:
 
     make check
 
+### Debugging
+
+    lldb mergesort
+
+    (lldb) breakpoint set --line 41
+    (lldb) run
+
+Show frame variables:
+
+    (lldb) frame variable
+
+Show current source:
+
+    (lldb) source list
+or
+    (lldb) frame select
+
+Source step:
+
+    (lldb) thread step-in
+
+Show frames:
+
+    (lldb) thread backtrace
+
+This can be useful when inspecting recursive algorithms. For example, mergesort may look something like this:
+
+    (lldb) thread backtrace
+    * thread #1: tid = 0x173e0, 0x0000000100000d4b mergesort`mergeSort(arr=0x00007fff5fbff620, len=4, aux=0x00007fff5fbff5c0, low=0, high=0) + 27 at mergesort.cpp:23, queue = 'com.apple.main-thread', stop reason = step in
+      * frame #0: 0x0000000100000d4b mergesort`mergeSort(arr=0x00007fff5fbff620, len=4, aux=0x00007fff5fbff5c0, low=0, high=0) + 27 at mergesort.cpp:23
+        frame #1: 0x0000000100000d92 mergesort`mergeSort(arr=0x00007fff5fbff620, len=4, aux=0x00007fff5fbff5c0, low=0, high=1) + 98 at mergesort.cpp:27
+        frame #2: 0x0000000100000d92 mergesort`mergeSort(arr=0x00007fff5fbff620, len=4, aux=0x00007fff5fbff5c0, low=0, high=2) + 98 at mergesort.cpp:27
+        frame #3: 0x0000000100000d92 mergesort`mergeSort(arr=0x00007fff5fbff620, len=4, aux=0x00007fff5fbff5c0, low=0, high=4) + 98 at mergesort.cpp:27
+        frame #4: 0x0000000100000e42 mergesort`merge_sort(arr=0x00007fff5fbff620, len=4) + 98 at mergesort.cpp:34
+        frame #5: 0x0000000100000eb7 mergesort`main + 71 at mergesort.cpp:41
+        frame #6: 0x00007fff922575c9 libdyld.dylib`start + 1
+
+
+
+
+
