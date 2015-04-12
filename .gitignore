@@ -32,3 +32,4 @@ test/recursive_test
 test/shellsort_test
 test/mergesort_test
 test/selectionsort_test
+test/insertionsort_test

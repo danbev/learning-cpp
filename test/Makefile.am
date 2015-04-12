@@ -47,6 +47,13 @@ selectionsort_test_CXXFLAGS = $(GTEST_CXXFLAGS)
 selectionsort_test_LDFLAGS = $(GTEST_LDFLAGS)
 selectionsort_test_LDADD = $(libsearch) $(GTEST_LIBS) $(top_builddir)/src/selectionsort.o -lgtest_main
 
+check_PROGRAMS += insertionsort_test
+insertionsort_test_SOURCES = insertionsort_test.cpp insertionsort.hpp
+insertionsort_test_CPPFLAGS = -I$(top_srcdir)/src/ $(GTEST_CPPFLAGS)
+insertionsort_test_CXXFLAGS = $(GTEST_CXXFLAGS)
+insertionsort_test_LDFLAGS = $(GTEST_LDFLAGS)
+insertionsort_test_LDADD = $(libsearch) $(GTEST_LIBS) $(top_builddir)/src/insertionsort.o -lgtest_main
+
 # Declare libraries and define tests here...
 
 # Define programs run automatically by "make check"

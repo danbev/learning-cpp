@@ -1,10 +1,11 @@
-bin_PROGRAMS = types bs pointer shellsort mergesort selectionsort
+bin_PROGRAMS = types bs pointer shellsort mergesort selectionsort insertionsort
 types_SOURCES = types.cpp
 bs_SOURCES = bs.cpp
 pointer_SOURCES = pointer.cpp
 shellsort_SOURCES = shellsort.hpp shellsort.cpp
 mergesort_SOURCES = mergesort.hpp mergesort.cpp
 selectionsort_SOURCES = selectionsort.hpp selectionsort.cpp
+insertionsort_SOURCES = insertionsort.hpp insertionsort.cpp
 CFLAGS="-g" 
 CXXFLAGS="-g" 
 LDFLAGS="-g"
