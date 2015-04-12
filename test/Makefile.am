@@ -4,34 +4,12 @@ check_PROGRAMS =
 # Declare libraries to test
 libsearch = $(top_builddir)/src/libsearch.la
 
-# Define tests with gtest
-check_PROGRAMS += search_test
-search_test_SOURCES = search_test.cpp 
-search_test_CPPFLAGS = -I$(top_srcdir)/src/ $(GTEST_CPPFLAGS)
-search_test_CXXFLAGS = $(GTEST_CXXFLAGS)
-search_test_LDFLAGS = $(GTEST_LDFLAGS)
-search_test_LDADD = $(libsearch) $(GTEST_LIBS) -lgtest_main
-
-check_PROGRAMS += recursive_test
-recursive_test_SOURCES = recursive_test.cpp 
-recursive_test_CPPFLAGS = -I$(top_srcdir)/src/ $(GTEST_CPPFLAGS)
-recursive_test_CXXFLAGS = $(GTEST_CXXFLAGS)
-recursive_test_LDFLAGS = $(GTEST_LDFLAGS)
-recursive_test_LDADD = $(libsearch) $(GTEST_LIBS) -lgtest_main
-
-check_PROGRAMS += shellsort_test
-shellsort_test_SOURCES = shellsort_test.cpp shellsort.hpp
-shellsort_test_CPPFLAGS = -I$(top_srcdir)/src/ $(GTEST_CPPFLAGS)
-shellsort_test_CXXFLAGS = $(GTEST_CXXFLAGS)
-shellsort_test_LDFLAGS = $(GTEST_LDFLAGS)
-shellsort_test_LDADD = $(libsearch) $(GTEST_LIBS) $(top_builddir)/src/shellsort.o -lgtest_main
-
-check_PROGRAMS += mergesort_test
-mergesort_test_SOURCES = mergesort_test.cpp mergesort.hpp
-mergesort_test_CPPFLAGS = -I$(top_srcdir)/src/ $(GTEST_CPPFLAGS)
-mergesort_test_CXXFLAGS = $(GTEST_CXXFLAGS)
-mergesort_test_LDFLAGS = $(GTEST_LDFLAGS)
-mergesort_test_LDADD = $(libsearch) $(GTEST_LIBS) $(top_builddir)/src/mergesort.o -lgtest_main
+check_PROGRAMS += bubblesort_test
+bubblesort_test_SOURCES = bubblesort_test.cpp bubblesort.hpp
+bubblesort_test_CPPFLAGS = -I$(top_srcdir)/src/ $(GTEST_CPPFLAGS)
+bubblesort_test_CXXFLAGS = $(GTEST_CXXFLAGS)
+bubblesort_test_LDFLAGS = $(GTEST_LDFLAGS)
+bubblesort_test_LDADD = $(libsearch) $(GTEST_LIBS) $(top_builddir)/src/bubblesort.o -lgtest_main
 
 check_PROGRAMS += selectionsort_test
 selectionsort_test_SOURCES = selectionsort_test.cpp selectionsort.hpp
@@ -47,12 +25,34 @@ insertionsort_test_CXXFLAGS = $(GTEST_CXXFLAGS)
 insertionsort_test_LDFLAGS = $(GTEST_LDFLAGS)
 insertionsort_test_LDADD = $(libsearch) $(GTEST_LIBS) $(top_builddir)/src/insertionsort.o -lgtest_main
 
-check_PROGRAMS += bubblesort_test
-bubblesort_test_SOURCES = bubblesort_test.cpp bubblesort.hpp
-bubblesort_test_CPPFLAGS = -I$(top_srcdir)/src/ $(GTEST_CPPFLAGS)
-bubblesort_test_CXXFLAGS = $(GTEST_CXXFLAGS)
-bubblesort_test_LDFLAGS = $(GTEST_LDFLAGS)
-bubblesort_test_LDADD = $(libsearch) $(GTEST_LIBS) $(top_builddir)/src/bubblesort.o -lgtest_main
+check_PROGRAMS += shellsort_test
+shellsort_test_SOURCES = shellsort_test.cpp shellsort.hpp
+shellsort_test_CPPFLAGS = -I$(top_srcdir)/src/ $(GTEST_CPPFLAGS)
+shellsort_test_CXXFLAGS = $(GTEST_CXXFLAGS)
+shellsort_test_LDFLAGS = $(GTEST_LDFLAGS)
+shellsort_test_LDADD = $(libsearch) $(GTEST_LIBS) $(top_builddir)/src/shellsort.o -lgtest_main
+
+check_PROGRAMS += mergesort_test
+mergesort_test_SOURCES = mergesort_test.cpp mergesort.hpp
+mergesort_test_CPPFLAGS = -I$(top_srcdir)/src/ $(GTEST_CPPFLAGS)
+mergesort_test_CXXFLAGS = $(GTEST_CXXFLAGS)
+mergesort_test_LDFLAGS = $(GTEST_LDFLAGS)
+mergesort_test_LDADD = $(libsearch) $(GTEST_LIBS) $(top_builddir)/src/mergesort.o -lgtest_main
+
+check_PROGRAMS += recursive_test
+recursive_test_SOURCES = recursive_test.cpp 
+recursive_test_CPPFLAGS = -I$(top_srcdir)/src/ $(GTEST_CPPFLAGS)
+recursive_test_CXXFLAGS = $(GTEST_CXXFLAGS)
+recursive_test_LDFLAGS = $(GTEST_LDFLAGS)
+recursive_test_LDADD = $(libsearch) $(GTEST_LIBS) -lgtest_main
+
+# Define tests with gtest
+check_PROGRAMS += search_test
+search_test_SOURCES = search_test.cpp 
+search_test_CPPFLAGS = -I$(top_srcdir)/src/ $(GTEST_CPPFLAGS)
+search_test_CXXFLAGS = $(GTEST_CXXFLAGS)
+search_test_LDFLAGS = $(GTEST_LDFLAGS)
+search_test_LDADD = $(libsearch) $(GTEST_LIBS) -lgtest_main
 
 # Declare libraries and define tests here...
 
