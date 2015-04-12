@@ -1,3 +1,2 @@
 #include <stddef.h>
 int* bubble_sort(int arr[], size_t len);
-int* insertion_sort(int arr[], size_t len);

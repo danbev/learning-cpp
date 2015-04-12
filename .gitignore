@@ -33,3 +33,4 @@ test/shellsort_test
 test/mergesort_test
 test/selectionsort_test
 test/insertionsort_test
+test/bubblesort_test
