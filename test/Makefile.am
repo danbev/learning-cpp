@@ -32,6 +32,13 @@ shellsort_test_CXXFLAGS = $(GTEST_CXXFLAGS)
 shellsort_test_LDFLAGS = $(GTEST_LDFLAGS)
 shellsort_test_LDADD = $(libsearch) $(GTEST_LIBS) $(top_builddir)/src/shellsort.o -lgtest_main
 
+#check_PROGRAMS += quicksort_test
+#quicksort_test_SOURCES = quicksort_test.cpp quicksort_header.hpp
+#quicksort_test_CPPFLAGS = -I$(top_srcdir)/src/ $(GTEST_CPPFLAGS)
+#quicksort_test_CXXFLAGS = $(GTEST_CXXFLAGS)
+#quicksort_test_LDFLAGS = $(GTEST_LDFLAGS)
+#quicksort_test_LDADD = $(libsearch) $(GTEST_LIBS) $(top_builddir)/src/quicksort.o -lgtest_main
+
 check_PROGRAMS += mergesort_test
 mergesort_test_SOURCES = mergesort_test.cpp mergesort.hpp
 mergesort_test_CPPFLAGS = -I$(top_srcdir)/src/ $(GTEST_CPPFLAGS)

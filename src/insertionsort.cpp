@@ -23,7 +23,7 @@ int* insertion_sort (int arr[], size_t len) {
         // j is our "marker" for the already sorted items. 
         // On the first pass we are comparing the current item 'i'.
         // On the next passes we are checking if any of the already sorted items need swapping.
-        for (int j = i; j > 0 && arr[j] < arr[j-1];j--) {
+        for (int j = i; j > 0 && arr[j] < arr[j-1]; j--) {
             int tmp = arr[j];
             arr[j] = arr[j-1];
             arr[j-1] = tmp;
