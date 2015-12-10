@@ -12,6 +12,7 @@ public:
   ~Person();
   std::string name() const;
   friend std::ostream & operator<<(std::ostream &os, const Person &p);
+  operator std::string();
 };
 
 #endif

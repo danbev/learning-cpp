@@ -1,6 +1,7 @@
 // clang++ -std=c++11 -stdlib=libc++ person.cpp -o person
 #include <iostream>
 #include "person.h"
+#include <string>
 
 Person::Person() {
   _name = "unknown";
@@ -23,14 +24,23 @@ std::ostream & operator<<(std::ostream &os, const Person &p) {
   return os;
 }
 
+Person::operator std::string() {
+  return name();
+}
+
 int main() {
   Person p ("Fletch");
-  std::cout << "Person: " << p << std::endl;
   Person p2;
-  std::cout << "Person2: " << p2 << std::endl;
   Person p3 = Person("Bajja");
-  std::cout << "Person3: " << p3 << std::endl;
   Person p4 {"Four"};
-  std::cout << "Person4: " << p4 << std::endl;
+  std::string name = "beve";
+  Person p5 = name;
+  std::cout << p << std::endl;
+  std::cout << p2 << std::endl;
+  std::cout << p3 << std::endl;
+  std::cout << p4 << std::endl;
+  std::cout << p5 << std::endl;
+  std::string pName = p;
+  std::cout << "pName=" << pName << std::endl;
   return 0;
 }
