@@ -11,6 +11,7 @@ CXXFLAGS="-std=c++0x"
 AC_CONFIG_FILES([Makefile
                  lib/Makefile lib/gtest-1.6.0/Makefile lib/gmock-1.6.0/Makefile
                  src/classes/Makefile 
+                 src/new/Makefile 
                  src/Makefile 
                  test/classes/Makefile 
                  test/Makefile])
