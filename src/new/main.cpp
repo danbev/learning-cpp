@@ -8,10 +8,16 @@ void passByValue(StringBad);
 int main() {
   using std::endl;
   {
-    cout << "Starting inner block..." << endl;
     StringBad first("Fletch");
+    StringBad second;
+    // first the no args constructor will be called, then the assignement
+    // operator will take part in things.
+    second = first;
+    cout << first[0] << endl;
+    //cout << "Starting inner block..." << endl;
     //passByRef(first);
-    passByValue(first);
+    //passByValue(first);
+
   }
   return 0;
 }

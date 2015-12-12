@@ -12,6 +12,8 @@ class StringBad {
     StringBad();
     StringBad(const StringBad &); // Copy Constructor
     ~StringBad();
-    friend std::ostream & operator<<(std::ostream &os, const StringBad &st); 
+    friend std::ostream & operator<<(std::ostream &os, const StringBad &sd); 
+    StringBad & operator=(const StringBad &);
+    char operator[](int n);
 };
 #endif
