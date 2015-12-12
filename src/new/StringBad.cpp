@@ -21,14 +21,17 @@ StringBad::StringBad(const char *s) {
 }
 
 StringBad::StringBad(const StringBad &sb) {
-  cout << ":\"" << sb.str << "\" created using Copy Constructor\n";
-  // simulate the default copy constructor
-  str = sb.str;
+  cout << nrStrings << ":\"" << sb.str << "\"  created using Copy Constructor\n";
   len = sb.len;
+  nrStrings++;
+  // simulate the default copy constructor
+  //str = sb.str;
+  str = new char[len+1];
+  std::strcpy(str, sb.str);
 }
 
 StringBad::~StringBad() {
-  cout << ":\"" << str << "\" object delected\n";
+  cout << ":\"" << str << "\" object deleted\n";
   --nrStrings;
   cout << nrStrings << " left\n";
   delete []str;
