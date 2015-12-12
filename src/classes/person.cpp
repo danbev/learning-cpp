@@ -24,6 +24,10 @@ std::ostream & operator<<(std::ostream &os, const Person &p) {
   return os;
 }
 
+Person operator+(const Person &p1, const Person &p2) {
+  return Person(p1->name() + p2->name();
+}
+
 Person::operator std::string() {
   return name();
 }
