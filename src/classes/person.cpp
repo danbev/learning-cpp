@@ -25,11 +25,11 @@ std::ostream & operator<<(std::ostream &os, const Person &p) {
 }
 
 Person operator+(const Person &p1, const Person &p2) {
-  return Person(p1->name() + p2->name();
+  return Person(p1.name() + p2.name());
 }
 
-Person::operator std::string() {
-  return name();
+Person Person::operator=(const std::string &s) {
+  return Person(s);
 }
 
 int main() {
@@ -44,7 +44,7 @@ int main() {
   std::cout << p3 << std::endl;
   std::cout << p4 << std::endl;
   std::cout << p5 << std::endl;
-  std::string pName = p;
-  std::cout << "pName=" << pName << std::endl;
+  //std::string pName = p;
+  //std::cout << "pName=" << pName << std::endl;
   return 0;
 }
