@@ -15,5 +15,7 @@ class StringBad {
     friend std::ostream & operator<<(std::ostream &os, const StringBad &sd); 
     StringBad & operator=(const StringBad &);
     char operator[](int n);
+    StringBad & operator+(const StringBad &sb);
+    static int nrOfStrings() { return nrStrings; };
 };
 #endif

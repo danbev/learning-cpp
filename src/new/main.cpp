@@ -14,6 +14,7 @@ int main() {
     // operator will take part in things.
     second = first;
     cout << first[0] << endl;
+    cout << "number of Strings : " << StringBad::nrOfStrings() << endl;
     //cout << "Starting inner block..." << endl;
     //passByRef(first);
     //passByValue(first);
