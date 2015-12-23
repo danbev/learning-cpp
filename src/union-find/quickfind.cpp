@@ -18,12 +18,11 @@ class QuickFind {
     }
     void connect(int p, int q) {
       cout << "Connecting " << p << " and " << q << endl;
-      int srcGroup = entries[p];
-      int dstGroup = entries[q];
-      entries[q] = srcGroup;
-      for (int i = 0; i < n; i++) {
-        if (entries[i] == dstGroup) {
-          entries[i] = srcGroup;
+      int srcGroup = entries[p]; // first access of array
+      int dstGroup = entries[q]; // second access of array
+      for (int i = 0; i < n; i++) { // N accesses
+        if (entries[i] == srcGroup) {
+          entries[i] = dstGroup;
         }
       }
     }
