@@ -62,7 +62,7 @@ search_test_LDADD = $(libsearch) $(GTEST_LIBS) -lgtest_main
 
 check_PROGRAMS += quickunion_test
 quickunion_test_SOURCES = quickunion_test.cpp
-quickunion_test_CPPFLAGS = -I$(top_srcdir)/src/union-find $(GTEST_CPPFLAGS)
+quickunion_test_CPPFLAGS = -I$(top_srcdir)/src/algorithms/fundamental $(GTEST_CPPFLAGS)
 quickunion_test_CXXFLAGS = $(GTEST_CXXFLAGS)
 quickunion_test_LDFLAGS = $(GTEST_LDFLAGS)
 quickunion_test_LDADD = $(libsearch) $(GTEST_LIBS) -lgtest_main

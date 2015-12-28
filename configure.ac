@@ -12,7 +12,7 @@ AC_CONFIG_FILES([Makefile
                  lib/Makefile lib/gtest-1.6.0/Makefile lib/gmock-1.6.0/Makefile
                  src/classes/Makefile 
                  src/new/Makefile 
-                 src/union-find/Makefile 
+                 src/algorithms/fundamental/Makefile 
                  src/Makefile 
                  test/classes/Makefile 
                  test/Makefile])
