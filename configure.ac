@@ -13,6 +13,7 @@ AC_CONFIG_FILES([Makefile
                  src/classes/Makefile 
                  src/new/Makefile 
                  src/algorithms/fundamental/Makefile 
+                 src/algorithms/searching/Makefile 
                  src/Makefile 
                  test/classes/Makefile 
                  test/Makefile])

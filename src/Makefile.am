@@ -1,6 +1,5 @@
-bin_PROGRAMS = types bs pointer shellsort mergesort selectionsort insertionsort bubblesort quicksort
+bin_PROGRAMS = types pointer shellsort mergesort selectionsort insertionsort bubblesort quicksort
 types_SOURCES = types.cpp
-bs_SOURCES = bs.cpp
 pointer_SOURCES = pointer.cpp
 shellsort_SOURCES = shellsort.hpp shellsort.cpp
 mergesort_SOURCES = mergesort.hpp mergesort.cpp
