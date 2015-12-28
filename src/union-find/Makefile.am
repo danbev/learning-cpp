@@ -1,5 +1,6 @@
-bin_PROGRAMS = quickfind 
-quickfind_SOURCES = quickfind.cpp
+bin_PROGRAMS = quickfind quickunion
+quickfind_SOURCES = quickfind.cpp 
+quickunion_SOURCES = quickunion.cpp 
 CXX=clang++
 CXXFLAGS="-g" 
 LDFLAGS="-g"
