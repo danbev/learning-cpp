@@ -61,14 +61,14 @@ search_test_LDFLAGS = $(GTEST_LDFLAGS)
 search_test_LDADD = $(libsearch) $(GTEST_LIBS) -lgtest_main
 
 check_PROGRAMS += quickunion_test
-quickunion_test_SOURCES = quickunion_test.cpp
+quickunion_test_SOURCES = ./algorithms/fundamentals/quickunion_test.cpp
 quickunion_test_CPPFLAGS = -I$(top_srcdir)/src/algorithms/fundamental $(GTEST_CPPFLAGS)
 quickunion_test_CXXFLAGS = $(GTEST_CXXFLAGS)
 quickunion_test_LDFLAGS = $(GTEST_LDFLAGS)
 quickunion_test_LDADD = $(libsearch) $(GTEST_LIBS) -lgtest_main
 
 check_PROGRAMS += quickfind_test
-quickfind_test_SOURCES = quickfind_test.cpp
+quickfind_test_SOURCES = ./algorithms/fundamentals/quickfind_test.cpp
 quickfind_test_CPPFLAGS = -I$(top_srcdir)/src/algorithms/fundamental $(GTEST_CPPFLAGS)
 quickfind_test_CXXFLAGS = $(GTEST_CXXFLAGS)
 quickfind_test_LDFLAGS = $(GTEST_LDFLAGS)
