@@ -6,10 +6,10 @@ libsearch = $(top_builddir)/src/libsearch.la
 
 check_PROGRAMS += bubblesort_test
 bubblesort_test_SOURCES = bubblesort_test.cpp bubblesort.hpp
-bubblesort_test_CPPFLAGS = -I$(top_srcdir)/src/ $(GTEST_CPPFLAGS)
+bubblesort_test_CPPFLAGS = -I$(top_srcdir)/src/algorithms/sorting $(GTEST_CPPFLAGS)
 bubblesort_test_CXXFLAGS = $(GTEST_CXXFLAGS)
 bubblesort_test_LDFLAGS = $(GTEST_LDFLAGS)
-bubblesort_test_LDADD = $(libsearch) $(GTEST_LIBS) $(top_builddir)/src/bubblesort.o -lgtest_main
+bubblesort_test_LDADD = $(libsearch) $(GTEST_LIBS) $(top_builddir)/src/algorithms/sorting/bubblesort.o -lgtest_main
 
 check_PROGRAMS += selectionsort_test
 selectionsort_test_SOURCES = selectionsort_test.cpp selectionsort.hpp
