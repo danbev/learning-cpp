@@ -7,13 +7,13 @@ class QuickUnion {
     int * entries;
     int * sizes;
     int n;
-    int sets;
+    int comps;
 
   public:
 
     QuickUnion(int n) {
       this->n = n;
-      this->sets = n;
+      this->comps = n;
       entries  = new int[n];
       sizes  = new int[n];
       for (int i = 0; i < n; i++) {
@@ -42,11 +42,11 @@ class QuickUnion {
         entries[j] = i;
         sizes[i] += sizes[j];
       }
-      sets--;
+      comps--;
     }
 
     bool connected(int p, int q) {
-      return entries[q] == p;
+      return root(p) == root(q);
     }
 
     void print() {
@@ -54,28 +54,19 @@ class QuickUnion {
       for (int i = 0; i < n; i++) {
         cout << i << "=" << entries[i] << ", ";
       }
-      cout << "] Sets=" << sets << endl;
+      cout << "] Sets=" << comps << endl;
     }
 
     ~QuickUnion() {
       delete [] entries;
       cout << "Deleted array " << endl;
     }
+
     int size() {
       return n;
     }
-};
 
-int main() {
-  cout.setf(ios::boolalpha);
-  QuickUnion qu (10);
-  qu.print();
-  qu.connect(0, 1);
-  qu.print();
-  cout << "Are 0,1 connected: " << qu.connected(0, 1) << endl;
-  qu.connect(8, 9);
-  qu.print();
-  qu.connect(0,8);
-  qu.print();
-  return 0;
-}
+    int components() {
+      return comps;
+    }
+};

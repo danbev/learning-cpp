@@ -53,13 +53,19 @@ recursive_test_CXXFLAGS = $(GTEST_CXXFLAGS)
 recursive_test_LDFLAGS = $(GTEST_LDFLAGS)
 recursive_test_LDADD = $(libsearch) $(GTEST_LIBS) -lgtest_main
 
-# Define tests with gtest
 check_PROGRAMS += search_test
 search_test_SOURCES = search_test.cpp 
 search_test_CPPFLAGS = -I$(top_srcdir)/src/ $(GTEST_CPPFLAGS)
 search_test_CXXFLAGS = $(GTEST_CXXFLAGS)
 search_test_LDFLAGS = $(GTEST_LDFLAGS)
 search_test_LDADD = $(libsearch) $(GTEST_LIBS) -lgtest_main
+
+check_PROGRAMS += quickunion_test
+quickunion_test_SOURCES = quickunion_test.cpp
+quickunion_test_CPPFLAGS = -I$(top_srcdir)/src/union-find $(GTEST_CPPFLAGS)
+quickunion_test_CXXFLAGS = $(GTEST_CXXFLAGS)
+quickunion_test_LDFLAGS = $(GTEST_LDFLAGS)
+quickunion_test_LDADD = $(libsearch) $(GTEST_LIBS) -lgtest_main
 
 # Declare libraries and define tests here...
 
