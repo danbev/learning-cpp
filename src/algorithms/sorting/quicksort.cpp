@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "quicksort_header.hpp"
+#include "quicksort.hpp"
 
 int* _quick_sort(int arr[], int left, int right);
 
@@ -36,13 +36,3 @@ int* _quick_sort(int arr[], int left, int right) {
     return arr;
 }
 
-
-int main() {
-    int unsorted[] = {4, 2, 1, 3};
-    int len = 4;
-    int *sorted = quick_sort(unsorted, len);
-    for (int i = 0 ; i < len; i++) {
-        printf("%d", sorted[i]);
-    }
-    printf("\n");
-}

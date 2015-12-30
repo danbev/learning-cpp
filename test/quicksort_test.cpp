@@ -1,5 +1,5 @@
 #include <gtest/gtest.h>
-#include "quicksort_header.hpp"
+#include "quicksort.hpp"
 
 TEST(quicksort_sort, one) {
   int unsorted[] = {2, 4, 1, 5, 3};
