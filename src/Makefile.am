@@ -1,7 +1,6 @@
-bin_PROGRAMS = types pointer shellsort
+bin_PROGRAMS = types pointer
 types_SOURCES = types.cpp
 pointer_SOURCES = pointer.cpp
-shellsort_SOURCES = shellsort.hpp shellsort.cpp
 CXX=clang++
 CXXFLAGS="-g" 
 LDFLAGS="-g"

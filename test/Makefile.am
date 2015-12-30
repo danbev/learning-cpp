@@ -27,10 +27,10 @@ insertionsort_test_LDADD = $(libsearch) $(GTEST_LIBS) $(top_builddir)/src/algori
 
 check_PROGRAMS += shellsort_test
 shellsort_test_SOURCES = shellsort_test.cpp shellsort.hpp
-shellsort_test_CPPFLAGS = -I$(top_srcdir)/src/ $(GTEST_CPPFLAGS)
+shellsort_test_CPPFLAGS = -I$(top_srcdir)/src/algorithms/sorting $(GTEST_CPPFLAGS)
 shellsort_test_CXXFLAGS = $(GTEST_CXXFLAGS)
 shellsort_test_LDFLAGS = $(GTEST_LDFLAGS)
-shellsort_test_LDADD = $(libsearch) $(GTEST_LIBS) $(top_builddir)/src/shellsort.o -lgtest_main
+shellsort_test_LDADD = $(libsearch) $(GTEST_LIBS) $(top_builddir)/src/algorithms/sorting/shellsort.o -lgtest_main
 
 #check_PROGRAMS += quicksort_test
 #quicksort_test_SOURCES = quicksort_test.cpp quicksort.hpp

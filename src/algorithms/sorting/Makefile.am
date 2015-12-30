@@ -1,10 +1,10 @@
 bin_PROGRAMS = bubblesort selectionsort insertionsort mergesort quicksort
-shellsort_SOURCES = shellsort.hpp shellsort.cpp
-mergesort_SOURCES = mergesort.hpp mergesort.cpp
+bubblesort_SOURCES = bubblesort.hpp bubblesort.cpp
 selectionsort_SOURCES = selectionsort.hpp selectionsort.cpp
 insertionsort_SOURCES = insertionsort.hpp insertionsort.cpp
-bubblesort_SOURCES = bubblesort.hpp bubblesort.cpp
+mergesort_SOURCES = mergesort.hpp mergesort.cpp
 quicksort_SOURCES = quicksort.hpp quicksort.cpp
+shellsort_SOURCES = shellsort.hpp shellsort.cpp
 CXX=clang++
 CXXFLAGS="-g" 
 LDFLAGS="-g"
