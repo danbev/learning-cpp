@@ -20,10 +20,10 @@ selectionsort_test_LDADD = $(libsearch) $(GTEST_LIBS) $(top_builddir)/src/select
 
 check_PROGRAMS += insertionsort_test
 insertionsort_test_SOURCES = insertionsort_test.cpp insertionsort.hpp
-insertionsort_test_CPPFLAGS = -I$(top_srcdir)/src/ $(GTEST_CPPFLAGS)
+insertionsort_test_CPPFLAGS = -I$(top_srcdir)/src/algorithms/sorting $(GTEST_CPPFLAGS)
 insertionsort_test_CXXFLAGS = $(GTEST_CXXFLAGS)
 insertionsort_test_LDFLAGS = $(GTEST_LDFLAGS)
-insertionsort_test_LDADD = $(libsearch) $(GTEST_LIBS) $(top_builddir)/src/insertionsort.o -lgtest_main
+insertionsort_test_LDADD = $(libsearch) $(GTEST_LIBS) $(top_builddir)/src/algorithms/sorting/insertionsort.o -lgtest_main
 
 check_PROGRAMS += shellsort_test
 shellsort_test_SOURCES = shellsort_test.cpp shellsort.hpp

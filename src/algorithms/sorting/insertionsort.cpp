@@ -32,13 +32,3 @@ int* insertion_sort (int arr[], size_t len) {
     return arr;
 }
 
-int main() {
-    int unsorted[] = {4, 1, 2, 3};
-    int len = 4;
-    int *sorted = insertion_sort(unsorted, len);
-    for (int i = 0 ; i < len; i++) {
-        printf("%d", sorted[i]);
-    }
-    printf("\n");
-}
-
