@@ -1,4 +1,4 @@
-bin_PROGRAMS = bubblesort insertionsort mergesort quicksort
+bin_PROGRAMS = bubblesort selectionsort insertionsort mergesort quicksort
 shellsort_SOURCES = shellsort.hpp shellsort.cpp
 mergesort_SOURCES = mergesort.hpp mergesort.cpp
 selectionsort_SOURCES = selectionsort.hpp selectionsort.cpp

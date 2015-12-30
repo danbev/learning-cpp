@@ -13,10 +13,10 @@ bubblesort_test_LDADD = $(libsearch) $(GTEST_LIBS) $(top_builddir)/src/algorithm
 
 check_PROGRAMS += selectionsort_test
 selectionsort_test_SOURCES = selectionsort_test.cpp selectionsort.hpp
-selectionsort_test_CPPFLAGS = -I$(top_srcdir)/src/ $(GTEST_CPPFLAGS)
+selectionsort_test_CPPFLAGS = -I$(top_srcdir)/src/algorithms/sorting $(GTEST_CPPFLAGS)
 selectionsort_test_CXXFLAGS = $(GTEST_CXXFLAGS)
 selectionsort_test_LDFLAGS = $(GTEST_LDFLAGS)
-selectionsort_test_LDADD = $(libsearch) $(GTEST_LIBS) $(top_builddir)/src/selectionsort.o -lgtest_main
+selectionsort_test_LDADD = $(libsearch) $(GTEST_LIBS) $(top_builddir)/src/algorithms/sorting/selectionsort.o -lgtest_main
 
 check_PROGRAMS += insertionsort_test
 insertionsort_test_SOURCES = insertionsort_test.cpp insertionsort.hpp
