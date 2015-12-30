@@ -74,6 +74,13 @@ quickfind_test_CXXFLAGS = $(GTEST_CXXFLAGS)
 quickfind_test_LDFLAGS = $(GTEST_LDFLAGS)
 quickfind_test_LDADD = $(libsearch) $(GTEST_LIBS) -lgtest_main
 
+check_PROGRAMS += randomize_test
+randomize_test_SOURCES = ./algorithms/fundamentals/randomize_test.cpp
+randomize_test_CPPFLAGS = -I$(top_srcdir)/src/algorithms/fundamental $(GTEST_CPPFLAGS)
+randomize_test_CXXFLAGS = $(GTEST_CXXFLAGS)
+randomize_test_LDFLAGS = $(GTEST_LDFLAGS)
+randomize_test_LDADD = $(libsearch) $(GTEST_LIBS) -lgtest_main
+
 # Declare libraries and define tests here...
 
 # Define programs run automatically by "make check"
