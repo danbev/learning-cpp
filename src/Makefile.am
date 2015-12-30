@@ -1,10 +1,8 @@
-bin_PROGRAMS = types pointer shellsort mergesort selectionsort quicksort
+bin_PROGRAMS = types pointer shellsort selectionsort quicksort
 types_SOURCES = types.cpp
 pointer_SOURCES = pointer.cpp
 shellsort_SOURCES = shellsort.hpp shellsort.cpp
-mergesort_SOURCES = mergesort.hpp mergesort.cpp
 selectionsort_SOURCES = selectionsort.hpp selectionsort.cpp
-insertionsort_SOURCES = insertionsort.hpp insertionsort.cpp
 quicksort_SOURCES = quicksort_header.hpp quicksort.cpp
 CXX=clang++
 CXXFLAGS="-g" 

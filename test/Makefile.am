@@ -41,10 +41,10 @@ shellsort_test_LDADD = $(libsearch) $(GTEST_LIBS) $(top_builddir)/src/shellsort.
 
 check_PROGRAMS += mergesort_test
 mergesort_test_SOURCES = mergesort_test.cpp mergesort.hpp
-mergesort_test_CPPFLAGS = -I$(top_srcdir)/src/ $(GTEST_CPPFLAGS)
+mergesort_test_CPPFLAGS = -I$(top_srcdir)/src/algorithms/sorting $(GTEST_CPPFLAGS)
 mergesort_test_CXXFLAGS = $(GTEST_CXXFLAGS)
 mergesort_test_LDFLAGS = $(GTEST_LDFLAGS)
-mergesort_test_LDADD = $(libsearch) $(GTEST_LIBS) $(top_builddir)/src/mergesort.o -lgtest_main
+mergesort_test_LDADD = $(libsearch) $(GTEST_LIBS) $(top_builddir)/src/algorithms/sorting/mergesort.o -lgtest_main
 
 check_PROGRAMS += recursive_test
 recursive_test_SOURCES = recursive_test.cpp 
