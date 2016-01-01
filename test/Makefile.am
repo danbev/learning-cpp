@@ -88,6 +88,13 @@ gcd_test_CXXFLAGS = $(GTEST_CXXFLAGS)
 gcd_test_LDFLAGS = $(GTEST_LDFLAGS)
 gcd_test_LDADD = $(libsearch) $(GTEST_LIBS) -lgtest_main
 
+check_PROGRAMS += lcg_test
+lcg_test_SOURCES = ./algorithms/fundamentals/lcg_test.cpp
+lcg_test_CPPFLAGS = -I$(top_srcdir)/src/algorithms/fundamental $(GTEST_CPPFLAGS)
+lcg_test_CXXFLAGS = $(GTEST_CXXFLAGS)
+lcg_test_LDFLAGS = $(GTEST_LDFLAGS)
+lcg_test_LDADD = $(libsearch) $(GTEST_LIBS) -lgtest_main
+
 # Declare libraries and define tests here...
 
 # Define programs run automatically by "make check"
