@@ -81,6 +81,13 @@ randomize_test_CXXFLAGS = $(GTEST_CXXFLAGS)
 randomize_test_LDFLAGS = $(GTEST_LDFLAGS)
 randomize_test_LDADD = $(libsearch) $(GTEST_LIBS) -lgtest_main
 
+check_PROGRAMS += gcd_test
+gcd_test_SOURCES = ./algorithms/fundamentals/gcd_test.cpp
+gcd_test_CPPFLAGS = -I$(top_srcdir)/src/algorithms/fundamental $(GTEST_CPPFLAGS)
+gcd_test_CXXFLAGS = $(GTEST_CXXFLAGS)
+gcd_test_LDFLAGS = $(GTEST_LDFLAGS)
+gcd_test_LDADD = $(libsearch) $(GTEST_LIBS) -lgtest_main
+
 # Declare libraries and define tests here...
 
 # Define programs run automatically by "make check"
