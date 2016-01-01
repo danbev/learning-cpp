@@ -1,6 +1,8 @@
 /*
  * Greatest Common divisor/factor (the largest integer that divides both
  * a and b).
+ *
+ * The size of a and b is cut in least in half giving O(Log N).
  */
 int gcd(unsigned int a, unsigned int b) {
   if (b == 0) {
