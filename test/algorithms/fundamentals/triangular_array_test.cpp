@@ -31,9 +31,20 @@ So we have removed:
 4 + 3 + 2 + 1 = 10 entries. The previous size was 16 so we need to have an array of 6.
 This can be calculated using N * (N-1)/2, 4 * (4-1)/2 = 12/2=6.
 This is how the size of the one dimentional array is calculated.
+So we create a simple array able to hold 6 ints:
+int tri[6] = {790, 1745, 2776, 1852, 2564, 381};
+
+But how do we map these value?
+Lets look at an example:
+TriArr tri (4);
+tri.set(1, 0, 790); // NewYork <-> Chicago
+This will take the row (1) and column (0) and to the following mapping:
+1 * (1 - 1) / 2 + 1= 0
+
+tri.set(1, 2, 2776); // NewYork <-> LA
+1 * (1 - 1) / 2 + 2 = 2
 */
 
-//int tri[6] = {790, 1745, 2776, 1852, 2564, 381};
 
 TEST(tri, initialize) {
   TriArr tri (4);
@@ -42,7 +53,6 @@ TEST(tri, initialize) {
 
 TEST(tri, rowZero) {
   TriArr tri (4);
-  /* Chicago  {0,       790,      1745,     1852}, */
   EXPECT_EQ(1 * (1-1)/2, tri.index(0, 1));
   EXPECT_EQ(2 * (2-1)/2, tri.index(0, 2));
 }
@@ -52,5 +62,24 @@ TEST(tri, index) {
   EXPECT_EQ(1, tri.index(0, 2));
   EXPECT_EQ(3, tri.index(0, 3));
   EXPECT_EQ(2, tri.index(1, 2));
+}
+
+TEST(tri, add) {
+  TriArr tri (4);
+  /* Chicago  {0,       790,      1745,     1852}, */
+  tri.set(0, 1, 790); 
+  tri.set(0, 2, 1745); 
+  tri.set(0, 3, 1852); 
+  EXPECT_EQ(790, tri.get(0, 0));
+  EXPECT_EQ(1745, tri.get(0, 2));
+  EXPECT_EQ(1852, tri.get(0, 3));
+
+  /* New York    {790,       0,      2776,     2564}, */
+  tri.set(1, 0, 790); 
+  tri.set(1, 2, 2276); 
+  tri.set(1, 3, 2564); 
+  EXPECT_EQ(790, tri.get(1, 0));
+  EXPECT_EQ(2276, tri.get(1, 2));
+  EXPECT_EQ(2564, tri.get(1, 3));
 }
 
