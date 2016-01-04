@@ -20,3 +20,12 @@ TEST(linkedlist, popEmptyList) {
   EXPECT_EQ(0, list.pop());
 }
 
+TEST(linkedlist, reverseArray) {
+  int arr[] {1, 2, 3, 4};
+  reverseArray(arr, 4);
+  EXPECT_EQ(4, arr[0]);
+  EXPECT_EQ(3, arr[1]);
+  EXPECT_EQ(2, arr[2]);
+  EXPECT_EQ(1, arr[3]);
+}
+

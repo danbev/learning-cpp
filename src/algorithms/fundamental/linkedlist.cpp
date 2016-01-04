@@ -57,3 +57,16 @@ class LinkedIntList {
       return *this;
     }
 };
+
+/*
+ * Reverses the passed in array using the LinkedIntList
+ */ 
+void reverseArray(int arr[], int size) {
+  LinkedIntList list;
+  for (int i = 0; i < size; i++) {
+    list.push(arr[i]);
+  }
+  for (int i = 0; i < size; i++) {
+    arr[i] = list.pop();
+  }
+}
