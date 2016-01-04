@@ -1,0 +1,59 @@
+#include <iostream>
+
+class IntNode {
+friend class LinkedIntList;
+  private:
+    int value;
+    IntNode *next;
+  public:
+    IntNode(int value, IntNode * next) {
+      this->value = value;
+      this->next = next;
+    }
+    ~IntNode() {
+    }
+};
+
+class LinkedIntList {
+  private: 
+    IntNode * head;
+    int lenght;
+  public:
+    LinkedIntList() : head(NULL) {
+    }
+    LinkedIntList &push(int value) {
+      IntNode *newNode = new IntNode(value, NULL);
+      if (head == NULL) {
+        head = newNode;
+      } else {
+        IntNode *current = head;
+        newNode->next = current;
+        head = newNode;
+      }
+      return *this;
+    }
+    int pop() {
+      if (head == NULL) {
+        return 0;
+      }
+      IntNode *old = head;
+      head = old->next;
+      int value = old->value;
+      delete old;
+      return value;
+    }
+    LinkedIntList &print() {
+      if (head == NULL) {
+        std::cout << "[empty]" << std::endl;
+      } else {
+        IntNode * node = head;
+        std::cout << "[" << node->value;
+        while(node->next) {
+          node = node->next;
+          std::cout << ", " << node->value;
+        }
+        std::cout << "]" << std::endl;
+      }
+      return *this;
+    }
+};

@@ -102,6 +102,13 @@ triangular_array_test_CXXFLAGS = $(GTEST_CXXFLAGS)
 triangular_array_test_LDFLAGS = $(GTEST_LDFLAGS)
 triangular_array_test_LDADD = $(libsearch) $(GTEST_LIBS) -lgtest_main
 
+check_PROGRAMS += linkedlist_test
+linkedlist_test_SOURCES = ./algorithms/fundamentals/linkedlist_test.cpp
+linkedlist_test_CPPFLAGS = -I$(top_srcdir)/src/algorithms/fundamental $(GTEST_CPPFLAGS)
+linkedlist_test_CXXFLAGS = $(GTEST_CXXFLAGS)
+linkedlist_test_LDFLAGS = $(GTEST_LDFLAGS)
+linkedlist_test_LDADD = $(libsearch) $(GTEST_LIBS) -lgtest_main
+
 # Declare libraries and define tests here...
 
 # Define programs run automatically by "make check"
