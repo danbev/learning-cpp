@@ -109,6 +109,13 @@ linkedlist_test_CXXFLAGS = $(GTEST_CXXFLAGS)
 linkedlist_test_LDFLAGS = $(GTEST_LDFLAGS)
 linkedlist_test_LDADD = $(libsearch) $(GTEST_LIBS) -lgtest_main
 
+check_PROGRAMS += primenumbers_test
+primenumbers_test_SOURCES = ./algorithms/fundamentals/primenumbers_test.cpp
+primenumbers_test_CPPFLAGS = -I$(top_srcdir)/src/algorithms/fundamental $(GTEST_CPPFLAGS)
+primenumbers_test_CXXFLAGS = $(GTEST_CXXFLAGS)
+primenumbers_test_LDFLAGS = $(GTEST_LDFLAGS)
+primenumbers_test_LDADD = $(libsearch) $(GTEST_LIBS) -lgtest_main
+
 # Declare libraries and define tests here...
 
 # Define programs run automatically by "make check"
