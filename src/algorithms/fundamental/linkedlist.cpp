@@ -17,9 +17,9 @@ friend class LinkedIntList;
 class LinkedIntList {
   private: 
     IntNode * head;
-    int lenght;
+    int length;
   public:
-    LinkedIntList() : head(NULL) {
+    LinkedIntList() : head(NULL), length(0) {
     }
     LinkedIntList &push(int value) {
       IntNode *newNode = new IntNode(value, NULL);
@@ -30,6 +30,7 @@ class LinkedIntList {
         newNode->next = current;
         head = newNode;
       }
+      length++;
       return *this;
     }
     int pop() {
@@ -40,7 +41,11 @@ class LinkedIntList {
       head = old->next;
       int value = old->value;
       delete old;
+      length--;
       return value;
+    }
+    int size() {
+      return length;
     }
     LinkedIntList &print() {
       if (head == NULL) {

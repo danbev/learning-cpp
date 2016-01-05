@@ -12,6 +12,7 @@ TEST(linkedlist, addIntValueToEmptyList) {
 TEST(linkedlist, addIntValueTo) {
   LinkedIntList list;
   list.push(1).push(2).print();
+  EXPECT_EQ(2, list.size());
   EXPECT_EQ(2, list.pop());
   EXPECT_EQ(1, list.pop());
 }
