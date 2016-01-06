@@ -1,5 +1,5 @@
 #include <iostream>
-#include "linkedlist.cpp"
+#include "../datastructures/linkedlist.cpp"
 #include <iostream>
 
 LinkedIntList primefactors(int nr) {
