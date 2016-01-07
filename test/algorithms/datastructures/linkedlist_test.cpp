@@ -22,6 +22,14 @@ TEST(linkedlist, removeFront) {
   EXPECT_EQ(-1, list.removeFront());
 }
 
+TEST(linkedlist, contains) {
+  LinkedList list;
+  EXPECT_EQ(false, list.contains(1));
+  list.addFront(1);
+  EXPECT_EQ(true, list.contains(1));
+  EXPECT_EQ(false, list.contains(2));
+}
+
 TEST(linkedlist, reverseArray) {
   int arr[] {1, 2, 3, 4};
   reverseArray(arr, 4);

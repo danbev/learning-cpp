@@ -62,6 +62,19 @@ class LinkedList {
       return length;
     }
 
+    bool contains(int nr) const {
+      if (head == NULL) {
+        return false;
+      }
+      IntNode *p = head;
+      do {
+        if (p->value == nr) {
+          return true;
+        }
+      } while (p->next != NULL);
+      return false;
+    }
+
     const LinkedList &print() const {
       if (head == NULL) {
         std::cout << "[empty]" << std::endl;
