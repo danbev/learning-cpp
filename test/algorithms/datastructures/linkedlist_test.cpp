@@ -2,24 +2,24 @@
 #include <gtest/gtest.h>
 #include "linkedlist.cpp"
 
-
-TEST(linkedlist, addIntValueToEmptyList) {
-  LinkedIntList list;
-  list.push(1);
-  EXPECT_EQ(1, list.pop());
+TEST(linkedlist, empty) {
+  LinkedList list;
+  EXPECT_EQ(true, list.empty());
+  list.addFront(10);
+  EXPECT_EQ(false, list.empty());
 }
 
-TEST(linkedlist, addIntValueTo) {
-  LinkedIntList list;
-  list.push(1).push(2).print();
+TEST(linkedlist, addFront) {
+  LinkedList list;
+  list.addFront(1).addFront(2).print();
   EXPECT_EQ(2, list.size());
-  EXPECT_EQ(2, list.pop());
-  EXPECT_EQ(1, list.pop());
+  EXPECT_EQ(2, list.removeFront());
+  EXPECT_EQ(1, list.removeFront());
 }
 
-TEST(linkedlist, popEmptyList) {
-  LinkedIntList list;
-  EXPECT_EQ(0, list.pop());
+TEST(linkedlist, removeFront) {
+  LinkedList list;
+  EXPECT_EQ(-1, list.removeFront());
 }
 
 TEST(linkedlist, reverseArray) {
@@ -31,7 +31,7 @@ TEST(linkedlist, reverseArray) {
   EXPECT_EQ(1, arr[3]);
 }
 
-void printTowers(int move, LinkedIntList one, LinkedIntList two, LinkedIntList three) {
+void printTowers(int move, LinkedList one, LinkedList two, LinkedList three) {
   std::cout << "Move: " << move << std::endl;
   std::cout << "Tower 1: ";
   one.print();
@@ -42,32 +42,32 @@ void printTowers(int move, LinkedIntList one, LinkedIntList two, LinkedIntList t
 }
 
 TEST(linkedlist, tower) {
-  LinkedIntList peg1;
-  LinkedIntList peg2;
-  LinkedIntList peg3;
-  peg1.push(3);
-  peg1.push(2);
-  peg1.push(1);
+  LinkedList peg1;
+  LinkedList peg2;
+  LinkedList peg3;
+  peg1.addFront(3);
+  peg1.addFront(2);
+  peg1.addFront(1);
   printTowers(1, peg1, peg2, peg3);
 
-  peg2.push(peg1.pop());
+  peg2.addFront(peg1.removeFront());
   printTowers(2, peg1, peg2, peg3);
 
-  peg3.push(peg1.pop());
+  peg3.addFront(peg1.removeFront());
   printTowers(3, peg1, peg2, peg3);
-  peg3.push(peg2.pop());
+  peg3.addFront(peg2.removeFront());
   printTowers(4, peg1, peg2, peg3);
 
-  peg2.push(peg1.pop());
+  peg2.addFront(peg1.removeFront());
   printTowers(5, peg1, peg2, peg3);
 
-  peg1.push(peg3.pop());
+  peg1.addFront(peg3.removeFront());
   printTowers(6, peg1, peg2, peg3);
-  peg2.push(peg3.pop());
+  peg2.addFront(peg3.removeFront());
   printTowers(7, peg1, peg2, peg3);
-  peg2.push(peg1.pop());
+  peg2.addFront(peg1.removeFront());
   printTowers(7, peg1, peg2, peg3);
-  EXPECT_EQ(1, peg2.pop());
-  EXPECT_EQ(2, peg2.pop());
-  EXPECT_EQ(3, peg2.pop());
+  EXPECT_EQ(1, peg2.removeFront());
+  EXPECT_EQ(2, peg2.removeFront());
+  EXPECT_EQ(3, peg2.removeFront());
 }

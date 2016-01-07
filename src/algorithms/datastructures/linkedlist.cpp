@@ -1,7 +1,7 @@
 #include <iostream>
 
 class IntNode {
-friend class LinkedIntList;
+  friend class LinkedList;
   private:
     int value;
     IntNode *next;
@@ -14,14 +14,19 @@ friend class LinkedIntList;
     }
 };
 
-class LinkedIntList {
+class LinkedList {
   private: 
     IntNode * head;
     int length;
   public:
-    LinkedIntList() : head(NULL), length(0) {
+    LinkedList() : head(NULL), length(0) {
     }
-    LinkedIntList &push(int value) {
+
+    bool empty() const {
+      return head == NULL;
+    }
+
+    LinkedList &addFront(int value) {
       IntNode *newNode = new IntNode(value, NULL);
       if (head == NULL) {
         head = newNode;
@@ -33,9 +38,10 @@ class LinkedIntList {
       length++;
       return *this;
     }
-    int pop() {
+
+    int removeFront() {
       if (head == NULL) {
-        return 0;
+        return -1;
       }
       IntNode *old = head;
       head = old->next;
@@ -44,10 +50,19 @@ class LinkedIntList {
       length--;
       return value;
     }
-    int size() {
+
+    int front() const {
+      if (head == NULL) {
+        return -1;
+      }
+      return head->next->value;
+    }
+
+    int size() const {
       return length;
     }
-    LinkedIntList &print() {
+
+    const LinkedList &print() const {
       if (head == NULL) {
         std::cout << "[empty]" << std::endl;
       } else {
@@ -67,12 +82,12 @@ class LinkedIntList {
  * Reverses the passed in array using the LinkedIntList
  */ 
 void reverseArray(int arr[], int size) {
-  LinkedIntList list;
+  LinkedList list;
   for (int i = 0; i < size; i++) {
-    list.push(arr[i]);
+    list.addFront(arr[i]);
   }
   for (int i = 0; i < size; i++) {
-    arr[i] = list.pop();
+    arr[i] = list.removeFront();
   }
 }
 
