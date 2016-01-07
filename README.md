@@ -28,6 +28,14 @@ Mergesort:
 
     make check
 
+You can run individual test by running them directly:
+
+    ./test/linkedlist_test --gtest_filter=linkedlist.contains
+
+To list all the tests:
+
+    ./test/linkedlist_test --gtest_list_tests
+
 ### Debugging
 
     lldb mergesort
