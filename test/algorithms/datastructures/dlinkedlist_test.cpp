@@ -25,7 +25,6 @@ TEST(dlinkedlist, contains) {
   EXPECT_EQ(true, list.contains(1));
   EXPECT_EQ(false, list.contains(2));
 }
-/*
 
 void printInt(int i) {
   std::cout << i << std::endl;
@@ -33,8 +32,7 @@ void printInt(int i) {
 
 TEST(DlinkedList, forEach) {
   DLinkedList list;
-  list.addFront(1).addFront(2).addFront(3);
+  list.addEnd(1).addEnd(2).addEnd(3);
   list.forEach(printInt);
 }
-*/
 

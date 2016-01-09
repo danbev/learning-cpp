@@ -70,13 +70,12 @@ class DLinkedList {
     }
 
     DLinkedList &addEnd(int value) {
-      IntNode *newNode = new IntNode(value, NULL);
+      IntNode *newNode = new IntNode(value, NULL, NULL);
       if (empty()) {
         return addFront(value);
       } 
-      IntNode *current = tail;
+      IntNode *current = tail == NULL ? head:tail;
       current->next = newNode;
-      newNode->next = NULL;
       newNode->previous = current;
       tail = newNode;
       length++;
@@ -116,11 +115,15 @@ class DLinkedList {
     }
 
     template<class Func>
-    void forEach(Func f) {
+    void forEach(Func &f) {
+      if (head == NULL) {
+        return;
+      }
       IntNode *p = head;
       do {
         f(p->value);
-      } while (p->next != NULL);
+        p = p->next;
+      } while (p != NULL);
     }
 
     const DLinkedList &print() const {
