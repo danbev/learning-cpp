@@ -109,6 +109,13 @@ linkedlist_test_CXXFLAGS = $(GTEST_CXXFLAGS)
 linkedlist_test_LDFLAGS = $(GTEST_LDFLAGS)
 linkedlist_test_LDADD = $(libsearch) $(GTEST_LIBS) -lgtest_main
 
+check_PROGRAMS += dlinkedlist_test
+dlinkedlist_test_SOURCES = ./algorithms/datastructures/dlinkedlist_test.cpp
+dlinkedlist_test_CPPFLAGS = -I$(top_srcdir)/src/algorithms/datastructures $(GTEST_CPPFLAGS)
+dlinkedlist_test_CXXFLAGS = $(GTEST_CXXFLAGS)
+dlinkedlist_test_LDFLAGS = $(GTEST_LDFLAGS)
+dlinkedlist_test_LDADD = $(libsearch) $(GTEST_LIBS) -lgtest_main
+
 check_PROGRAMS += primenumbers_test
 primenumbers_test_SOURCES = ./algorithms/fundamentals/primenumbers_test.cpp
 primenumbers_test_CPPFLAGS = -I$(top_srcdir)/src/algorithms/fundamental $(GTEST_CPPFLAGS)
