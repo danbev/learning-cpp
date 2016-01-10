@@ -36,9 +36,15 @@ To list all the tests:
 
     ./test/linkedlist_test --gtest_list_tests
 
-### Debugging
+You can also run the test directly:
 
-    lldb mergesort
+  ./test/.libs/bu_mergesort_test
+
+### Debugging
+This section is currently not accurate. I'm investigating how to debug
+Google Test unit test using lldb.
+
+    lldb test/.libs/mergesort_test
 
     (lldb) breakpoint set --line 41
     (lldb) run
