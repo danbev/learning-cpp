@@ -1,3 +1,6 @@
+# Input file to Autoconf
+# The autoconf tool translates a configure.ac file into a configure shell script 
+# that executes the tests that determines what the build environment is.
 AC_INIT(leaningcxx, version-0.0.1)
 AM_INIT_AUTOMAKE([foreign subdir-objects])
 AC_CONFIG_SRCDIR([configure.ac])
@@ -7,7 +10,7 @@ AC_CONFIG_MACRO_DIR([m4])
 echo "                             Testing for a C++ compiler"
 AC_PROG_CXX
 AC_LANG_PUSH([C++])
-CXXFLAGS="-std=c++0x"
+CXXFLAGS="-std=c++0x -g"
 AC_CONFIG_FILES([Makefile
                  lib/Makefile lib/gtest-1.6.0/Makefile lib/gmock-1.6.0/Makefile
                  src/classes/Makefile 
