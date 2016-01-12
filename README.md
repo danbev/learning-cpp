@@ -47,6 +47,7 @@ Google Test unit test using lldb.
     lldb test/.libs/mergesort_test
 
     (lldb) breakpoint set --line 41
+    (lldb) breakpoint set --file mergesort.cpp --line 33
     (lldb) run
 
 Show frame variables:
