@@ -68,6 +68,7 @@ Show frames:
 
     (lldb) thread backtrace
 
+
 This can be useful when inspecting recursive algorithms. For example, mergesort may look something like this:
 
     (lldb) thread backtrace
@@ -79,6 +80,10 @@ This can be useful when inspecting recursive algorithms. For example, mergesort 
         frame #4: 0x0000000100000e42 mergesort`merge_sort(arr=0x00007fff5fbff620, len=4) + 98 at mergesort.cpp:34
         frame #5: 0x0000000100000eb7 mergesort`main + 71 at mergesort.cpp:41
         frame #6: 0x00007fff922575c9 libdyld.dylib`start + 1
+
+Printing an array:
+
+    (lldb) p *(int(*)[5]) arr
 
 ## Adding unit tests
 You should be able to simply update the test/Makefile.am with the new test.
