@@ -85,6 +85,11 @@ Printing an array:
 
     (lldb) p *(int(*)[5]) arr
 
+Saving breakpoints:  
+Sometime you want to exit lldb and recompile to make change in the tested code. This means you hhave to reenter you breakpoints. But you can also specify command to run when lldb start using the ```-S filename``` argument:
+
+  	lldb -S breakpoints test/.libs/pattern_test
+
 ## Adding unit tests
 You should be able to simply update the test/Makefile.am with the new test.
 __Note__ that .cpp files under test with a main function do not seem to be testable. Removing the main
