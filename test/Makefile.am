@@ -123,6 +123,13 @@ primenumbers_test_CXXFLAGS = $(GTEST_CXXFLAGS)
 primenumbers_test_LDFLAGS = $(GTEST_LDFLAGS)
 primenumbers_test_LDADD = $(libsearch) $(GTEST_LIBS) -lgtest_main
 
+check_PROGRAMS += pattern_test
+pattern_test_SOURCES = ./algorithms/searching/pattern_test.cpp
+pattern_test_CPPFLAGS = -I$(top_srcdir)/src/algorithms/searching $(GTEST_CPPFLAGS)
+pattern_test_CXXFLAGS = $(GTEST_CXXFLAGS)
+pattern_test_LDFLAGS = $(GTEST_LDFLAGS)
+pattern_test_LDADD = $(libsearch) $(GTEST_LIBS) -lgtest_main
+
 # Declare libraries and define tests here...
 
 # Define programs run automatically by "make check"
