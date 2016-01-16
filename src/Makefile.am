@@ -6,6 +6,6 @@ CXXFLAGS="-g"
 LDFLAGS="-g"
 AM_CFLAGS ="-g"
 AM_CXXFLAGS="-std=c++0x"
-nobase_pkginclude_HEADERS = search.hpp recursive.hpp
+nobase_pkginclude_HEADERS = search.hpp
 lib_LTLIBRARIES = libsearch.la
-libsearch_la_SOURCES = search.hpp search.cpp recursive.hpp recursive.cpp
+libsearch_la_SOURCES = search.hpp search.cpp

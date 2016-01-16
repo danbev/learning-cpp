@@ -54,8 +54,8 @@ bu_mergesort_test_LDFLAGS = $(GTEST_LDFLAGS)
 bu_mergesort_test_LDADD = $(libsearch) $(GTEST_LIBS) -lgtest_main
 
 check_PROGRAMS += recursive_test
-recursive_test_SOURCES = recursive_test.cpp 
-recursive_test_CPPFLAGS = -I$(top_srcdir)/src/ $(GTEST_CPPFLAGS)
+recursive_test_SOURCES = ./algorithms/recursive/recursive_test.cpp 
+recursive_test_CPPFLAGS = -I$(top_srcdir)/src/algorithms/recursive $(GTEST_CPPFLAGS)
 recursive_test_CXXFLAGS = $(GTEST_CXXFLAGS)
 recursive_test_LDFLAGS = $(GTEST_LDFLAGS)
 recursive_test_LDADD = $(libsearch) $(GTEST_LIBS) -lgtest_main
