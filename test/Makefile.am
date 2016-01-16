@@ -46,6 +46,13 @@ mergesort_test_CXXFLAGS = $(GTEST_CXXFLAGS)
 mergesort_test_LDFLAGS = $(GTEST_LDFLAGS)
 mergesort_test_LDADD = $(libsearch) $(GTEST_LIBS) $(top_builddir)/src/algorithms/sorting/mergesort.o -lgtest_main
 
+check_PROGRAMS += bu_mergesort_test
+bu_mergesort_test_SOURCES = ./algorithms/sorting/bu_mergesort_test.cpp
+bu_mergesort_test_CPPFLAGS = -I$(top_srcdir)/src/algorithms/sorting $(GTEST_CPPFLAGS)
+bu_mergesort_test_CXXFLAGS = $(GTEST_CXXFLAGS)
+bu_mergesort_test_LDFLAGS = $(GTEST_LDFLAGS)
+bu_mergesort_test_LDADD = $(libsearch) $(GTEST_LIBS) -lgtest_main
+
 check_PROGRAMS += recursive_test
 recursive_test_SOURCES = recursive_test.cpp 
 recursive_test_CPPFLAGS = -I$(top_srcdir)/src/ $(GTEST_CPPFLAGS)
