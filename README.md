@@ -38,7 +38,7 @@ To list all the tests:
 
 You can also run the test directly:
 
-  ./test/.libs/bu_mergesort_test
+  ./test/.libs/mergesort_test
 
 #### Disabling a test
 You can disable a test by renaming it with a ```DISABLED_``` prefix, as in:
