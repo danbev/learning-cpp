@@ -128,6 +128,13 @@ pattern_test_CXXFLAGS = $(GTEST_CXXFLAGS)
 pattern_test_LDFLAGS = $(GTEST_LDFLAGS)
 pattern_test_LDADD = $(GTEST_LIBS) -lgtest_main
 
+check_PROGRAMS += binaryheap_test
+binaryheap_test_SOURCES = ./algorithms/datastructures/binaryheap_test.cpp
+binaryheap_test_CPPFLAGS = -I$(top_srcdir)/src/algorithms/datastructures $(GTEST_CPPFLAGS)
+binaryheap_test_CXXFLAGS = $(GTEST_CXXFLAGS)
+binaryheap_test_LDFLAGS = $(GTEST_LDFLAGS)
+binaryheap_test_LDADD = $(GTEST_LIBS) -lgtest_main
+
 # Declare libraries and define tests here...
 
 # Define programs run automatically by "make check"
