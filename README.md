@@ -99,6 +99,17 @@ Sometime you want to exit lldb and recompile to make change in the tested code. 
 
   	lldb -S breakpoints test/.libs/pattern_test
 
+Adding a watch point:  
+
+  (lldb) watchpoint set var end
+
+Every time the above variable _end_ is modified it will be displayed:
+
+  Watchpoint 1 hit:
+  old value: 2
+  new value: 1
+  
+
 ## Adding unit tests
 You should be able to simply update the test/Makefile.am with the new test.
 __Note__ that .cpp files under test with a main function do not seem to be testable. Removing the main
