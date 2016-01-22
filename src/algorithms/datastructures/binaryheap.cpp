@@ -38,11 +38,11 @@
  * 2^2 = 4
  * 2^3 = 8
  * 2^4 = 16
- *
+ * 
  */
 class BinaryHeap {
   private:
-    int msize;
+    int mcapacity;
     int n;
     char *a;
     /**
@@ -52,15 +52,27 @@ class BinaryHeap {
      */
     void reheapifyUp(int k) {
       while (k > 1 && a[k] > a[k/2]) {
-        swap(k/2, k);
+        swap(k/2, k, a);
         k = k/2;
       }
+    }
+  public:
+    BinaryHeap() : mcapacity(10), n(0) {
+      a = new char[mcapacity + 1];
+    }
+    ~BinaryHeap() {
+      delete [] a;
+    }
+    static void swap(int i, int j, char *a) {
+      char tmp = a[i];
+      a[i] = a[j];
+      a[j] = tmp;
     }
     /**
      * When we remove the max we also have to maintain the order. This time
      * going from the top of the heap.
      */
-    void reheapifyDown(int k) {
+    static void reheapifyDown(int k, char *a, int n) {
       // Remember k*2 will give us the left child if there is one.
       while (k*2 <= n) {
         int child = 2*k;
@@ -74,24 +86,12 @@ class BinaryHeap {
         if (a[k] > a[child]) {
           break;
         }
-        swap(k, child);
+        swap(k, child, a);
         k = child;
       }
     }
-    void swap(int i, int j) {
-      char tmp = a[i];
-      a[i] = a[j];
-      a[j] = tmp;
-    }
-  public:
-    BinaryHeap() : msize(10), n(0) {
-      a = new char[msize + 1];
-    }
-    ~BinaryHeap() {
-      delete [] a;
-    }
     int capacity() {
-      return msize;
+      return mcapacity;
     }
     int size() {
       return n;
@@ -104,7 +104,7 @@ class BinaryHeap {
       char m = max();
       a[1] = a[n];
       n--;
-      reheapifyDown(1);
+      reheapifyDown(1, a, n);
       return m;
     }
     char max() {

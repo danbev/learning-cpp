@@ -135,6 +135,13 @@ binaryheap_test_CXXFLAGS = $(GTEST_CXXFLAGS)
 binaryheap_test_LDFLAGS = $(GTEST_LDFLAGS)
 binaryheap_test_LDADD = $(GTEST_LIBS) -lgtest_main
 
+check_PROGRAMS += heapsort_test
+heapsort_test_SOURCES = ./algorithms/datastructures/heapsort_test.cpp
+heapsort_test_CPPFLAGS = -I$(top_srcdir)/src/algorithms/datastructures $(GTEST_CPPFLAGS)
+heapsort_test_CXXFLAGS = $(GTEST_CXXFLAGS)
+heapsort_test_LDFLAGS = $(GTEST_LDFLAGS)
+heapsort_test_LDADD = $(GTEST_LIBS) -lgtest_main
+
 # Declare libraries and define tests here...
 
 # Define programs run automatically by "make check"
