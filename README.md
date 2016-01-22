@@ -99,6 +99,12 @@ Sometime you want to exit lldb and recompile to make change in the tested code. 
 
   	lldb -S breakpoints test/.libs/pattern_test
 
+Adding a conditional break point:  
+
+  (lldb) breakpoint set --file heapsort.cpp --line 41 --condition 'end==1'
+
+Here _end_ is a local variable.
+
 Adding a watch point:  
 
   (lldb) watchpoint set var end
@@ -108,6 +114,10 @@ Every time the above variable _end_ is modified it will be displayed:
   Watchpoint 1 hit:
   old value: 2
   new value: 1
+
+You can also add a condition so that it breaks when this condition applies:  
+
+  (lldb) watchpoint modify -c 'end==1'
   
 
 ## Adding unit tests
