@@ -9,8 +9,6 @@ This project uses Autotool and is required to bulid
     ./configure CPPFLAGS=-DGTEST_USE_OWN_TR1_TUPLE=1
     make
 
-The produces programs are in in the same folder, _src_, as the source files.
-
 #### Manually compiling a program
 Compiling with c++11 and libc:
 
