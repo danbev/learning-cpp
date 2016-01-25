@@ -7,13 +7,15 @@ class Node {
     Node *right;
     int key;
     char value;
+    int count;
   public:
-    Node(int key, char value) : Node(key, value, NULL, NULL) {} ;
-    Node(int key, char value, Node *left, Node *right) { 
+    Node(int key, char value) : Node(key, value, NULL, NULL, 1) {} ;
+    Node(int key, char value, Node *left, Node *right, int count) {
       this->key = key;
       this->value = value;
       this->left = left;
       this->right = right;
+      this->count = count;
     }
 };
 
@@ -31,6 +33,8 @@ class BinarySearchTree {
       } else {
         node->value = value;
       }
+      // we have to increment the size of all nodes, not just the node added.
+      node->count = size(node->left) + size(node->right) + 1;
       return node;
     }
     Node * getNode(Node *node, int key) {
@@ -44,6 +48,9 @@ class BinarySearchTree {
       } else {
         return node;
       }
+    }
+    int size(Node *node) {
+      return node == NULL ? 0 : node->count;
     }
   public:
     BinarySearchTree() : root(NULL) {
@@ -61,5 +68,9 @@ class BinarySearchTree {
         throw "No such key";
       }
       return node->value;
+    }
+
+    int size() {
+      return size(root);
     }
 };

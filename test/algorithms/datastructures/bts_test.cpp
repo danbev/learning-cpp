@@ -24,3 +24,15 @@ TEST(BinarySearchTree, put) {
   EXPECT_EQ('z', bts.get(1));
   EXPECT_EQ('b', bts.get(2));
 }
+
+TEST(BinarySearchTree, sizeEmpty) {
+  BinarySearchTree bts;
+  EXPECT_EQ(0, bts.size());
+}
+
+TEST(BinarySearchTree, size) {
+  BinarySearchTree bts;
+  bts.put(1, 'z');
+  bts.put(2, 'a');
+  EXPECT_EQ(2, bts.size());
+}
