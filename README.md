@@ -48,8 +48,6 @@ TEST(BinaryHeap, DISABLED_insert) {
 ```
 
 ### Debugging
-This section is currently not accurate. I'm investigating how to debug
-Google Test unit test using lldb.
 
     lldb test/.libs/mergesort_test
 
@@ -70,10 +68,20 @@ or
 Source step:
 
     (lldb) thread step-in
+    (lldb) s
+    (lldb) thread step-over
+    (lldb) n
+    (lldb) thread step-out
+    (lldb) finish
 
 Show frames:
 
     (lldb) thread backtrace
+    (lldb) bt
+
+A useful argument is --count which limits the backtrace, for example:
+
+    (lldb) br -c 3
 
 
 This can be useful when inspecting recursive algorithms. For example, mergesort may look something like this:
