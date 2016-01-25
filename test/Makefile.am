@@ -142,12 +142,12 @@ heapsort_test_CXXFLAGS = $(GTEST_CXXFLAGS)
 heapsort_test_LDFLAGS = $(GTEST_LDFLAGS)
 heapsort_test_LDADD = $(GTEST_LIBS) -lgtest_main
 
-check_PROGRAMS += bts_test
-bts_test_SOURCES = ./algorithms/datastructures/bts_test.cpp
-bts_test_CPPFLAGS = -I$(top_srcdir)/src/algorithms/datastructures $(GTEST_CPPFLAGS)
-bts_test_CXXFLAGS = $(GTEST_CXXFLAGS)
-bts_test_LDFLAGS = $(GTEST_LDFLAGS)
-bts_test_LDADD = $(GTEST_LIBS) -lgtest_main
+check_PROGRAMS += bst_test
+bst_test_SOURCES = ./algorithms/datastructures/bst_test.cpp
+bst_test_CPPFLAGS = -I$(top_srcdir)/src/algorithms/datastructures $(GTEST_CPPFLAGS)
+bst_test_CXXFLAGS = $(GTEST_CXXFLAGS)
+bst_test_LDFLAGS = $(GTEST_LDFLAGS)
+bst_test_LDADD = $(GTEST_LIBS) -lgtest_main
 
 # Declare libraries and define tests here...
 

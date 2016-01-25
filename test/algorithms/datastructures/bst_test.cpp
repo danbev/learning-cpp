@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 #include <iostream>
-#include "bts.cpp"
+#include "bst.cpp"
 
 TEST(BinarySearchTree, getMissingKey) {
   BinarySearchTree bts;
