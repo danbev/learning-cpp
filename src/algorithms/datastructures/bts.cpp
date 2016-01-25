@@ -20,20 +20,46 @@ class Node {
 class BinarySearchTree {
   private:
     Node *root;
+    Node * putNode(Node *node, int key, char value) {
+      if (node == NULL) {
+          return new Node(key, value);
+      }
+      if (key < node->key) {
+        node->left = putNode(node->left, key, value);
+      } else if (key > node->key) {
+        node->right = putNode(node->right, key, value);
+      } else {
+        node->value = value;
+      }
+      return node;
+    }
+    Node * getNode(Node *node, int key) {
+      if (node == NULL) {
+        return NULL;
+      }
+      if (key < node->key) {
+        return getNode(node->left, key);
+      } else if (key > node->key) {
+        return getNode(node->right, key);
+      } else {
+        return node;
+      }
+    }
   public:
     BinarySearchTree() : root(NULL) {
     }
     ~BinarySearchTree() {
     }
+
     void put(int key, char value) {
-      if (root == NULL) {
-        root = new Node(key, value);
-      }
+      root = putNode(root, key, value);
     }
+
     char get(int key) {
-      if (root == NULL) {
+      Node *node = getNode(root, key);
+      if (node == NULL) {
         throw "No such key";
       }
-      return '0';
+      return node->value;
     }
 };
