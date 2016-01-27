@@ -43,3 +43,12 @@ TEST(BinarySearchTree, min) {
   bts.put(2, 'z');
   EXPECT_EQ('a', bts.min());
 }
+
+TEST(BinarySearchTree, max) {
+  BinarySearchTree bts;
+  bts.put(1, 'a');
+  bts.put(2, 'b');
+  bts.put(3, 'c');
+  bts.put(4, 'd');
+  EXPECT_EQ('d', bts.max());
+}

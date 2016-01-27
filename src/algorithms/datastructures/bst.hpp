@@ -26,5 +26,6 @@ class SearchTree {
     char get(int key);
     int size();
     char min();
+    char max();
 };
 #endif

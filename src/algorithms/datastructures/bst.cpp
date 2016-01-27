@@ -7,6 +7,7 @@ class BinarySearchTree: public SearchTree {
     Node *putNode(Node *node, int key, char value);
     Node *getNode(Node *node, int key);
     Node *min(Node *node);
+    Node *max(Node *node);
     int size(Node *node);
   public:
     BinarySearchTree() : root(NULL) {
@@ -17,6 +18,7 @@ class BinarySearchTree: public SearchTree {
     char get(int key);
     int size();
     char min();
+    char max();
 };
 
 void BinarySearchTree::put(int key, char value) {
@@ -42,8 +44,19 @@ Node * BinarySearchTree::min(Node *node) {
   return min(node->left);
 }
 
+Node * BinarySearchTree::max(Node *node) {
+  if (node->right == NULL) {
+    return node;
+  }
+  return max(node->right);
+}
+
 char BinarySearchTree::min() {
   return min(root)->value;
+}
+
+char BinarySearchTree::max() {
+  return max(root)->value;
 }
 
 Node * BinarySearchTree::putNode(Node *node, int key, char value) {
