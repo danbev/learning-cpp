@@ -1,12 +1,12 @@
 #include <iostream>
 #include "bst.hpp"
 
-//class BinarySearchTree: public SearchTree {
-class BinarySearchTree {
+class BinarySearchTree: public SearchTree {
   private:
     Node *root;
-    Node * putNode(Node *node, int key, char value);
-    Node * getNode(Node *node, int key);
+    Node *putNode(Node *node, int key, char value);
+    Node *getNode(Node *node, int key);
+    Node *min(Node *node);
     int size(Node *node);
   public:
     BinarySearchTree() : root(NULL) {
@@ -16,10 +16,13 @@ class BinarySearchTree {
     void put(int key, char value);
     char get(int key);
     int size();
+    char min();
 };
+
 void BinarySearchTree::put(int key, char value) {
   root = putNode(root, key, value);
 }
+
 char BinarySearchTree::get(int key) {
   Node *node = getNode(root, key);
   if (node == NULL) {
@@ -30,6 +33,17 @@ char BinarySearchTree::get(int key) {
 
 int BinarySearchTree::size() {
   return size(root);
+}
+
+Node * BinarySearchTree::min(Node *node) {
+  if (node->left == NULL) {
+    return node;
+  }
+  return min(node->left);
+}
+
+char BinarySearchTree::min() {
+  return min(root)->value;
 }
 
 Node * BinarySearchTree::putNode(Node *node, int key, char value) {
@@ -47,6 +61,7 @@ Node * BinarySearchTree::putNode(Node *node, int key, char value) {
   node->count = size(node->left) + size(node->right) + 1;
   return node;
 }
+
 Node * BinarySearchTree::getNode(Node *node, int key) {
   if (node == NULL) {
     return NULL;

@@ -3,7 +3,7 @@
 #include "bst.cpp"
 
 TEST(BinarySearchTree, getMissingKey) {
-  BinarySearchTree bts;
+  BinarySearchTree bts = BinarySearchTree();
   try {
     bts.get(10);
   } catch (const char *msg) {
@@ -35,4 +35,11 @@ TEST(BinarySearchTree, size) {
   bts.put(1, 'z');
   bts.put(2, 'a');
   EXPECT_EQ(2, bts.size());
+}
+
+TEST(BinarySearchTree, min) {
+  BinarySearchTree bts;
+  bts.put(1, 'a');
+  bts.put(2, 'z');
+  EXPECT_EQ('a', bts.min());
 }

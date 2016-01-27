@@ -1,3 +1,6 @@
+#ifndef SEARCH_TREE_H
+#define SEARCH_TREE_H
+
 class Node {
   friend class BinarySearchTree;
   private:
@@ -22,4 +25,6 @@ class SearchTree {
     void put(int key, char value);
     char get(int key);
     int size();
+    char min();
 };
+#endif
