@@ -10,6 +10,7 @@ class BinarySearchTree: public SearchTree {
     Node *max(Node *node);
     int size(Node *node);
     const Node *floor(const Node *node, int key);
+    const Node *ceil(const Node *node, int key);
   public:
     BinarySearchTree() : root(NULL) {
     }
@@ -21,7 +22,28 @@ class BinarySearchTree: public SearchTree {
     char min();
     char max();
     int floor(int key);
+    int ceil(int key);
 };
+
+const Node * BinarySearchTree::ceil(const Node *node, int key) {
+  if (node == NULL) {
+    return NULL;
+  }
+
+  if (key == node->key) {
+    return node;
+  }
+
+  if (key > node->key) {
+    return ceil(node->right, key);
+  }
+  const Node *left = ceil(node->left, key);
+  return left == NULL ? node : left;
+}
+
+int BinarySearchTree::ceil(int key) {
+  return ceil(root, key)->key;
+}
 
 /**
  * Return the Node that has the largest key less than, or equal to key.

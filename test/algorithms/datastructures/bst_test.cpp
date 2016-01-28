@@ -62,3 +62,10 @@ TEST(BinarySearchTree, floor) {
   EXPECT_EQ(4, bts.floor(4));
   EXPECT_EQ(2, bts.floor(3));
 }
+
+TEST(BinarySearchTree, ceil) {
+  BinarySearchTree bts;
+  bts.put(2, 'b');
+  bts.put(4, 'd');
+  EXPECT_EQ(2, bts.ceil(1));
+}

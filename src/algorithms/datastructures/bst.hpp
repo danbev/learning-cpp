@@ -29,5 +29,6 @@ class SearchTree {
     char max();
     /* return the largest key less than, or equal to the passed-in key */
     int floor(int key);
+    int ceil(int key);
 };
 #endif
