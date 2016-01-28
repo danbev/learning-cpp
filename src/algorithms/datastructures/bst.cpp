@@ -9,6 +9,7 @@ class BinarySearchTree: public SearchTree {
     Node *min(Node *node);
     Node *max(Node *node);
     int size(Node *node);
+    const Node *floor(const Node *node, int key);
   public:
     BinarySearchTree() : root(NULL) {
     }
@@ -19,7 +20,34 @@ class BinarySearchTree: public SearchTree {
     int size();
     char min();
     char max();
+    int floor(int key);
 };
+
+/**
+ * Return the Node that has the largest key less than, or equal to key.
+ *
+ */
+const Node * BinarySearchTree::floor(const Node *node, int key) {
+  if (node == NULL) {
+    return NULL;
+  }
+  if (key == node->key) {
+    return node;
+  } 
+  if (key < node->key) {
+    // check the left subtree. We know the key should belong 
+    return floor(node->left, key);
+  } 
+  // if key is greater then node->key, then we search the right subtree
+  // but the key might not exist at all, in which case we want to return
+  // the largest key less than key. This would be the current node.
+  const Node * right = floor(node->right, key);
+  return right == NULL ? node : right;
+}
+
+int BinarySearchTree::floor(int key) {
+  return floor(root, key)->key;
+}
 
 void BinarySearchTree::put(int key, char value) {
   root = putNode(root, key, value);

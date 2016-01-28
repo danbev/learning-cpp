@@ -52,3 +52,13 @@ TEST(BinarySearchTree, max) {
   bts.put(4, 'd');
   EXPECT_EQ('d', bts.max());
 }
+
+TEST(BinarySearchTree, floor) {
+  BinarySearchTree bts;
+  bts.put(1, 'a');
+  bts.put(2, 'b');
+  bts.put(4, 'd');
+  EXPECT_EQ(4, bts.floor(5));
+  EXPECT_EQ(4, bts.floor(4));
+  EXPECT_EQ(2, bts.floor(3));
+}
