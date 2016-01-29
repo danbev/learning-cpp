@@ -69,3 +69,15 @@ TEST(BinarySearchTree, ceil) {
   bts.put(4, 'd');
   EXPECT_EQ(2, bts.ceil(1));
 }
+
+TEST(BinarySearchTree, rank) {
+  BinarySearchTree bts;
+  bts.put(1, 'a');
+  bts.put(2, 'b');
+  bts.put(3, 'c');
+  bts.put(4, 'd');
+  EXPECT_EQ(3, bts.rank(4));
+  EXPECT_EQ(2, bts.rank(3));
+  EXPECT_EQ(1, bts.rank(2));
+  EXPECT_EQ(0, bts.rank(1));
+}

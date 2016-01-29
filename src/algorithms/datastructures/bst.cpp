@@ -11,6 +11,8 @@ class BinarySearchTree: public SearchTree {
     int size(Node *node);
     const Node *floor(const Node *node, int key);
     const Node *ceil(const Node *node, int key);
+    int rank(const Node *node, int key);
+
   public:
     BinarySearchTree() : root(NULL) {
     }
@@ -23,7 +25,34 @@ class BinarySearchTree: public SearchTree {
     char max();
     int floor(int key);
     int ceil(int key);
+    int rank(int key);
 };
+
+/*
+*  Return the number of keys that are less than the passed-in key
+*/
+int BinarySearchTree::rank(const Node *node, int key) {
+  if (node == NULL) {
+    return 0;
+  }
+  if (key == node->key) {
+    // return the count of the left. This is not the same as the current nodes count
+    // as it also contains the count for its right tree.
+    return size(node->left);
+  }
+  if (key < node->key) {
+    // process the left subtree
+    return rank(node->left, key);
+  }
+  // so the key was greater then the current nodes key. 
+  // Take the size of the left subtree, plus 1 for this node and 
+  // the rank of processing the right subtree.
+  return 1 + size(node->left) + rank(node->right, key);
+}
+
+int BinarySearchTree::rank(int key) {
+  return rank(root, key);
+}
 
 const Node * BinarySearchTree::ceil(const Node *node, int key) {
   if (node == NULL) {
