@@ -12,6 +12,7 @@ class BinarySearchTree: public SearchTree {
     const Node *floor(const Node *node, int key);
     const Node *ceil(const Node *node, int key);
     int rank(const Node *node, int key);
+    Node *deleteMin(Node*node);
 
   public:
     BinarySearchTree() : root(NULL) {
@@ -26,7 +27,24 @@ class BinarySearchTree: public SearchTree {
     int floor(int key);
     int ceil(int key);
     int rank(int key);
+    void deleteMin();
 };
+
+Node *BinarySearchTree::deleteMin(Node* node) {
+  if (node->left == NULL) {
+    // assign right to left (or null if ther is no left which is ok.
+    return node->right;
+  }
+  // this node was not the min so recurse downwards (to the left)
+  node->left = deleteMin(node->left);
+  // update the count for each node.
+  node->count = size(node->left) + size(node->right) + 1;
+  return node;
+}
+
+void BinarySearchTree::deleteMin() {
+  root = deleteMin(root);
+}
 
 /*
 *  Return the number of keys that are less than the passed-in key
@@ -112,6 +130,10 @@ char BinarySearchTree::get(int key) {
   return node->value;
 }
 
+int BinarySearchTree::size(Node *node) {
+  return node == NULL ? 0 : node->count;
+}
+
 int BinarySearchTree::size() {
   return size(root);
 }
@@ -165,8 +187,5 @@ Node * BinarySearchTree::getNode(Node *node, int key) {
   } else {
     return node;
   }
-}
-int BinarySearchTree::size(Node *node) {
-  return node == NULL ? 0 : node->count;
 }
 

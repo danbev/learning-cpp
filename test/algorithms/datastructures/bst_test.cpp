@@ -81,3 +81,17 @@ TEST(BinarySearchTree, rank) {
   EXPECT_EQ(1, bts.rank(2));
   EXPECT_EQ(0, bts.rank(1));
 }
+TEST(BinarySearchTree, deleteMin) {
+  BinarySearchTree bts;
+  bts.put(3, '3');
+  bts.put(1, '1');
+  bts.put(2, '2');
+  EXPECT_EQ('1', bts.min());
+  EXPECT_EQ(3, bts.size());
+  bts.deleteMin();
+  EXPECT_EQ('2', bts.min());
+  EXPECT_EQ(2, bts.size());
+  bts.deleteMin();
+  EXPECT_EQ('3', bts.min());
+  EXPECT_EQ(1, bts.size());
+}
