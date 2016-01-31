@@ -13,6 +13,7 @@ class BinarySearchTree: public SearchTree {
     const Node *ceil(const Node *node, int key);
     int rank(const Node *node, int key);
     Node *deleteMin(Node*node);
+    Node *deleteMax(Node*node);
 
   public:
     BinarySearchTree() : root(NULL) {
@@ -28,7 +29,21 @@ class BinarySearchTree: public SearchTree {
     int ceil(int key);
     int rank(int key);
     void deleteMin();
+    void deleteMax();
 };
+
+void BinarySearchTree::deleteMax() {
+  root = deleteMax(root);
+}
+
+Node *BinarySearchTree::deleteMax(Node *node) {
+  if (node->right == NULL) {
+    return node->left;
+  }
+  node->right = deleteMax(node->right);
+  node->count = size(node->left) + size(node->right) + 1;
+  return node;
+}
 
 Node *BinarySearchTree::deleteMin(Node* node) {
   if (node->left == NULL) {
