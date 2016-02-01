@@ -14,6 +14,7 @@ class BinarySearchTree: public SearchTree {
     int rank(const Node *node, int key);
     Node *deleteMin(Node*node);
     Node *deleteMax(Node*node);
+    Node *deleteKey(Node*node, int key);
 
   public:
     BinarySearchTree() : root(NULL) {
@@ -30,7 +31,39 @@ class BinarySearchTree: public SearchTree {
     int rank(int key);
     void deleteMin();
     void deleteMax();
+    void deleteKey(int key);
 };
+
+Node *BinarySearchTree::deleteKey(Node *node, int key) {
+  if (node == NULL) {
+    return NULL;
+  }
+  if (key < node->key) {
+    // key is to the left so we only need to process the left side
+    node->left = deleteKey(node->left, key);
+  } else if (key > node->key) {
+    // key is to the right so we only need to process the right side
+    node->right = deleteKey(node->right, key);
+  } else { // keys are equal. This is the node to be deleted.
+    // the node to deleted does not have a left node. 
+    if (node->left == NULL) {
+      return node->right;
+    }
+    if (node->right == NULL) {
+      return node->left;
+    }
+    Node *d = node;
+    node = min(node->right);
+    node->right = deleteMin(node->right);
+    node->left = d->left;
+  }
+  node->count = size(node->left) + size(node->right) + 1;
+  return node;
+}
+
+void BinarySearchTree::deleteKey(int key) {
+  root = deleteKey(root, key);
+}
 
 void BinarySearchTree::deleteMax() {
   root = deleteMax(root);

@@ -108,3 +108,17 @@ TEST(BinarySearchTree, deleteMax) {
   bts.deleteMax();
   EXPECT_EQ('1', bts.max());
 }
+
+TEST(BinarySearchTree, deleteKey) {
+  BinarySearchTree bst;
+  bst.put(3, '3');
+  bst.put(1, '1');
+  bst.put(2, '2');
+  bst.deleteKey(1);
+  try {
+    bst.get(1);
+    ASSERT_TRUE(false);
+  } catch (const char *msg) {
+    EXPECT_EQ("No such key", msg);
+  }
+}
