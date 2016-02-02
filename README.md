@@ -58,6 +58,7 @@ TEST(BinaryHeap, DISABLED_insert) {
 Show frame variables:
 
     (lldb) frame variable
+    (lldb) fr v
 
 Show current source:
 
