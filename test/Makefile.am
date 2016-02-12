@@ -149,6 +149,13 @@ bst_test_CXXFLAGS = $(GTEST_CXXFLAGS)
 bst_test_LDFLAGS = $(GTEST_LDFLAGS)
 bst_test_LDADD = $(GTEST_LIBS) -lgtest_main
 
+check_PROGRAMS += modulo_bias_test
+modulo_bias_test_SOURCES = ./algorithms/fundamentals/modulo_bias_test.cpp
+modulo_bias_test_CPPFLAGS = -I$(top_srcdir)/src/algorithms/fundamental $(GTEST_CPPFLAGS)
+modulo_bias_test_CXXFLAGS = $(GTEST_CXXFLAGS)
+modulo_bias_test_LDFLAGS = $(GTEST_LDFLAGS)
+modulo_bias_test_LDADD = $(GTEST_LIBS) -lgtest_main
+
 # Declare libraries and define tests here...
 
 # Define programs run automatically by "make check"
