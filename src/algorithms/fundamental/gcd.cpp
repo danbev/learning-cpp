@@ -5,10 +5,10 @@
  * The size of a and b is cut in least in half giving O(Log N).
  */
 int gcd(unsigned int a, unsigned int b) {
-  if (b == 0) {
-    return a;
-  }
-  return gcd(b, a % b);
+    if (b == 0) {
+        return a;
+    }
+    return gcd(b, a % b);
 }
 
 /*
