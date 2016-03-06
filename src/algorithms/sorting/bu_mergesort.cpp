@@ -24,14 +24,14 @@ void merge(int arr[], int aux[], int low, int mid, int high) {
  * The second iteration will separate them arrays of size 2 which will be merged
  */
 int * mergesort(int arr[], size_t n) {
-  int aux[n];
-  for (int i = 1; i < n; i = i + i) {
-    for (int low = 0; low < n-i; low += i + i) {
-      int mid = low + i -1;
-      int high =  fmin(low + i + i - 1, n-1);
-      merge(arr, aux, low, mid, high);
+    int aux[n];
+    for (int i = 1; i < n; i = i + i) {
+        for (int low = 0; low < n-i; low += i + i) {
+            int mid = low + i -1;
+            int high =  fmin(low + i + i - 1, n-1);
+            merge(arr, aux, low, mid, high);
+        }
     }
-  }
-  return arr;
+    return arr;
 }
 
