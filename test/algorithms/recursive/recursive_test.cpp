@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 
-#include "recursive.hpp"
+#include "recursive.cpp"
 
 TEST(triangle, one) {
   EXPECT_EQ(1, triangle(1));
