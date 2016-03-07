@@ -1,6 +1,26 @@
 #include <iostream>
 #include "bst.hpp"
 
+/*
+ * The shape of the tree is dependant on the order of insertion.
+ * The number of search/inserts is equal to 1 + depth of node.
+ * Best case: random inserted
+ * Average case: almost random
+ * Worst case: ordered insertion. Is the same as a linked list.
+ *
+ * If N distinct keys are inserted in random order the expected
+ * number of search/inserts is ~2 ln N. (1.39 lg N)
+ * Interestingly this is the same as the partitioning in quicksort.
+ * But in contrast to quickstort where we randomize the data, the
+ * insertion is done by the caller which is out of our control.
+ *
+ * So, guaranteed:
+ * Search N
+ * Insert N
+ * Average case:
+ * Search 1.39 lg N
+ * Insert 1.39 lg N
+ */
 class BinarySearchTree: public SearchTree {
     private:
         Node *root;
