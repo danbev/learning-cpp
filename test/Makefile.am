@@ -156,6 +156,13 @@ modulo_bias_test_CXXFLAGS = $(GTEST_CXXFLAGS)
 modulo_bias_test_LDFLAGS = $(GTEST_LDFLAGS)
 modulo_bias_test_LDADD = $(GTEST_LIBS) -lgtest_main
 
+check_PROGRAMS += sequential_symbol_table_test
+sequential_symbol_table_test_SOURCES = ./algorithms/datastructures/sequential_symbol_table_test.cpp
+sequential_symbol_table_test_CPPFLAGS = -I$(top_srcdir)/src/algorithms/datastructures $(GTEST_CPPFLAGS)
+sequential_symbol_table_test_CXXFLAGS = $(GTEST_CXXFLAGS)
+sequential_symbol_table_test_LDFLAGS = $(GTEST_LDFLAGS)
+sequential_symbol_table_test_LDADD = $(GTEST_LIBS) -lgtest_main
+
 # Declare libraries and define tests here...
 
 # Define programs run automatically by "make check"
