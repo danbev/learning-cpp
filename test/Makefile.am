@@ -163,6 +163,12 @@ sequential_symbol_table_test_CXXFLAGS = $(GTEST_CXXFLAGS)
 sequential_symbol_table_test_LDFLAGS = $(GTEST_LDFLAGS)
 sequential_symbol_table_test_LDADD = $(GTEST_LIBS) -lgtest_main
 
+check_PROGRAMS += binary_search_symbol_table_test
+binary_search_symbol_table_test_SOURCES = ./algorithms/datastructures/binary_search_symbol_table_test.cpp
+binary_search_symbol_table_test_CPPFLAGS = -I$(top_srcdir)/src/algorithms/datastructures $(GTEST_CPPFLAGS)
+binary_search_symbol_table_test_CXXFLAGS = $(GTEST_CXXFLAGS)
+binary_search_symbol_table_test_LDFLAGS = $(GTEST_LDFLAGS)
+binary_search_symbol_table_test_LDADD = $(GTEST_LIBS) -lgtest_main
 # Declare libraries and define tests here...
 
 # Define programs run automatically by "make check"
