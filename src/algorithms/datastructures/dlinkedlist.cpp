@@ -15,6 +15,9 @@ class IntNode {
         ~IntNode() {}
 };
 
+/*
+ * Doubly linked list implementation
+ */
 class DLinkedList {
     private: 
         IntNode *head;
