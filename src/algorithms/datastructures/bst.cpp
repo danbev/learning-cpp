@@ -2,6 +2,9 @@
 #include "bst.hpp"
 
 /*
+ * Combines the flexibility of insertion in a linked list with 
+ * the efficiency of search in an ordered array.
+ *
  * The shape of the tree is dependant on the order of insertion.
  * The number of search/inserts is equal to 1 + depth of node.
  * Best case: random inserted
@@ -14,12 +17,10 @@
  * But in contrast to quickstort where we randomize the data, the
  * insertion is done by the caller which is out of our control.
  *
- * So, guaranteed:
- * Search N
- * Insert N
- * Average case:
- * Search 1.39 lg N
- * Insert 1.39 lg N
+ * worst-case cost      average-case cost
+ * search: N            1.39 lg N
+ * insert: N            1.39 lg N
+ *
  */
 class BinarySearchTree: public SearchTree {
     private:
