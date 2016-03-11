@@ -5,7 +5,7 @@
  * larger or equal to they keys at two other specific positions.
  *
  * To move around we use the following calculations:
- * - Root not is 1
+ * - Root node is 1
  * - Parent of a node k is k/2
  * - Children of node k are 2k and 2k+1
  *
