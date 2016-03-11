@@ -1,6 +1,13 @@
 #include <stdio.h>
 #include <string.h>
 
+/*
+ * Sequential symbol table that uses a singely linked list.
+ * This is one of the basic implementations of symbol tables
+ * which are mainly to point out the weakness with them, and
+ * help understanding the more complex implementations.
+ * I've currently only implemented get/put.
+ */
 class Node {
     friend class SequentialSymbolTable;
     private: 
@@ -16,9 +23,6 @@ class Node {
         ~Node() {};
 };
 
-/*
- * Sequential symbol table that uses a linked list.
- */
 class SequentialSymbolTable {
     private:
         Node *head;
