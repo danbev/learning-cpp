@@ -7,6 +7,12 @@
  * which are mainly to point out the weakness with them, and
  * help understanding the more complex implementations.
  * I've currently only implemented get/put.
+ *
+ *
+ * worst-case cost          average-case cost
+ * search:  N               N/2
+ * insert:  N               N
+ *
  */
 class Node {
     friend class SequentialSymbolTable;
