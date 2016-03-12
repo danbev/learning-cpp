@@ -7,5 +7,5 @@ TEST(SequentialSymbolTable, put) {
     sst.put(10, 'a');
     sst.put(1, 'b');
     sst.put(2, 'x');
-    EXPECT_EQ('a', sst.get(10));
+    EXPECT_EQ('a', sst.get(10)) << "Value at index 10 should have been " << 'a';
 }
