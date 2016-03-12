@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 #include <iostream>
-#include "BinarySearchSymbolTable.cpp"
+#include "binary-search-symbol-table.cpp"
 
 TEST(BinarySearchSymbolTable, put) {
     BinarySearchSymbolTable bst = BinarySearchSymbolTable(10);

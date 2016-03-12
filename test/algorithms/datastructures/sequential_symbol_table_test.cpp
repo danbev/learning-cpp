@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 #include <iostream>
-#include "SequentialSymbolTable.cpp"
+#include "sequential-symbol-table.cpp"
 
 TEST(SequentialSymbolTable, put) {
     SequentialSymbolTable sst = SequentialSymbolTable();
