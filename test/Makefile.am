@@ -176,6 +176,13 @@ red_black_bst_test_CPPFLAGS = -I$(top_srcdir)/src/algorithms/datastructures $(GT
 red_black_bst_test_CXXFLAGS = $(GTEST_CXXFLAGS) 
 red_black_bst_test_LDFLAGS = $(GTEST_LDFLAGS)
 red_black_bst_test_LDADD = $(GTEST_LIBS) -lgtest_main
+
+check_PROGRAMS += hash_table_chaining_test
+hash_table_chaining_test_SOURCES = ./algorithms/datastructures/hash_table_chaining_test.cpp
+hash_table_chaining_test_CPPFLAGS = -I$(top_srcdir)/src/algorithms/datastructures $(GTEST_CPPFLAGS) 
+hash_table_chaining_test_CXXFLAGS = $(GTEST_CXXFLAGS) 
+hash_table_chaining_test_LDFLAGS = $(GTEST_LDFLAGS)
+hash_table_chaining_test_LDADD = $(GTEST_LIBS) -lgtest_main
 # Declare libraries and define tests here...
 
 # Define programs run automatically by "make check"
