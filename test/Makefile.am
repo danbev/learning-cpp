@@ -183,6 +183,14 @@ hash_table_chaining_test_CPPFLAGS = -I$(top_srcdir)/src/algorithms/datastructure
 hash_table_chaining_test_CXXFLAGS = $(GTEST_CXXFLAGS) 
 hash_table_chaining_test_LDFLAGS = $(GTEST_LDFLAGS)
 hash_table_chaining_test_LDADD = $(GTEST_LIBS) -lgtest_main
+
+check_PROGRAMS += binary_search_test
+binary_search_test_SOURCES = ./algorithms/searching/binary_search_test.cpp
+binary_search_test_CPPFLAGS = -I$(top_srcdir)/src/algorithms/searching $(GTEST_CPPFLAGS) 
+binary_search_test_CXXFLAGS = $(GTEST_CXXFLAGS) 
+binary_search_test_LDFLAGS = $(GTEST_LDFLAGS)
+binary_search_test_LDADD = $(GTEST_LIBS) -lgtest_main
+
 # Declare libraries and define tests here...
 
 # Define programs run automatically by "make check"
