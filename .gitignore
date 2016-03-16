@@ -60,3 +60,4 @@ test/sequential_symbol_table_test
 test/triangular_array_test
 test/binary_search_test
 test/stack_test
+test/hash_table_linear_probing_test

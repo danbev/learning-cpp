@@ -198,6 +198,13 @@ stack_test_CXXFLAGS = $(GTEST_CXXFLAGS)
 stack_test_LDFLAGS = $(GTEST_LDFLAGS)
 stack_test_LDADD = $(GTEST_LIBS) -lgtest_main
 
+check_PROGRAMS += hash_table_linear_probing_test
+hash_table_linear_probing_test_SOURCES = ./algorithms/datastructures/hash_table_linear_probing_test.cpp
+hash_table_linear_probing_test_CPPFLAGS = -I$(top_srcdir)/src/algorithms/datastructures $(GTEST_CPPFLAGS) 
+hash_table_linear_probing_test_CXXFLAGS = $(GTEST_CXXFLAGS) 
+hash_table_linear_probing_test_LDFLAGS = $(GTEST_LDFLAGS)
+hash_table_linear_probing_test_LDADD = $(GTEST_LIBS) -lgtest_main
+
 # Declare libraries and define tests here...
 
 # Define programs run automatically by "make check"
