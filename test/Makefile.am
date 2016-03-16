@@ -191,6 +191,13 @@ binary_search_test_CXXFLAGS = $(GTEST_CXXFLAGS)
 binary_search_test_LDFLAGS = $(GTEST_LDFLAGS)
 binary_search_test_LDADD = $(GTEST_LIBS) -lgtest_main
 
+check_PROGRAMS += stack_test
+stack_test_SOURCES = ./algorithms/datastructures/stack_test.cpp
+stack_test_CPPFLAGS = -I$(top_srcdir)/src/algorithms/datastructures $(GTEST_CPPFLAGS) 
+stack_test_CXXFLAGS = $(GTEST_CXXFLAGS) 
+stack_test_LDFLAGS = $(GTEST_LDFLAGS)
+stack_test_LDADD = $(GTEST_LIBS) -lgtest_main
+
 # Declare libraries and define tests here...
 
 # Define programs run automatically by "make check"
