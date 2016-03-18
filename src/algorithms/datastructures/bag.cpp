@@ -6,6 +6,7 @@ class Bag {
         int n;
         int count;
     public:
+        Bag() : Bag(10) {};
         Bag(int size) {
             this->n = size;
             this->items = new int[size] {0};
