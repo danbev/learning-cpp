@@ -205,6 +205,13 @@ hash_table_linear_probing_test_CXXFLAGS = $(GTEST_CXXFLAGS)
 hash_table_linear_probing_test_LDFLAGS = $(GTEST_LDFLAGS)
 hash_table_linear_probing_test_LDADD = $(GTEST_LIBS) -lgtest_main
 
+check_PROGRAMS += bag_test
+bag_test_SOURCES = ./algorithms/datastructures/bag_test.cpp
+bag_test_CPPFLAGS = -I$(top_srcdir)/src/algorithms/datastructures $(GTEST_CPPFLAGS) 
+bag_test_CXXFLAGS = $(GTEST_CXXFLAGS) 
+bag_test_LDFLAGS = $(GTEST_LDFLAGS)
+bag_test_LDADD = $(GTEST_LIBS) -lgtest_main
+
 # Declare libraries and define tests here...
 
 # Define programs run automatically by "make check"
