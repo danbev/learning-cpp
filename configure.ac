@@ -20,6 +20,7 @@ AC_CONFIG_FILES([Makefile
                  src/algorithms/sorting/Makefile 
                  src/algorithms/datastructures/Makefile 
                  src/algorithms/recursive/Makefile 
+                 src/algorithms/graphs/Makefile
                  src/Makefile 
                  test/classes/Makefile 
                  test/Makefile])

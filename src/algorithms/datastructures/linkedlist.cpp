@@ -87,6 +87,18 @@ class LinkedList {
         }
         return *this;
     }
+
+    template<class Func>
+    void foreach(Func &f) {
+        if (empty()) {
+            return;
+        }
+        IntNode * node = head;
+        while(node->next) {
+            node = node->next;
+            f(node->value);
+        }
+    }
 };
 
 /*

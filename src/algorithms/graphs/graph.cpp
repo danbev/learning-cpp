@@ -70,6 +70,5 @@ class Graph {
     public:
         virtual int vertices() = 0;
         virtual int edges() = 0;
-        static void doit() {
-        }
+        virtual void addEdge(int v, int w) = 0;
 };

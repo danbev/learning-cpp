@@ -205,6 +205,13 @@ hash_table_linear_probing_test_CXXFLAGS = $(GTEST_CXXFLAGS)
 hash_table_linear_probing_test_LDFLAGS = $(GTEST_LDFLAGS)
 hash_table_linear_probing_test_LDADD = $(GTEST_LIBS) -lgtest_main
 
+check_PROGRAMS += undirected_graph_test
+undirected_graph_test_SOURCES = ./algorithms/graphs/undirected_graph_test.cpp
+undirected_graph_test_CPPFLAGS = -I$(top_srcdir)/src/algorithms/graphs $(GTEST_CPPFLAGS) 
+undirected_graph_test_CXXFLAGS = $(GTEST_CXXFLAGS) 
+undirected_graph_test_LDFLAGS = $(GTEST_LDFLAGS)
+undirected_graph_test_LDADD = $(GTEST_LIBS) -lgtest_main
+
 check_PROGRAMS += bag_test
 bag_test_SOURCES = ./algorithms/datastructures/bag_test.cpp
 bag_test_CPPFLAGS = -I$(top_srcdir)/src/algorithms/datastructures $(GTEST_CPPFLAGS) 

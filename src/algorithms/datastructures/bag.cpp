@@ -1,40 +1,28 @@
 #include <stdio.h>
+#include "linkedlist.cpp"
 
+/*
+ * A datastructure that can only be added into.
+ */
 class Bag {
     private:
-        int * items;
-        int n;
-        int count;
+        LinkedList* list;
     public:
-        Bag() : Bag(10) {};
-        Bag(int size) {
-            this->n = size;
-            this->items = new int[size] {0};
-            this->count = 0;
+        Bag() {
+            this->list = new LinkedList();
         }
         ~Bag() {
-            delete [] items;
-        }
-        int capacity() {
-            return n;
+            delete list;
         }
         int size() {
-            return count;
+            return list->size();
         }
-        Bag* add(int value) {
-            if (count == n) {
-                throw "Bag is full";
-            }
-            items[count++] = value;
-            return this;
+        Bag& add(int value) {
+            list->addFront(value);
+            return *this;
         }
         template<class Func>
         void foreach(Func &f) {
-            if (count == 0) {
-                return;
-            }
-            for (int i = 0; i < count; i++) {
-                f(items[i]);
-            }
+            list->foreach(f);
         }
 };
