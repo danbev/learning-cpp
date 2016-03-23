@@ -5,15 +5,15 @@
 #include <iostream>
 
 class Person {
-  std::string _name;
+    std::string _name;
 public: 
-  Person();
-  Person(const std::string name);
-  ~Person();
-  std::string name() const;
-  friend std::ostream & operator<<(std::ostream &os, const Person &p);
-  friend Person & operator+(const Person &p);
-  Person operator=(const std::string &s);
+    Person();
+    Person(const std::string name);
+    ~Person();
+    std::string name() const;
+    friend std::ostream & operator<<(std::ostream &os, const Person &p);
+    friend Person & operator+(const Person &p);
+    Person operator=(const std::string &s);
 };
 
 #endif
