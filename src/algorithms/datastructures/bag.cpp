@@ -25,4 +25,7 @@ class Bag {
         void foreach(Func &f) {
             list->foreach(f);
         }
+        IntIterator iterator() {
+            return list->iterator();
+        }
 };
