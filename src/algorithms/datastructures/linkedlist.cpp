@@ -1,7 +1,10 @@
 #include <iostream>
+#include "iterator.cpp"
+class IntIterator;
 
 class IntNode {
     friend class LinkedList;
+    friend class IntIterator;
     private:
         int value;
         IntNode *next;
@@ -14,6 +17,7 @@ class IntNode {
 };
 
 class LinkedList {
+    friend class IntIterator;
     private: 
         IntNode * head;
         int length;
@@ -99,10 +103,35 @@ class LinkedList {
             f(node->value);
         }
     }
+
+    IntIterator iterator();
+
 };
 
+class IntIterator : public Iterator<int> {
+    private:
+        LinkedList * list;
+    public: 
+        IntIterator(LinkedList *list) {
+            this->list = list;
+        }
+        int next() {
+            int value = list->head->value;
+            list->head = list->head->next;
+            return value;
+        }
+        bool hasNext() {
+            return list->head != NULL;
+        }
+};
+
+
+IntIterator LinkedList::iterator() {
+    return IntIterator(this);
+}
+
 /*
- * Reverses the passed in array using the LinkedIntList
+ * Reverses the passed in array using the LinkedList
  */ 
 void reverseArray(int arr[], int size) {
     LinkedList list;

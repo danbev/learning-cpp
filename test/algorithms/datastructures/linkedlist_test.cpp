@@ -79,3 +79,16 @@ TEST(linkedlist, tower) {
   EXPECT_EQ(2, peg2.removeFront());
   EXPECT_EQ(3, peg2.removeFront());
 }
+
+TEST(linkedlist, iterator) {
+    LinkedList list;
+    list.addFront(1);
+    list.addFront(2);
+    list.addFront(3);
+    EXPECT_EQ(3, list.size());
+    IntIterator it = list.iterator();
+    while (it.hasNext()) {
+        int i = it.next();
+        std::cout << "next = " << i << std::endl;
+    }
+}
