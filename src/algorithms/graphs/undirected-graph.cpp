@@ -34,4 +34,7 @@ class UndirectedGraph : public Graph {
             bags[w]->add(v);
             e++;
         }
+        Iterator<int> adjacent(int v) {
+            return bags[v]->iterator();
+        }
 };

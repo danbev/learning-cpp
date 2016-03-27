@@ -1,6 +1,7 @@
 #include <iostream>
 #include <gtest/gtest.h>
 #include "undirected-graph.cpp"
+#include "iterator.cpp"
 
 TEST(Graph, size) {
   UndirectedGraph graph {20};
@@ -11,5 +12,14 @@ TEST(Graph, add) {
   UndirectedGraph graph {20};
   graph.addEdge(0, 1);
   EXPECT_EQ(1, graph.edges());
+}
+
+TEST(Graph, adjaent) {
+  UndirectedGraph graph {20};
+  graph.addEdge(0, 1);
+  graph.addEdge(0, 2);
+  graph.addEdge(0, 5);
+  Iterator<int> iter = graph.adjacent(0);
+  //EXPECT_EQ(1, iter.next());
 }
 
