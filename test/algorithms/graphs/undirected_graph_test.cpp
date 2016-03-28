@@ -1,7 +1,6 @@
 #include <iostream>
 #include <gtest/gtest.h>
 #include "undirected-graph.cpp"
-#include "iterator.cpp"
 
 TEST(Graph, size) {
   UndirectedGraph graph {20};
