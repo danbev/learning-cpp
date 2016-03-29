@@ -10,7 +10,7 @@ class Node {
         char value;
         int count;
     public:
-        Node(int key, char value) : Node(key, value, NULL, NULL, 1) {} ;
+        Node(int key, char value) : Node(key, value, nullptr, nullptr, 1) {} ;
         Node(int key, char value, Node *left, Node *right, int count) {
             this->key = key;
             this->value = value;

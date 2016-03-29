@@ -22,15 +22,15 @@ class LinkedList {
         IntNode * head;
         int length;
     public:
-        LinkedList() : head(NULL), length(0) {}
+        LinkedList() : head(nullptr), length(0) {}
 
     bool empty() const {
-        return head == NULL;
+        return head == nullptr;
     }
 
     LinkedList &addFront(int value) {
-        IntNode *newNode = new IntNode(value, NULL);
-        if (head == NULL) {
+        IntNode *newNode = new IntNode(value, nullptr);
+        if (head == nullptr) {
             head = newNode;
         } else {
             IntNode *current = head;
@@ -42,7 +42,7 @@ class LinkedList {
     }
 
     int removeFront() {
-        if (head == NULL) {
+        if (head == nullptr) {
             return -1;
         }
         IntNode *old = head;
@@ -54,7 +54,7 @@ class LinkedList {
     }
 
     int front() const {
-        if (head == NULL) {
+        if (head == nullptr) {
             return -1;
         }
         return head->next->value;
@@ -65,7 +65,7 @@ class LinkedList {
     }
 
     bool contains(int nr) const {
-        if (head == NULL) {
+        if (head == nullptr) {
             return false;
         }
         IntNode *p = head;
@@ -73,12 +73,12 @@ class LinkedList {
             if (p->value == nr) {
                 return true;
             }
-        } while (p->next != NULL);
+        } while (p->next != nullptr);
         return false;
     }
 
     const LinkedList &print() const {
-        if (head == NULL) {
+        if (head == nullptr) {
             std::cout << "[empty]" << std::endl;
         } else {
             IntNode * node = head;
@@ -121,7 +121,7 @@ class IntIterator : public Iterator<int> {
             return value;
         }
         bool hasNext() {
-            return list->head != NULL;
+            return list->head != nullptr;
         }
 };
 

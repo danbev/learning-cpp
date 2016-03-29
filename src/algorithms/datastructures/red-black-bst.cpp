@@ -90,8 +90,8 @@ class Node {
     bool red;
     int count;
     public: 
-        Node(int key, int value) : Node(key, value, NULL, NULL, false, 0) {};
-        Node(int key, int value, bool red, int count) : Node(key, value, NULL, NULL, red, count) {};
+        Node(int key, int value) : Node(key, value, nullptr, nullptr, false, 0) {};
+        Node(int key, int value, bool red, int count) : Node(key, value, nullptr, nullptr, red, count) {};
         Node(int key, char value, Node *left, Node *right, bool red = false, int count = 0) {
             this->key = key;
             this->value = value;
@@ -117,7 +117,7 @@ class RedBlackBST {
         Node* rotateRight(Node* node);
         void flipColors(Node* node);
     public:
-        RedBlackBST() : root(NULL) {}
+        RedBlackBST() : root(nullptr) {}
         ~RedBlackBST() {}
         void put(int key, char value);
         char get(int key);
@@ -132,7 +132,7 @@ void RedBlackBST::put(int key, char value) {
 }
 
 Node * RedBlackBST::putNode(Node *node, int key, char value) {
-    if (node == NULL) {
+    if (node == nullptr) {
         return new Node(key, value, true, 1);
     }
     if (key < node->key) {
@@ -157,14 +157,14 @@ Node * RedBlackBST::putNode(Node *node, int key, char value) {
 }
 
 bool RedBlackBST::isRed(Node* node) {
-    return node == NULL ? false :node->red;
+    return node == nullptr ? false :node->red;
 }
 
 bool RedBlackBST::hasTwoRedLeftLinks(Node* node) {
-    if (node->left == NULL) {
+    if (node->left == nullptr) {
         return false;
     }
-    if (node->left->left == NULL) {
+    if (node->left->left == nullptr) {
         return false;
     }
     return isRed(node->left) && isRed(node->left->left);
@@ -232,7 +232,7 @@ Node * RedBlackBST::rotateRight(Node *parent) {
 *  Return the number of keys that are less than the passed-in key
 */
 int RedBlackBST::rank(const Node *node, int key) {
-    if (node == NULL) {
+    if (node == nullptr) {
         return 0;
     }
     if (key == node->key) {
@@ -256,14 +256,14 @@ int RedBlackBST::rank(int key) {
 
 char RedBlackBST::get(int key) {
     Node *node = getNode(root, key);
-    if (node == NULL) {
+    if (node == nullptr) {
         throw "No such key";
     }
     return node->value;
 }
 
 int RedBlackBST::size(Node *node) {
-    return node == NULL ? 0 : node->count;
+    return node == nullptr ? 0 : node->count;
 }
 
 int RedBlackBST::size() {
@@ -271,8 +271,8 @@ int RedBlackBST::size() {
 }
 
 Node * RedBlackBST::getNode(Node *node, int key) {
-    if (node == NULL) {
-        return NULL;
+    if (node == nullptr) {
+        return nullptr;
     }
     if (key < node->key) {
         return getNode(node->left, key);
@@ -284,14 +284,14 @@ Node * RedBlackBST::getNode(Node *node, int key) {
 }
 
 Node * RedBlackBST::min(Node *node) {
-    if (node->left == NULL) {
+    if (node->left == nullptr) {
         return node;
     }
     return min(node->left);
 }
 
 Node * RedBlackBST::max(Node *node) {
-    if (node->right == NULL) {
+    if (node->right == nullptr) {
         return node;
     }
     return max(node->right);

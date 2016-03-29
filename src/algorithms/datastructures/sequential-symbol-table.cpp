@@ -21,7 +21,7 @@ class Node {
         char value;
         Node *next;
     public:
-        Node(int key, int value, Node *next = NULL) {
+        Node(int key, int value, Node *next = nullptr) {
             this->key = key;
             this->value = value;
             this->next = next;
@@ -36,9 +36,9 @@ class SequentialSymbolTable {
             throw "No such key: " + std::to_string(key);
         }
     public:
-        SequentialSymbolTable() :head(NULL) {};
+        SequentialSymbolTable() :head(nullptr) {};
         void put(int key, char value) {
-            for (Node *n = head; n != NULL; n = n->next) {
+            for (Node *n = head; n != nullptr; n = n->next) {
                 if (n->key == key) {
                     n->value = value;
                     return;
@@ -47,7 +47,7 @@ class SequentialSymbolTable {
             head = new Node(key, value, head);
         }
         char get(int key) {
-            for (Node *n = head; n != NULL; n = n->next) {
+            for (Node *n = head; n != nullptr; n = n->next) {
                 if (n->key == key) {
                     return n->value;
                 }

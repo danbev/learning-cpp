@@ -18,10 +18,10 @@ class LinkedIntList {
         IntNode * head;
         int length;
     public:
-        LinkedIntList() : head(NULL), length(0) {}
+        LinkedIntList() : head(nullptr), length(0) {}
         LinkedIntList &push(int value) {
-            IntNode *newNode = new IntNode(value, NULL);
-            if (head == NULL) {
+            IntNode *newNode = new IntNode(value, nullptr);
+            if (head == nullptr) {
                 head = newNode;
             } else {
                 IntNode *current = head;
@@ -32,7 +32,7 @@ class LinkedIntList {
             return *this;
         }
         int pop() {
-            if (head == NULL) {
+            if (head == nullptr) {
                 return 0;
             }
             IntNode *old = head;
@@ -46,7 +46,7 @@ class LinkedIntList {
             return length;
         }
         LinkedIntList &print() {
-            if (head == NULL) {
+            if (head == nullptr) {
                 std::cout << "[empty]" << std::endl;
             } else {
                 IntNode * node = head;

@@ -38,7 +38,7 @@ class BinarySearchTree: public SearchTree {
         Node *deleteKey(Node*node, int key);
 
     public:
-        BinarySearchTree() : root(NULL) {
+        BinarySearchTree() : root(nullptr) {
         }
         ~BinarySearchTree() {
         }
@@ -56,8 +56,8 @@ class BinarySearchTree: public SearchTree {
 };
 
 Node *BinarySearchTree::deleteKey(Node *node, int key) {
-    if (node == NULL) {
-        return NULL;
+    if (node == nullptr) {
+        return nullptr;
     }
     if (key < node->key) {
         // key is to the left so we only need to process the left side
@@ -67,10 +67,10 @@ Node *BinarySearchTree::deleteKey(Node *node, int key) {
         node->right = deleteKey(node->right, key);
     } else { // keys are equal. This is the node to be deleted.
         // the node to deleted does not have a left node. 
-        if (node->left == NULL) {
+        if (node->left == nullptr) {
             return node->right;
         }
-        if (node->right == NULL) {
+        if (node->right == nullptr) {
             return node->left;
         }
         Node *d = node;
@@ -91,7 +91,7 @@ void BinarySearchTree::deleteMax() {
 }
 
 Node *BinarySearchTree::deleteMax(Node *node) {
-    if (node->right == NULL) {
+    if (node->right == nullptr) {
         return node->left;
     }
     node->right = deleteMax(node->right);
@@ -100,7 +100,7 @@ Node *BinarySearchTree::deleteMax(Node *node) {
 }
 
 Node *BinarySearchTree::deleteMin(Node* node) {
-    if (node->left == NULL) {
+    if (node->left == nullptr) {
         // assign right to left (or null if ther is no left which is ok.
         return node->right;
     }
@@ -119,7 +119,7 @@ void BinarySearchTree::deleteMin() {
 *  Return the number of keys that are less than the passed-in key
 */
 int BinarySearchTree::rank(const Node *node, int key) {
-    if (node == NULL) {
+    if (node == nullptr) {
         return 0;
     }
     if (key == node->key) {
@@ -142,8 +142,8 @@ int BinarySearchTree::rank(int key) {
 }
 
 const Node * BinarySearchTree::ceil(const Node *node, int key) {
-    if (node == NULL) {
-        return NULL;
+    if (node == nullptr) {
+        return nullptr;
     }
 
     if (key == node->key) {
@@ -154,7 +154,7 @@ const Node * BinarySearchTree::ceil(const Node *node, int key) {
         return ceil(node->right, key);
     }
     const Node *left = ceil(node->left, key);
-    return left == NULL ? node : left;
+    return left == nullptr ? node : left;
 }
 
 int BinarySearchTree::ceil(int key) {
@@ -166,8 +166,8 @@ int BinarySearchTree::ceil(int key) {
  *
  */
 const Node * BinarySearchTree::floor(const Node *node, int key) {
-    if (node == NULL) {
-        return NULL;
+    if (node == nullptr) {
+        return nullptr;
     }
     if (key == node->key) {
         return node;
@@ -180,7 +180,7 @@ const Node * BinarySearchTree::floor(const Node *node, int key) {
     // but the key might not exist at all, in which case we want to return
     // the largest key less than key. This would be the current node.
     const Node * right = floor(node->right, key);
-    return right == NULL ? node : right;
+    return right == nullptr ? node : right;
 }
 
 int BinarySearchTree::floor(int key) {
@@ -193,14 +193,14 @@ void BinarySearchTree::put(int key, char value) {
 
 char BinarySearchTree::get(int key) {
     Node *node = getNode(root, key);
-    if (node == NULL) {
+    if (node == nullptr) {
         throw "No such key";
     }
     return node->value;
 }
 
 int BinarySearchTree::size(Node *node) {
-    return node == NULL ? 0 : node->count;
+    return node == nullptr ? 0 : node->count;
 }
 
 int BinarySearchTree::size() {
@@ -208,14 +208,14 @@ int BinarySearchTree::size() {
 }
 
 Node * BinarySearchTree::min(Node *node) {
-    if (node->left == NULL) {
+    if (node->left == nullptr) {
         return node;
     }
     return min(node->left);
 }
 
 Node * BinarySearchTree::max(Node *node) {
-    if (node->right == NULL) {
+    if (node->right == nullptr) {
         return node;
     }
     return max(node->right);
@@ -230,7 +230,7 @@ char BinarySearchTree::max() {
 }
 
 Node * BinarySearchTree::putNode(Node *node, int key, char value) {
-    if (node == NULL) {
+    if (node == nullptr) {
         return new Node(key, value);
     }
     if (key < node->key) {
@@ -246,8 +246,8 @@ Node * BinarySearchTree::putNode(Node *node, int key, char value) {
 }
 
 Node * BinarySearchTree::getNode(Node *node, int key) {
-    if (node == NULL) {
-        return NULL;
+    if (node == nullptr) {
+        return nullptr;
     }
     if (key < node->key) {
         return getNode(node->left, key);

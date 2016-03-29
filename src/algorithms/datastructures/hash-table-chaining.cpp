@@ -41,7 +41,7 @@ class HashTable {
         };
         ~HashTable() {
             for (int i = 0; i < size; i++) {
-                if (table[i] != NULL) {
+                if (table[i] != nullptr) {
                     delete table[i];
                 }
             }
@@ -65,7 +65,7 @@ void HashTable::put(int key, char value) {
 char HashTable::get(int key) {
     int h = hash(key);
     SequentialSymbolTable* list = table[h];
-    if (list == NULL) {
+    if (list == nullptr) {
         throw "Key iiinot found : " + std::to_string(key);
     }
 

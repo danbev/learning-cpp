@@ -7,7 +7,7 @@ class IntNode {
         IntNode *next;
         IntNode *previous;
     public:
-        IntNode(int value, IntNode *next, IntNode *previous = NULL) {
+        IntNode(int value, IntNode *next, IntNode *previous = nullptr) {
             this->value = value;
             this->next = next;
             this->previous = previous;
@@ -24,14 +24,14 @@ class DLinkedList {
         IntNode *tail;
         int length;
     public:
-        DLinkedList() : head(NULL), tail(NULL), length(0) {}
+        DLinkedList() : head(nullptr), tail(nullptr), length(0) {}
 
         bool empty() const {
-            return head == NULL;
+            return head == nullptr;
         }
 
         DLinkedList &addFront(int value) {
-            IntNode *newNode = new IntNode(value, NULL, NULL);
+            IntNode *newNode = new IntNode(value, nullptr, nullptr);
             if (empty()) {
                 head = newNode;
             } else {
@@ -45,7 +45,7 @@ class DLinkedList {
         }
 
         int removeFront() {
-            if (head == NULL) {
+            if (head == nullptr) {
                 return -1;
             }
             IntNode *old = head;
@@ -67,15 +67,15 @@ class DLinkedList {
             if (empty()) {
                 return -1;
             }
-            return (tail == NULL) ? head->value : tail->value;
+            return (tail == nullptr) ? head->value : tail->value;
         }
 
         DLinkedList &addEnd(int value) {
-            IntNode *newNode = new IntNode(value, NULL, NULL);
+            IntNode *newNode = new IntNode(value, nullptr, nullptr);
             if (empty()) {
                 return addFront(value);
             } 
-            IntNode *current = tail == NULL ? head:tail;
+            IntNode *current = tail == nullptr ? head:tail;
             current->next = newNode;
             newNode->previous = current;
             tail = newNode;
@@ -87,12 +87,12 @@ class DLinkedList {
             if (empty()) {
                 return -1;
             }
-            if (tail == NULL) {
+            if (tail == nullptr) {
                 return removeFront();
             }
             IntNode *old = tail;
             int value = old->value;
-            old->previous = NULL;
+            old->previous = nullptr;
             delete old;
             length--;
             return value;
@@ -106,29 +106,29 @@ class DLinkedList {
             if (empty()) {
                 return false;
             }
-            IntNode *p = tail == NULL ? head:tail;
+            IntNode *p = tail == nullptr ? head:tail;
             do {
                 if (p->value == nr) {
                     return true;
                 }
-            } while (p->previous != NULL);
+            } while (p->previous != nullptr);
             return false;
         }
 
         template<class Func>
         void forEach(Func &f) {
-            if (head == NULL) {
+            if (head == nullptr) {
                 return;
             }
             IntNode *p = head;
             do {
                 f(p->value);
                 p = p->next;
-            } while (p != NULL);
+            } while (p != nullptr);
         }
 
         const DLinkedList &print() const {
-            if (head == NULL) {
+            if (head == nullptr) {
                 std::cout << "[empty]" << std::endl;
             } else {
                 IntNode * node = head;
