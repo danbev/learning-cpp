@@ -1,4 +1,4 @@
-#include "../datastructures/iterator.cpp"
+#include "../datastructures/int-iterator.h"
 /*
  * Terminology:
  * Vertex: a point where two or more curves, lines, or edges meet. Like nodes in trees
@@ -72,5 +72,5 @@ class Graph {
         virtual int vertices() = 0;
         virtual int edges() = 0;
         virtual void addEdge(int v, int w) = 0;
-        virtual Iterator<int> adjacent(int v) = 0;
+        virtual IntIterator* adjacent(int v) = 0;
 };

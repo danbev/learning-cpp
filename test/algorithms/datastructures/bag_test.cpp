@@ -23,9 +23,9 @@ TEST(Bag, iterator) {
   Bag bag {};
   bag.add(1).add(2).add(10);
   EXPECT_EQ(3, bag.size());
-  IntIterator it = bag.iterator();
-  while (it.hasNext()) {
-      std::cout << it.next() << std::endl;
+  IntIterator* it = bag.iterator();
+  while (it->hasNext()) {
+      std::cout << it->next() << std::endl;
   }
 }
 

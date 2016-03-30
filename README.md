@@ -132,7 +132,26 @@ You should be able to simply update the test/Makefile.am with the new test.
 __Note__ that .cpp files under test with a main function do not seem to be testable. Removing the main
 and just using the functions/classes of the .cpp files worked for me.
 
-
-
-
-
+## Troubleshooting
+Unresolved symbol:
+```shell
+Undefined symbols for architecture x86_64:
+  "IntIterator::next()", referenced from:
+      Linkedlist_iterator_Test::TestBody() in linkedlist_test-linkedlist_test.o
+  "IntIterator::hasNext()", referenced from:
+      Linkedlist_iterator_Test::TestBody() in linkedlist_test-linkedlist_test.o
+ld: symbol(s) not found for architecture x86_64
+clang: error: linker command failed with exit code 1 (use -v to see invocation)
+```
+This was happening because int-iterator.h does not have any definitions of the methods
+that it defines.
+You can verify this by inspecting the unresolved symbols using `nm`:
+```shell
+$ nm -u test/algorithms/datastructures/linkedlist_test-linkedlist_test.o
+__Unwind_Resume
+__ZN11IntIterator4nextEv
+__ZN11IntIterator7hasNextEv
+...
+```
+Lets just try adding an inline definition to see if that make it resolved. Yep that worked but this is not what I want. I want the implementation to be different depending on the underlying data structure used for the iterator.
+It turns out that I was trying to return an abstract class from my iterator() methods. This is not possible but I should have been returning a pointer or a reference. Thinking about this a little more it makes sense, to return a non-reference requires instantiating a ny instance but that won't work as the class is abstract.

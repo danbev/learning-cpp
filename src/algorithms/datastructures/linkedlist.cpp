@@ -1,10 +1,10 @@
 #include <iostream>
-#include "iterator.cpp"
-class IntIterator;
+#include "int-iterator.h"
+class LinkedListIntIterator;
 
 class IntNode {
     friend class LinkedList;
-    friend class IntIterator;
+    friend class LinkedListIntIterator;
     private:
         int value;
         IntNode *next;
@@ -17,7 +17,7 @@ class IntNode {
 };
 
 class LinkedList {
-    friend class IntIterator;
+    friend class LinkedListIntIterator;
     private: 
         IntNode * head;
         int length;
@@ -104,30 +104,36 @@ class LinkedList {
         }
     }
 
-    IntIterator iterator();
+    IntIterator* iterator();
 
 };
 
-class IntIterator : public Iterator<int> {
+class LinkedListIntIterator : public IntIterator {
     private:
         LinkedList * list;
     public: 
-        IntIterator(LinkedList *list) {
-            this->list = list;
-        }
-        int next() {
-            int value = list->head->value;
-            list->head = list->head->next;
-            return value;
-        }
-        bool hasNext() {
-            return list->head != nullptr;
-        }
+        LinkedListIntIterator(LinkedList *list);
+        int next();
+        bool hasNext();
 };
 
+LinkedListIntIterator::LinkedListIntIterator(LinkedList *list) {
+    this->list = list;
+}
 
-IntIterator LinkedList::iterator() {
-    return IntIterator(this);
+int LinkedListIntIterator::next() {
+    int value = list->head->value;
+    list->head = list->head->next;
+    return value;
+}
+
+
+bool LinkedListIntIterator::hasNext() {
+    return list->head != nullptr;
+}
+
+IntIterator * LinkedList::iterator() {
+    return new LinkedListIntIterator(this);
 }
 
 /*
