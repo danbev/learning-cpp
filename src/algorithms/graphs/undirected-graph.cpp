@@ -23,10 +23,10 @@ class UndirectedGraph : public Graph {
         ~UndirectedGraph() {
             delete [] bags;
         }
-        int vertices() {
+        int vertices() const {
             return v;
         }
-        int edges() {
+        int edges() const {
             return e;
         }
         void addEdge(int v, int w) {
@@ -34,7 +34,7 @@ class UndirectedGraph : public Graph {
             bags[w]->add(v);
             e++;
         }
-        IntIterator* adjacent(int v) {
+        IntIterator* adjacent(int v) const {
             return bags[v]->iterator();
         }
 };

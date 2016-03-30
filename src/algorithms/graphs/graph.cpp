@@ -69,8 +69,8 @@
  */
 class Graph {
     public:
-        virtual int vertices() = 0;
-        virtual int edges() = 0;
+        virtual int vertices() const = 0;
+        virtual int edges() const = 0;
         virtual void addEdge(int v, int w) = 0;
-        virtual IntIterator* adjacent(int v) = 0;
+        virtual IntIterator* adjacent(int v) const = 0;
 };
