@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "graph.cpp"
+#include "graph.h"
 #include "../datastructures/bag.cpp"
 
 /*
