@@ -219,6 +219,13 @@ bag_test_CXXFLAGS = $(GTEST_CXXFLAGS)
 bag_test_LDFLAGS = $(GTEST_LDFLAGS)
 bag_test_LDADD = $(GTEST_LIBS) -lgtest_main
 
+check_PROGRAMS += search_test
+search_test_SOURCES = ./algorithms/graphs/search_test.cpp
+search_test_CPPFLAGS = -I$(top_srcdir)/src/algorithms/graphs $(GTEST_CPPFLAGS) 
+search_test_CXXFLAGS = $(GTEST_CXXFLAGS) 
+search_test_LDFLAGS = $(GTEST_LDFLAGS)
+search_test_LDADD = $(GTEST_LIBS) -lgtest_main
+
 # Declare libraries and define tests here...
 
 # Define programs run automatically by "make check"

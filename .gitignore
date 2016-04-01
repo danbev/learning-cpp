@@ -63,3 +63,4 @@ test/stack_test
 test/hash_table_linear_probing_test
 test/undirected_graph_test
 test/bag_test
+test/search_test
