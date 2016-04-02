@@ -40,6 +40,7 @@ void DepthFirstSearch::dfs(const Graph *g, int v) {
 }
 
 auto DepthFirstSearch::isConnectedToSource(int v) const -> bool {
+    std::cout << __func__ << ": is " << v << " connected to " << s << std::endl;
     return visited[v];
 }
 
