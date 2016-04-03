@@ -25,7 +25,7 @@ class Bag {
         void foreach(Func &f) {
             list->foreach(f);
         }
-        IntIterator* iterator() {
+        const IntIterator* iterator() {
             return list->iterator();
         }
 };

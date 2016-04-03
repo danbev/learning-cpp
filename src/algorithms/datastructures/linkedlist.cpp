@@ -104,7 +104,7 @@ class LinkedList {
         }
     }
 
-    IntIterator* iterator();
+    const IntIterator* iterator();
 
 };
 
@@ -113,26 +113,26 @@ class LinkedListIntIterator : public IntIterator {
         LinkedList * list;
     public: 
         LinkedListIntIterator(LinkedList *list);
-        int next();
-        bool hasNext();
+        int next() const;
+        bool hasNext() const;
 };
 
 LinkedListIntIterator::LinkedListIntIterator(LinkedList *list) {
     this->list = list;
 }
 
-int LinkedListIntIterator::next() {
+int LinkedListIntIterator::next() const {
     int value = list->head->value;
     list->head = list->head->next;
     return value;
 }
 
 
-bool LinkedListIntIterator::hasNext() {
+bool LinkedListIntIterator::hasNext() const {
     return list->head != nullptr;
 }
 
-IntIterator * LinkedList::iterator() {
+const IntIterator * LinkedList::iterator() {
     return new LinkedListIntIterator(this);
 }
 

@@ -34,7 +34,7 @@ class UndirectedGraph : public Graph {
             bags[w]->add(v);
             e++;
         }
-        IntIterator* adjacent(int v) const {
+        const IntIterator* adjacent(int v) const {
             return bags[v]->iterator();
         }
 };

@@ -86,7 +86,7 @@ TEST(Linkedlist, iterator) {
     list.addFront(2);
     list.addFront(3);
     EXPECT_EQ(3, list.size());
-    IntIterator* it = list.iterator();
+    const IntIterator* it = list.iterator();
     while (it->hasNext()) {
         int i = it->next();
         std::cout << "next = " << i << std::endl;

@@ -30,7 +30,7 @@ DepthFirstSearch::DepthFirstSearch(const Graph *graph, int s) {
  */
 void DepthFirstSearch::dfs(const Graph *g, int v) {
     visited[v] = true; // first step is to mark the vertex as visited
-    IntIterator *it = g->adjacent(v);
+    const IntIterator *it = g->adjacent(v);
     while(it->hasNext()) {
         int w = it->next();
         if (!visited[w]) {
