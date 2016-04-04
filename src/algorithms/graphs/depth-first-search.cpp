@@ -6,18 +6,18 @@ class DepthFirstSearch {
         const Graph* graph;
         int s;
         bool* visited;
+        int count;
         void dfs(const Graph* g, int v);
     public:
         DepthFirstSearch(const Graph * graph, int s);
-        // is v connected to s
         bool isConnectedToSource(int v) const;
-        // how many vertices are connected to s
-        int connectedVertices() const;
+        int visitedVertices() const;
 };
 
 DepthFirstSearch::DepthFirstSearch(const Graph *graph, int s) {
     this->graph = graph;
     this->s = s;
+    this->count = 1;
     visited = new bool[this->graph->vertices()] {false};
     dfs(this->graph, s);
 }
@@ -30,6 +30,7 @@ DepthFirstSearch::DepthFirstSearch(const Graph *graph, int s) {
  */
 void DepthFirstSearch::dfs(const Graph *g, int v) {
     visited[v] = true; // first step is to mark the vertex as visited
+    count++;
     const IntIterator *it = g->adjacent(v);
     while(it->hasNext()) {
         int w = it->next();
@@ -44,6 +45,6 @@ auto DepthFirstSearch::isConnectedToSource(int v) const -> bool {
     return visited[v];
 }
 
-auto DepthFirstSearch::connectedVertices() const -> int {
-    return sizeof(visited) / sizeof(bool);
+auto DepthFirstSearch::visitedVertices() const -> int {
+    return count;
 }
