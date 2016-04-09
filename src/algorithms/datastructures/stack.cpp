@@ -1,76 +1,50 @@
 #include <iostream>
+#include "linkedlist.cpp"
+#include "int-iterator.h"
 
-class IntNode {
-    friend class LinkedIntList;
+class Stack {
     private:
-        int value;
-        IntNode *next;
+        LinkedList * list;
     public:
-        IntNode(int value, IntNode * next) {
-            this->value = value;
-            this->next = next;
-        }
-        ~IntNode() {}
+        Stack();
+        Stack &push(int value);
+        int pop();
+        int size() const;
+        const IntIterator* iterator() const;
+        void print() const;
 };
 
-class LinkedIntList {
-    private: 
-        IntNode * head;
-        int length;
+class StackIterator : public IntIterator {
+    private:
+        const Stack * stack;
     public:
-        LinkedIntList() : head(nullptr), length(0) {}
-        LinkedIntList &push(int value) {
-            IntNode *newNode = new IntNode(value, nullptr);
-            if (head == nullptr) {
-                head = newNode;
-            } else {
-                IntNode *current = head;
-                newNode->next = current;
-                head = newNode;
-            }
-            length++;
-            return *this;
-        }
-        int pop() {
-            if (head == nullptr) {
-                return 0;
-            }
-            IntNode *old = head;
-            head = old->next;
-            int value = old->value;
-            delete old;
-            length--;
-            return value;
-        }
-        int size() {
-            return length;
-        }
-        LinkedIntList &print() {
-            if (head == nullptr) {
-                std::cout << "[empty]" << std::endl;
-            } else {
-                IntNode * node = head;
-                std::cout << "[" << node->value;
-                while(node->next) {
-                    node = node->next;
-                    std::cout << ", " << node->value;
-                }
-                std::cout << "]" << std::endl;
-            }
-            return *this;
-        }
+        StackIterator(const Stack *stack);
+        int next() const;
+        bool hasNext() const;
 };
 
-/*
- * Reverses the passed in array using the LinkedIntList
- */ 
-void reverseArray(int arr[], int size) {
-    LinkedIntList list;
-    for (int i = 0; i < size; i++) {
-        list.push(arr[i]);
-    }
-    for (int i = 0; i < size; i++) {
-        arr[i] = list.pop();
-    }
+Stack::Stack() {
+    this->list = new LinkedList();
+}
+
+Stack& Stack::push(int value) {
+    list->addFront(value);
+    return *this;
+}
+
+int Stack::pop() {
+    return list->removeFront();
+}
+
+int Stack::size() const {
+    return list->size();
+}
+
+void Stack::print() const {
+    list->print();
+}
+
+const IntIterator * Stack::iterator() const {
+    return list->iterator();
 }
 

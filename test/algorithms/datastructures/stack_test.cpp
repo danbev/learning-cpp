@@ -3,23 +3,23 @@
 #include "stack.cpp"
 
 
-TEST(linkedlist, addIntValueToEmptyList) {
-  LinkedIntList list;
-  list.push(1);
-  EXPECT_EQ(1, list.pop());
+TEST(Stack, addIntValueToEmptyList) {
+  Stack stack;
+  stack.push(1);
+  EXPECT_EQ(1, stack.pop());
 }
 
-TEST(linkedlist, addIntValueTo) {
-  LinkedIntList list;
-  list.push(1).push(2).print();
-  EXPECT_EQ(2, list.size());
-  EXPECT_EQ(2, list.pop());
-  EXPECT_EQ(1, list.pop());
+TEST(Stack, addIntValueTo) {
+  Stack stack;
+  stack.push(1).push(2).print();
+  EXPECT_EQ(2, stack.size());
+  EXPECT_EQ(2, stack.pop());
+  EXPECT_EQ(1, stack.pop());
 }
 
-TEST(linkedlist, popEmptyList) {
-  LinkedIntList list;
-  EXPECT_EQ(0, list.pop());
+TEST(Stack, popEmptyList) {
+  Stack stack;
+  EXPECT_EQ(-1, stack.pop());
 }
 
 TEST(linkedlist, reverseArray) {
@@ -31,7 +31,7 @@ TEST(linkedlist, reverseArray) {
   EXPECT_EQ(1, arr[3]);
 }
 
-void printTowers(int move, LinkedIntList one, LinkedIntList two, LinkedIntList three) {
+void printTowers(int move, Stack one, Stack two, Stack three) {
   std::cout << "Move: " << move << std::endl;
   std::cout << "Tower 1: ";
   one.print();
@@ -42,9 +42,9 @@ void printTowers(int move, LinkedIntList one, LinkedIntList two, LinkedIntList t
 }
 
 TEST(linkedlist, tower) {
-  LinkedIntList peg1;
-  LinkedIntList peg2;
-  LinkedIntList peg3;
+  Stack peg1;
+  Stack peg2;
+  Stack peg3;
   peg1.push(3);
   peg1.push(2);
   peg1.push(1);
