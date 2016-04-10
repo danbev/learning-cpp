@@ -11,7 +11,6 @@
  */
 TEST(DeptFirstPathSearch, pathTo) {
     UndirectedGraph graph {20};
-    graph.addEdge(0, 2);
     graph.addEdge(0, 5);
     graph.addEdge(2, 4);
     graph.addEdge(2, 3);
@@ -19,6 +18,7 @@ TEST(DeptFirstPathSearch, pathTo) {
     graph.addEdge(0, 1);
     graph.addEdge(3, 4);
     graph.addEdge(3, 5);
+    graph.addEdge(0, 2);
     // the order of the underlying dag is an array of bags. On bag for each vertex:
     // 0 = {2, 5, 1}
     // 1 = {2, 0}
@@ -34,9 +34,9 @@ TEST(DeptFirstPathSearch, pathTo) {
 
     const IntIterator* it = search.pathTo(5);
     EXPECT_EQ(0, it->next());
-    EXPECT_EQ(1, it->next());
     EXPECT_EQ(2, it->next());
     EXPECT_EQ(3, it->next());
     EXPECT_EQ(5, it->next());
+    EXPECT_EQ(false, it->hasNext());
 }
 
