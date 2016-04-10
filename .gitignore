@@ -65,3 +65,5 @@ test/undirected_graph_test
 test/bag_test
 test/search_test
 test/depth_first_search_test
+test/depth_first_path_search_test
+test/path_search_test

@@ -1,4 +1,6 @@
 #include <iostream>
+#ifndef LINKED_LIST
+#define LINKED_LIST
 #include "int-iterator.h"
 class LinkedListIntIterator;
 
@@ -148,4 +150,4 @@ void reverseArray(int arr[], int size) {
         arr[i] = list.removeFront();
     }
 }
-
+#endif

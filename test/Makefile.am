@@ -233,6 +233,13 @@ depth_first_search_test_CXXFLAGS = $(GTEST_CXXFLAGS)
 depth_first_search_test_LDFLAGS = $(GTEST_LDFLAGS)
 depth_first_search_test_LDADD = $(GTEST_LIBS) -lgtest_main
 
+check_PROGRAMS += depth_first_path_search_test
+depth_first_path_search_test_SOURCES = ./algorithms/graphs/depth_first_path_search_test.cpp
+depth_first_path_search_test_CPPFLAGS = -I$(top_srcdir)/src/algorithms/graphs $(GTEST_CPPFLAGS) 
+depth_first_path_search_test_CXXFLAGS = $(GTEST_CXXFLAGS) 
+depth_first_path_search_test_LDFLAGS = $(GTEST_LDFLAGS)
+depth_first_path_search_test_LDADD = $(GTEST_LIBS) -lgtest_main
+
 # Declare libraries and define tests here...
 
 # Define programs run automatically by "make check"

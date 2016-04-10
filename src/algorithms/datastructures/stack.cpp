@@ -1,6 +1,5 @@
 #include <iostream>
 #include "linkedlist.cpp"
-#include "int-iterator.h"
 
 class Stack {
     private:
