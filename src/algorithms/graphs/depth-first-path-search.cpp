@@ -21,8 +21,12 @@ DepthFirstPathSearch::DepthFirstPathSearch(const Graph *graph, int s) {
     this->graph = graph;
     this->s = s;
     this->count = 1;
-    visited = new bool[this->graph->vertices()] {false};
-    parentVertex = new int[this->graph->vertices()] {-1};
+    int length = this->graph->vertices();
+    visited = new bool[length] {false};
+    parentVertex = new int[length];
+    for (int i = 0; i < length; i++) {
+        parentVertex[i] = -1;
+    }
     dfs(this->graph, s);
 }
 
