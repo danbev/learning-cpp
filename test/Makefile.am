@@ -240,6 +240,13 @@ depth_first_path_search_test_CXXFLAGS = $(GTEST_CXXFLAGS)
 depth_first_path_search_test_LDFLAGS = $(GTEST_LDFLAGS)
 depth_first_path_search_test_LDADD = $(GTEST_LIBS) -lgtest_main
 
+check_PROGRAMS += queue_test
+queue_test_SOURCES = ./algorithms/datastructures/queue_test.cpp
+queue_test_CPPFLAGS = -I$(top_srcdir)/src/algorithms/datastructures $(GTEST_CPPFLAGS) 
+queue_test_CXXFLAGS = $(GTEST_CXXFLAGS) 
+queue_test_LDFLAGS = $(GTEST_LDFLAGS)
+queue_test_LDADD = $(GTEST_LIBS) -lgtest_main
+
 # Declare libraries and define tests here...
 
 # Define programs run automatically by "make check"

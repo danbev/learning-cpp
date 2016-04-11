@@ -1,7 +1,9 @@
 #include <iostream>
+#include "int-iterator.h"
 
 class IntNode {
     friend class DLinkedList;
+    friend class LinkedListIntIterator;
     private:
         int value;
         IntNode *next;
@@ -19,6 +21,7 @@ class IntNode {
  * Doubly linked list implementation
  */
 class DLinkedList {
+    friend class LinkedListIntIterator;
     private: 
         IntNode *head;
         IntNode *tail;
@@ -141,5 +144,34 @@ class DLinkedList {
             }
             return *this;
         }
+        const IntIterator* iterator();
 };
+
+class LinkedListIntIterator : public IntIterator {
+    private:
+        DLinkedList * list;
+    public:
+        LinkedListIntIterator(DLinkedList *list);
+        int next() const;
+        bool hasNext() const;
+};
+
+LinkedListIntIterator::LinkedListIntIterator(DLinkedList *list) {
+    this->list = list;
+}
+
+int LinkedListIntIterator::next() const {
+    int value = list->head->value;
+    list->head = list->head->next;
+    return value;
+}
+
+
+bool LinkedListIntIterator::hasNext() const {
+    return list->head != nullptr;
+}
+
+const IntIterator * DLinkedList::iterator() {
+    return new LinkedListIntIterator(this);
+}
 
