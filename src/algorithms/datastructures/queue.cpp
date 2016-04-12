@@ -1,4 +1,6 @@
 #include <iostream>
+#ifndef QUEUE
+#define QUEUE
 #include "dlinkedlist.cpp"
 
 class Queue {
@@ -9,6 +11,7 @@ class Queue {
         Queue &enqueue(int value);
         int dequeue();
         int size() const;
+        bool empty() const;
         const IntIterator* iterator() const;
         void print() const;
 };
@@ -39,6 +42,10 @@ int Queue::size() const {
     return list->size();
 }
 
+bool Queue::empty() const {
+    return list->empty();
+}
+
 void Queue::print() const {
     list->print();
 }
@@ -46,4 +53,4 @@ void Queue::print() const {
 const IntIterator * Queue::iterator() const {
     return list->iterator();
 }
-
+#endif

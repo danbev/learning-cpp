@@ -247,6 +247,13 @@ queue_test_CXXFLAGS = $(GTEST_CXXFLAGS)
 queue_test_LDFLAGS = $(GTEST_LDFLAGS)
 queue_test_LDADD = $(GTEST_LIBS) -lgtest_main
 
+check_PROGRAMS += breadth_first_path_search_test
+breadth_first_path_search_test_SOURCES = ./algorithms/graphs/breadth_first_path_search_test.cpp
+breadth_first_path_search_test_CPPFLAGS = -I$(top_srcdir)/src/algorithms/graphs $(GTEST_CPPFLAGS) 
+breadth_first_path_search_test_CXXFLAGS = $(GTEST_CXXFLAGS) 
+breadth_first_path_search_test_LDFLAGS = $(GTEST_LDFLAGS)
+breadth_first_path_search_test_LDADD = $(GTEST_LIBS) -lgtest_main
+
 # Declare libraries and define tests here...
 
 # Define programs run automatically by "make check"

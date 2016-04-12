@@ -1,30 +1,32 @@
 #include <iostream>
+#ifndef DLINKED_LIST
+#define DLINKED_LIST
 #include "int-iterator.h"
 
-class IntNode {
+class DIntNode {
     friend class DLinkedList;
-    friend class LinkedListIntIterator;
+    friend class DLinkedListIntIterator;
     private:
         int value;
-        IntNode *next;
-        IntNode *previous;
+        DIntNode *next;
+        DIntNode *previous;
     public:
-        IntNode(int value, IntNode *next, IntNode *previous = nullptr) {
+        DIntNode(int value, DIntNode *next, DIntNode *previous = nullptr) {
             this->value = value;
             this->next = next;
             this->previous = previous;
         }
-        ~IntNode() {}
+        ~DIntNode() {}
 };
 
 /*
  * Doubly linked list implementation
  */
 class DLinkedList {
-    friend class LinkedListIntIterator;
+    friend class DLinkedListIntIterator;
     private: 
-        IntNode *head;
-        IntNode *tail;
+        DIntNode *head;
+        DIntNode *tail;
         int length;
     public:
         DLinkedList() : head(nullptr), tail(nullptr), length(0) {}
@@ -34,11 +36,11 @@ class DLinkedList {
         }
 
         DLinkedList &addFront(int value) {
-            IntNode *newNode = new IntNode(value, nullptr, nullptr);
+            DIntNode *newNode = new DIntNode(value, nullptr, nullptr);
             if (empty()) {
                 head = newNode;
             } else {
-                IntNode *current = head;
+                DIntNode *current = head;
                 current->previous = newNode;
                 newNode->next = current;
                 head = newNode;
@@ -51,7 +53,7 @@ class DLinkedList {
             if (head == nullptr) {
                 return -1;
             }
-            IntNode *old = head;
+            DIntNode *old = head;
             head = old->next;
             int value = old->value;
             delete old;
@@ -74,11 +76,11 @@ class DLinkedList {
         }
 
         DLinkedList &addEnd(int value) {
-            IntNode *newNode = new IntNode(value, nullptr, nullptr);
+            DIntNode *newNode = new DIntNode(value, nullptr, nullptr);
             if (empty()) {
                 return addFront(value);
             } 
-            IntNode *current = tail == nullptr ? head:tail;
+            DIntNode *current = tail == nullptr ? head:tail;
             current->next = newNode;
             newNode->previous = current;
             tail = newNode;
@@ -93,7 +95,7 @@ class DLinkedList {
             if (tail == nullptr) {
                 return removeFront();
             }
-            IntNode *old = tail;
+            DIntNode *old = tail;
             int value = old->value;
             old->previous = nullptr;
             delete old;
@@ -109,7 +111,7 @@ class DLinkedList {
             if (empty()) {
                 return false;
             }
-            IntNode *p = tail == nullptr ? head:tail;
+            DIntNode *p = tail == nullptr ? head:tail;
             do {
                 if (p->value == nr) {
                     return true;
@@ -123,7 +125,7 @@ class DLinkedList {
             if (head == nullptr) {
                 return;
             }
-            IntNode *p = head;
+            DIntNode *p = head;
             do {
                 f(p->value);
                 p = p->next;
@@ -134,7 +136,7 @@ class DLinkedList {
             if (head == nullptr) {
                 std::cout << "[empty]" << std::endl;
             } else {
-                IntNode * node = head;
+                DIntNode * node = head;
                 std::cout << "[" << node->value;
                 while(node->next) {
                     node = node->next;
@@ -147,31 +149,32 @@ class DLinkedList {
         const IntIterator* iterator();
 };
 
-class LinkedListIntIterator : public IntIterator {
+class DLinkedListIntIterator : public IntIterator {
     private:
         DLinkedList * list;
     public:
-        LinkedListIntIterator(DLinkedList *list);
+        DLinkedListIntIterator(DLinkedList *list);
         int next() const;
         bool hasNext() const;
 };
 
-LinkedListIntIterator::LinkedListIntIterator(DLinkedList *list) {
+DLinkedListIntIterator::DLinkedListIntIterator(DLinkedList *list) {
     this->list = list;
 }
 
-int LinkedListIntIterator::next() const {
+int DLinkedListIntIterator::next() const {
     int value = list->head->value;
     list->head = list->head->next;
     return value;
 }
 
 
-bool LinkedListIntIterator::hasNext() const {
+bool DLinkedListIntIterator::hasNext() const {
     return list->head != nullptr;
 }
 
 const IntIterator * DLinkedList::iterator() {
-    return new LinkedListIntIterator(this);
+    return new DLinkedListIntIterator(this);
 }
+#endif
 
