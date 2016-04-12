@@ -20,9 +20,9 @@ TEST(DeptFirstPathSearch, pathTo) {
     graph.addEdge(3, 5);
     graph.addEdge(0, 2);
     // the order of the underlying dag is an array of bags. On bag for each vertex:
-    // 0 = {2, 5, 1}
+    // 0 = {5, 1, 2}
     // 1 = {2, 0}
-    // 2 = {0, 4, 3, 1}
+    // 2 = {4, 3, 1, 0}
     // 3 = {2, 4, 5}
     // 4 = {2, 3}
     // 5 = {0, 3}
