@@ -69,3 +69,4 @@ test/depth_first_path_search_test
 test/path_search_test
 test/queue_test
 test/breadth_first_path_search_test
+test/connected_component_search_test
