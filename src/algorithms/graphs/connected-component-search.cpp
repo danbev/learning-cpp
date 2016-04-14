@@ -25,8 +25,8 @@ class ConnectedComponentSearch {
     public:
         ConnectedComponentSearch(const Graph * graph);
         bool connected(int v, int w) const;
-        int group(int v) const;
-        int subgraphs() const;
+        int component(int v) const;
+        int components() const;
 };
 
 ConnectedComponentSearch::ConnectedComponentSearch(const Graph *graph) : count(0) {
@@ -62,11 +62,11 @@ auto ConnectedComponentSearch::connected(int v, int w) const -> bool {
     return groups[v] == groups[w];
 }
 
-auto ConnectedComponentSearch::subgraphs() const -> int {
+auto ConnectedComponentSearch::components() const -> int {
     return count;
 }
 
-auto ConnectedComponentSearch::group(int v) const -> int {
+auto ConnectedComponentSearch::component(int v) const -> int {
     return groups[v];
 }
 
