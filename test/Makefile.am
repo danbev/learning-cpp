@@ -254,6 +254,13 @@ connected_component_search_test_CXXFLAGS = $(GTEST_CXXFLAGS)
 connected_component_search_test_LDFLAGS = $(GTEST_LDFLAGS)
 connected_component_search_test_LDADD = $(GTEST_LIBS) -lgtest_main
 
+check_PROGRAMS += biparte_graph_test
+biparte_graph_test_SOURCES = ./algorithms/graphs/biparte_graph_test.cpp
+biparte_graph_test_CPPFLAGS = -I$(top_srcdir)/src/algorithms/graphs $(GTEST_CPPFLAGS) 
+biparte_graph_test_CXXFLAGS = $(GTEST_CXXFLAGS) 
+biparte_graph_test_LDFLAGS = $(GTEST_LDFLAGS)
+biparte_graph_test_LDADD = $(GTEST_LIBS) -lgtest_main
+
 # Declare libraries and define tests here...
 
 # Define programs run automatically by "make check"
