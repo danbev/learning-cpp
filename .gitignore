@@ -71,3 +71,4 @@ test/queue_test
 test/breadth_first_path_search_test
 test/connected_component_search_test
 test/biparte_graph_test
+test/cycle_graph_test
