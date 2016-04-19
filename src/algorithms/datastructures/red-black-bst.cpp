@@ -80,60 +80,74 @@
  *           \
  *            (D)
  */
+template <typename K, typename V>
 class Node {
+    // don't seem to be able to have the same typename variables names here
+    // or they will shadow the existing ones.
+    template <typename X, typename Y>
     friend class RedBlackBST;
-    int key;
-    char value;
+    K key;
+    V value;
     Node* left;
     Node* right;
     // color of the link from the parent node.
     bool red;
     int count;
     public: 
-        Node(int key, int value) : Node(key, value, nullptr, nullptr, false, 0) {};
-        Node(int key, int value, bool red, int count) : Node(key, value, nullptr, nullptr, red, count) {};
-        Node(int key, char value, Node *left, Node *right, bool red = false, int count = 0) {
-            this->key = key;
-            this->value = value;
-            this->left = left;
-            this->right = right;
-            this->red = red;
-            this->count = count;
-        }
+        Node(K key, V value);
+        Node(K key, V value, bool red, int count);
+        Node(K key, V value, Node *left, Node *right, bool red = false, int count = 0);
 };
 
+template <typename K, typename V>
+Node<K,V>::Node(K key, V value) : Node(key, value, nullptr, nullptr, false, 0) {};
+template <typename K, typename V>
+Node<K,V>::Node(K key, V value, bool red, int count) : Node(key, value, nullptr, nullptr, red, count) {};
+template <typename K, typename V>
+Node<K,V>::Node(K key, V value, Node *left, Node *right, bool red, int count) {
+    this->key = key;
+    this->value = value;
+    this->left = left;
+    this->right = right;
+    this->red = red;
+    this->count = count;
+}
+
+template <typename K, typename V>
 class RedBlackBST {
     private:
-        Node *root;
-        Node *putNode(Node *node, int key, char value);
-        Node *getNode(Node *node, int key);
-        Node *min(Node *node);
-        Node *max(Node *node);
-        int size(Node *node);
-        int rank(const Node *node, int key);
-        bool isRed(Node* node);
-        bool hasTwoRedLeftLinks(Node* node);
-        Node* rotateLeft(Node* node);
-        Node* rotateRight(Node* node);
-        void flipColors(Node* node);
+        Node<K,V> *root;
+        Node<K,V> *putNode(Node<K,V> *node, K key, V value);
+        Node<K,V> *getNode(Node<K,V> *node, K key);
+        Node<K,V> *min(Node<K,V> *node);
+        Node<K,V> *max(Node<K,V> *node);
+        int size(Node<K,V> *node);
+        int rank(const Node<K,V> *node, K key);
+        bool isRed(Node<K,V>* node);
+        bool hasTwoRedLeftLinks(Node<K,V>* node);
+        Node<K,V>* rotateLeft(Node<K,V>* node);
+        Node<K,V>* rotateRight(Node<K,V>* node);
+        void flipColors(Node<K,V>* node);
     public:
         RedBlackBST() : root(nullptr) {}
         ~RedBlackBST() {}
-        void put(int key, char value);
-        char get(int key);
+        void put(K key, V value);
+        V get(K key);
         int size();
-        char min();
-        char max();
-        int rank(int key);
+        V min();
+        V max();
+        int rank(K key);
 };
 
-void RedBlackBST::put(int key, char value) {
+template <typename K, typename V>
+void RedBlackBST<K,V>::put(K key, V value) {
     root = putNode(root, key, value);
 }
 
-Node * RedBlackBST::putNode(Node *node, int key, char value) {
+template <typename K, typename V>
+Node<K,V> * RedBlackBST<K,V>::putNode(Node<K,V> *node, K key, V value) {
     if (node == nullptr) {
-        return new Node(key, value, true, 1);
+        return new Node<K,V>(key, value, true, 1);
     }
     if (key < node->key) {
         node->left = putNode(node->left, key, value);
@@ -156,11 +170,13 @@ Node * RedBlackBST::putNode(Node *node, int key, char value) {
     return node;
 }
 
-bool RedBlackBST::isRed(Node* node) {
+template <typename K, typename V>
+bool RedBlackBST<K,V>::isRed(Node<K,V>* node) {
     return node == nullptr ? false :node->red;
 }
 
-bool RedBlackBST::hasTwoRedLeftLinks(Node* node) {
+template <typename K, typename V>
+bool RedBlackBST<K,V>::hasTwoRedLeftLinks(Node<K,V>* node) {
     if (node->left == nullptr) {
         return false;
     }
@@ -170,7 +186,8 @@ bool RedBlackBST::hasTwoRedLeftLinks(Node* node) {
     return isRed(node->left) && isRed(node->left->left);
 }
 
-void RedBlackBST::flipColors(Node *node) {
+template <typename K, typename V>
+void RedBlackBST<K,V>::flipColors(Node<K,V> *node) {
     node->red = true;
     node->left->red = false;
     node->right->red = false;
@@ -193,12 +210,13 @@ void RedBlackBST::flipColors(Node *node) {
 // We are switching from having the smaller of the two keys (b) to having the larger of
 // the two keys (c) at the root.
 //
-Node * RedBlackBST::rotateLeft(Node *parent) {
-    Node *newParent = parent->right; 
-    parent->right = newParent->left; 
+template <typename K, typename V>
+Node<K,V> * RedBlackBST<K,V>::rotateLeft(Node<K,V> *parent) {
+    Node<K,V> *newParent = parent->right;
+    parent->right = newParent->left;
     newParent->left = parent;
     newParent->red = parent->red; // set the color to whatever the parent was
-    parent->red = true; 
+    parent->red = true;
     newParent->count = parent->count;
     parent->count = 1 + size(parent->left) + size(parent->right);
     return newParent;
@@ -217,9 +235,10 @@ Node * RedBlackBST::rotateLeft(Node *parent) {
 //        /   \
 // [between b-c][greater than c]
 //
-Node * RedBlackBST::rotateRight(Node *parent) {
-    Node *newParent = parent->left; 
-    parent->left = newParent->right; 
+template <typename K, typename V>
+Node<K,V> * RedBlackBST<K,V>::rotateRight(Node<K,V> *parent) {
+    Node<K,V> *newParent = parent->left;
+    parent->left = newParent->right;
     newParent->right = parent;
     newParent->red = parent->red;
     parent->red = true;
@@ -231,7 +250,8 @@ Node * RedBlackBST::rotateRight(Node *parent) {
 /*
 *  Return the number of keys that are less than the passed-in key
 */
-int RedBlackBST::rank(const Node *node, int key) {
+template <typename K, typename V>
+int RedBlackBST<K,V>::rank(const Node<K,V> *node, K key) {
     if (node == nullptr) {
         return 0;
     }
@@ -250,27 +270,32 @@ int RedBlackBST::rank(const Node *node, int key) {
     return 1 + size(node->left) + rank(node->right, key);
 }
 
-int RedBlackBST::rank(int key) {
+template <typename K, typename V>
+int RedBlackBST<K,V>::rank(K key) {
     return rank(root, key);
 }
 
-char RedBlackBST::get(int key) {
-    Node *node = getNode(root, key);
+template <typename K, typename V>
+V RedBlackBST<K,V>::get(K key) {
+    Node<K,V> *node = getNode(root, key);
     if (node == nullptr) {
         throw "No such key";
     }
     return node->value;
 }
 
-int RedBlackBST::size(Node *node) {
+template <typename K, typename V>
+int RedBlackBST<K,V>::size(Node<K,V> *node) {
     return node == nullptr ? 0 : node->count;
 }
 
-int RedBlackBST::size() {
+template <typename K, typename V>
+int RedBlackBST<K,V>::size() {
     return size(root);
 }
 
-Node * RedBlackBST::getNode(Node *node, int key) {
+template <typename K, typename V>
+Node<K,V> * RedBlackBST<K,V>::getNode(Node<K,V> *node, K key) {
     if (node == nullptr) {
         return nullptr;
     }
@@ -283,25 +308,29 @@ Node * RedBlackBST::getNode(Node *node, int key) {
     }
 }
 
-Node * RedBlackBST::min(Node *node) {
+template <typename K, typename V>
+Node<K,V> * RedBlackBST<K,V>::min(Node<K,V> *node) {
     if (node->left == nullptr) {
         return node;
     }
     return min(node->left);
 }
 
-Node * RedBlackBST::max(Node *node) {
+template <typename K, typename V>
+Node<K,V> * RedBlackBST<K,V>::max(Node<K,V> *node) {
     if (node->right == nullptr) {
         return node;
     }
     return max(node->right);
 }
 
-char RedBlackBST::min() {
+template <typename K, typename V>
+V RedBlackBST<K,V>::min() {
     return min(root)->value;
 }
 
-char RedBlackBST::max() {
+template <typename K, typename V>
+V RedBlackBST<K,V>::max() {
     return max(root)->value;
 }
 
