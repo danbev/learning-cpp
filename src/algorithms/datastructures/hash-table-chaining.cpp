@@ -29,14 +29,14 @@
 class HashTable {
     private:
         int size;
-         SequentialSymbolTable** table;
-         int hash(int key);
+        SequentialSymbolTable<int, char>** table;
+        int hash(int key);
     public:
         HashTable(int size) { 
             this->size = size;
-            this->table = new SequentialSymbolTable*[size] {};
+            this->table = new SequentialSymbolTable<int, char>*[size] {};
             for (int i = 0; i < size; i++) {
-                this->table[i] = new SequentialSymbolTable();
+                this->table[i] = new SequentialSymbolTable<int, char>();
             }
         };
         ~HashTable() {
@@ -58,17 +58,16 @@ int HashTable::getSize() {
 
 void HashTable::put(int key, char value) {
     int h = hash(key);
-    SequentialSymbolTable* list = table[h];
+    SequentialSymbolTable<int, char>* list = table[h];
     list->put(key, value);
 }
 
 char HashTable::get(int key) {
     int h = hash(key);
-    SequentialSymbolTable* list = table[h];
+    SequentialSymbolTable<int, char>* list = table[h];
     if (list == nullptr) {
         throw "Key iiinot found : " + std::to_string(key);
     }
-
     return list->get(key);
 }
 

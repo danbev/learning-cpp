@@ -14,44 +14,53 @@
  * insert:  N               N
  *
  */
+template <typename K, typename V>
 class Node {
+    template <typename X, typename Y>
     friend class SequentialSymbolTable;
     private: 
-        int key;
-        char value;
+        K key;
+        V value;
         Node *next;
     public:
-        Node(int key, int value, Node *next = nullptr) {
-            this->key = key;
-            this->value = value;
-            this->next = next;
-        };
+        Node(K key, V value, Node *next = nullptr);
         ~Node() {};
 };
 
+template <typename K, typename V>
+Node<K,V>::Node(K key, V value, Node<K,V> *next) {
+    this->key = key;
+    this->value = value;
+    this->next = next;
+}
+
+template <typename K, typename V>
 class SequentialSymbolTable {
     private:
-        Node *head;
-        void throwNoSuchKey(int key) {
-            throw "No such key: " + std::to_string(key);
-        }
+        Node<K,V> *head;
     public:
         SequentialSymbolTable() :head(nullptr) {};
-        void put(int key, char value) {
-            for (Node *n = head; n != nullptr; n = n->next) {
-                if (n->key == key) {
-                    n->value = value;
-                    return;
-                }
-            }
-            head = new Node(key, value, head);
-        }
-        char get(int key) {
-            for (Node *n = head; n != nullptr; n = n->next) {
-                if (n->key == key) {
-                    return n->value;
-                }
-            }
-            throwNoSuchKey(key);
-        }
+        void put(K key, V value);
+        V get(K key);
 };
+
+template <typename K, typename V>
+void SequentialSymbolTable<K,V>::put(K key, V value) {
+    for (Node<K,V> *n = head; n != nullptr; n = n->next) {
+        if (n->key == key) {
+            n->value = value;
+            return;
+        }
+    }
+    head = new Node<K,V>(key, value, head);
+}
+
+template <typename K, typename V>
+V SequentialSymbolTable<K,V>::get(K key) {
+    for (Node<K,V> *n = head; n != nullptr; n = n->next) {
+        if (n->key == key) {
+            return n->value;
+        }
+    }
+    throw "No such key: " + std::to_string(key);
+}

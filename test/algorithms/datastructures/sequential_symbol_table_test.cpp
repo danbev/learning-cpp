@@ -3,7 +3,7 @@
 #include "sequential-symbol-table.cpp"
 
 TEST(SequentialSymbolTable, put) {
-    SequentialSymbolTable sst = SequentialSymbolTable();
+    SequentialSymbolTable<int, char> sst = SequentialSymbolTable<int, char>();
     sst.put(10, 'a');
     sst.put(1, 'b');
     sst.put(2, 'x');
