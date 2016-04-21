@@ -62,5 +62,5 @@ V SequentialSymbolTable<K,V>::get(K key) {
             return n->value;
         }
     }
-    throw "No such key: " + std::to_string(key);
+    throw "No such key";
 }
