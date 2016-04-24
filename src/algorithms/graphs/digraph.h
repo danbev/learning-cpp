@@ -7,6 +7,7 @@ class Digraph {
         virtual int edges() const = 0;
         virtual void addEdge(int v, int w) = 0;
         virtual const IntIterator* adjacent(int v) const = 0;
-        virtual const Digraph* reverse() const = 0;
+        virtual Digraph* reverse() const = 0;
+        virtual ~Digraph() {};
 };
 #endif
