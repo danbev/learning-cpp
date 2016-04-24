@@ -78,3 +78,15 @@ TEST(RedBlackBST, otherType) {
   EXPECT_EQ(0, bts.rank(1));
 }
 
+TEST(RedBlackBST, stringAsKeys) {
+  RedBlackBST<std::string, char> bts;
+  bts.put("one", 'a');
+  bts.put("two", 'b');
+  bts.put("three", 'c');
+  bts.put("four", 'd');
+  EXPECT_EQ('a', bts.get("one"));
+  EXPECT_EQ('b', bts.get("two"));
+  EXPECT_EQ('c', bts.get("three"));
+  EXPECT_EQ('d', bts.get("four"));
+}
+
