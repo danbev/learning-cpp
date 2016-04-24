@@ -2,6 +2,12 @@
 
 /**
  * A depth first search using a directed graph.
+ *
+ * Usages:
+ * Mark-and-sweep garbage collection
+ * ---------------------------------
+ * Each vertex would represent an object and each edge represents a reference
+ * to the object.
  */
 class DigraphDepthFirstSearch {
     private:
