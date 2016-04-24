@@ -6,22 +6,33 @@
 class DigraphDepthFirstSearch {
     private:
         const Digraph* graph;
-        int source;
         bool* visited;
         int count;
         void dfs(const Digraph* g, int v);
     public:
         DigraphDepthFirstSearch(const Digraph * graph, int source);
+        DigraphDepthFirstSearch(const Digraph * graph, const IntIterator* sources);
         bool hasPathFromSource(int v) const;
         int visitedVertices() const;
 };
 
 DigraphDepthFirstSearch::DigraphDepthFirstSearch(const Digraph *graph, int source) {
     this->graph = graph;
-    this->source = source;
     this->count = 1;
     visited = new bool[this->graph->vertices()] {false};
     dfs(this->graph, source);
+}
+
+DigraphDepthFirstSearch::DigraphDepthFirstSearch(const Digraph *graph, const IntIterator* sources) {
+    this->graph = graph;
+    this->count = 1;
+    visited = new bool[this->graph->vertices()] {false};
+    while(sources->hasNext()) {
+        int v = sources->next();
+        if (!visited[v]) {
+            dfs(this->graph, v);
+        }
+    }
 }
 
 void DigraphDepthFirstSearch::dfs(const Digraph *g, int v) {

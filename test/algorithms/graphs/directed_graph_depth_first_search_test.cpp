@@ -17,3 +17,20 @@ TEST(DigraphDepthFirstSearch, search) {
     EXPECT_EQ(false, search.hasPathFromSource(5));
 }
 
+TEST(DigraphDepthFirstSearch, sources) {
+    DirectedGraph graph {10};
+    graph.addEdge(0, 1);
+    graph.addEdge(1, 2);
+    graph.addEdge(2, 3);
+    graph.addEdge(4, 5);
+    Bag sources{};
+    sources.add(0);
+    sources.add(4);
+    DigraphDepthFirstSearch search (&graph, sources.iterator());
+    EXPECT_EQ(true, search.hasPathFromSource(1));
+    EXPECT_EQ(true, search.hasPathFromSource(2));
+    EXPECT_EQ(true, search.hasPathFromSource(3));
+    EXPECT_EQ(true, search.hasPathFromSource(4));
+    EXPECT_EQ(true, search.hasPathFromSource(5));
+}
+
