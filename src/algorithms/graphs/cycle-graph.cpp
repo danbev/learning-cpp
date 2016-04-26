@@ -3,7 +3,7 @@
 #include "../datastructures/stack.cpp"
 
 /*
- * Used depth first to search the Graph and detect a cycle in the graph.
+ * Uses depth first to search the Graph and detect if a cycle exists.
  *
  */
 class CycleGraph {
