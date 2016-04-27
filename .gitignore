@@ -76,3 +76,4 @@ test/directed_graph_test
 test/directed_graph_depth_first_search_test
 test/directed_depth_first_path_search_test
 test/directed_breadth_first_path_search_test
+test/directed_cycle_test
