@@ -303,6 +303,13 @@ directed_cycle_test_CXXFLAGS = $(GTEST_CXXFLAGS)
 directed_cycle_test_LDFLAGS = $(GTEST_LDFLAGS)
 directed_cycle_test_LDADD = $(GTEST_LIBS) -lgtest_main
 
+check_PROGRAMS += directed_depth_first_order_test
+directed_depth_first_order_test_SOURCES = ./algorithms/graphs/directed_depth_first_order_test.cpp
+directed_depth_first_order_test_CPPFLAGS = -I$(top_srcdir)/src/algorithms/graphs $(GTEST_CPPFLAGS)
+directed_depth_first_order_test_CXXFLAGS = $(GTEST_CXXFLAGS)
+directed_depth_first_order_test_LDFLAGS = $(GTEST_LDFLAGS)
+directed_depth_first_order_test_LDADD = $(GTEST_LIBS) -lgtest_main
+
 # Declare libraries and define tests here...
 
 # Define programs run automatically by "make check"
