@@ -44,6 +44,17 @@ void BreadthFirstPathSearch::bfs(const Graph *g, int s) {
             if (!visited[w]) {
                 parentVertex[w] = v;
                 visited[w] = true;
+                // we don't recurse like in depth first but instead add the vertex
+                // to the queue to be processed.
+                //   (0)-------(1)------(2)
+                //    |
+                //   (3)
+                //   so processing 0 would visit 1 mark it and put it on the queue.
+                //   next, 3 would be processed and put on the queue. That would be
+                //   the end of processing 0 as all its adjacent vertices have been
+                //   processed. At this point the queue contains 1 and 3. So we can
+                //   see that the closest vertices are processed first and then it 
+                //   spanns out.
                 queue.enqueue(w);
             }
         }
