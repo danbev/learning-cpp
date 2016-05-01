@@ -59,15 +59,15 @@ namespace graphs {
         reverse->push(v);
     }
 
-    auto DirectedDepthFirstOrder::preOrder() const -> const IntIterator * {
+    const IntIterator* DirectedDepthFirstOrder::preOrder() const {
         return pre->iterator();
     }
 
-    auto DirectedDepthFirstOrder::postOrder() const -> const IntIterator * {
+    const IntIterator* DirectedDepthFirstOrder::postOrder() const {
         return post->iterator();
     }
 
-    auto DirectedDepthFirstOrder::reverseOrder() const -> const IntIterator * {
+    const IntIterator* DirectedDepthFirstOrder::reverseOrder() const {
         return reverse->iterator();
     }
 
