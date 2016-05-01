@@ -310,6 +310,13 @@ directed_depth_first_order_test_CXXFLAGS = $(GTEST_CXXFLAGS)
 directed_depth_first_order_test_LDFLAGS = $(GTEST_LDFLAGS)
 directed_depth_first_order_test_LDADD = $(GTEST_LIBS) -lgtest_main
 
+check_PROGRAMS += topological_test
+topological_test_SOURCES = ./algorithms/graphs/topological_test.cpp
+topological_test_CPPFLAGS = -I$(top_srcdir)/src/algorithms/graphs $(GTEST_CPPFLAGS)
+topological_test_CXXFLAGS = $(GTEST_CXXFLAGS)
+topological_test_LDFLAGS = $(GTEST_LDFLAGS)
+topological_test_LDADD = $(GTEST_LIBS) -lgtest_main
+
 # Declare libraries and define tests here...
 
 # Define programs run automatically by "make check"
