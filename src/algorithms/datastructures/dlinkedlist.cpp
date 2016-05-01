@@ -146,34 +146,35 @@ class DLinkedList {
             }
             return *this;
         }
-        const IntIterator* iterator();
+        IntIterator* iterator();
 };
 
 class DLinkedListIntIterator : public IntIterator {
     private:
         DLinkedList * list;
+        DIntNode *current;
     public:
         DLinkedListIntIterator(DLinkedList *list);
-        int next() const;
+        int next();
         bool hasNext() const;
 };
 
 DLinkedListIntIterator::DLinkedListIntIterator(DLinkedList *list) {
-    this->list = list;
+    this->current = list->head;
 }
 
-int DLinkedListIntIterator::next() const {
-    int value = list->head->value;
-    list->head = list->head->next;
+int DLinkedListIntIterator::next() {
+    int value = current->value;
+    current = current->next;
     return value;
 }
 
 
 bool DLinkedListIntIterator::hasNext() const {
-    return list->head != nullptr;
+    return current != nullptr;
 }
 
-const IntIterator * DLinkedList::iterator() {
+IntIterator * DLinkedList::iterator() {
     return new DLinkedListIntIterator(this);
 }
 #endif

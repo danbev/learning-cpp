@@ -17,7 +17,7 @@ TEST(DirectedBreadthFirstPathSearch, pathTo) {
     graph.addEdge(3, 5);
     graph.addEdge(0, 5);
     const DirectedBreadthFirstPathSearch search (&graph, 0);
-    const IntIterator* it = search.pathTo(5);
+    IntIterator* it = search.pathTo(5);
     EXPECT_EQ(0, it->next());
     EXPECT_EQ(5, it->next());
     EXPECT_EQ(false, it->hasNext());

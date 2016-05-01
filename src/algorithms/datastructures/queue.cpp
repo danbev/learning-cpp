@@ -12,7 +12,7 @@ class Queue {
         int dequeue();
         int size() const;
         bool empty() const;
-        const IntIterator* iterator() const;
+        IntIterator* iterator() const;
         void print() const;
 };
 
@@ -50,7 +50,7 @@ void Queue::print() const {
     list->print();
 }
 
-const IntIterator * Queue::iterator() const {
+IntIterator * Queue::iterator() const {
     return list->iterator();
 }
 #endif

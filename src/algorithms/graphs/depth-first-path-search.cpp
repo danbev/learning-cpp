@@ -14,7 +14,7 @@ class DepthFirstPathSearch {
         DepthFirstPathSearch(const Graph * graph, int s);
         bool isConnectedToSource(int v) const;
         int visitedVertices() const;
-        const IntIterator* pathTo(int v) const;
+        IntIterator* pathTo(int v) const;
 };
 
 DepthFirstPathSearch::DepthFirstPathSearch(const Graph *graph, int s) {
@@ -39,7 +39,7 @@ DepthFirstPathSearch::DepthFirstPathSearch(const Graph *graph, int s) {
 void DepthFirstPathSearch::dfs(const Graph *g, int v) {
     visited[v] = true; // first step is to mark the vertex as visited
     count++;
-    const IntIterator *it = g->adjacent(v);
+    IntIterator *it = g->adjacent(v);
     std::cout << __func__ << ": Processing v = " << v << std::endl;
     while(it->hasNext()) {
         int w = it->next();
@@ -51,7 +51,7 @@ void DepthFirstPathSearch::dfs(const Graph *g, int v) {
     }
 }
 
-auto DepthFirstPathSearch::pathTo(int v) const -> const IntIterator * {
+IntIterator* DepthFirstPathSearch::pathTo(int v) const {
     if (!isConnectedToSource(v)) {
         // TODO: return an empty IntIterator
         return nullptr;
@@ -65,11 +65,11 @@ auto DepthFirstPathSearch::pathTo(int v) const -> const IntIterator * {
     return stack.iterator();
 }
 
-auto DepthFirstPathSearch::isConnectedToSource(int v) const -> bool {
+bool DepthFirstPathSearch::isConnectedToSource(int v) const {
     std::cout << __func__ << ": is " << v << " connected to " << s << std::endl;
     return visited[v];
 }
 
-auto DepthFirstPathSearch::visitedVertices() const -> int {
+int DepthFirstPathSearch::visitedVertices() const {
     return count;
 }

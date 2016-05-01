@@ -49,7 +49,7 @@ ConnectedComponentSearch::ConnectedComponentSearch(const Graph *graph) : count(0
 void ConnectedComponentSearch::dfs(const Graph *g, int v) {
     visited[v] = true; // first step is to mark the vertex as visited
     groups[v] = count; // set the group that vertex v belongs to
-    const IntIterator *it = g->adjacent(v);
+    IntIterator *it = g->adjacent(v);
     while(it->hasNext()) {
         int w = it->next();
         if (!visited[w]) {
@@ -58,15 +58,15 @@ void ConnectedComponentSearch::dfs(const Graph *g, int v) {
     }
 }
 
-auto ConnectedComponentSearch::connected(int v, int w) const -> bool {
+bool ConnectedComponentSearch::connected(int v, int w) const {
     return groups[v] == groups[w];
 }
 
-auto ConnectedComponentSearch::components() const -> int {
+int ConnectedComponentSearch::components() const {
     return count;
 }
 
-auto ConnectedComponentSearch::component(int v) const -> int {
+int ConnectedComponentSearch::component(int v) const {
     return groups[v];
 }
 

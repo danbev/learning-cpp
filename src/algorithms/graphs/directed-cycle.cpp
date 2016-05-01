@@ -28,7 +28,7 @@ class DirectedCycle {
         void dfs(const Digraph* g, int v);
     public:
         DirectedCycle(const Digraph * graph);
-        const IntIterator* cycle() const;
+        IntIterator* cycle() const;
         bool hasCycle() const;
 };
 
@@ -49,7 +49,7 @@ void DirectedCycle::dfs(const Digraph *g, int v) {
     // keep track of the vertex currently being processed.
     onstack[v] = true;
     visited[v] = true;
-    const IntIterator *it = g->adjacent(v);
+    IntIterator *it = g->adjacent(v);
     while(it->hasNext()) {
         // check if the last recursion found a cycle
         if (hasCycle()) {
@@ -73,10 +73,10 @@ void DirectedCycle::dfs(const Digraph *g, int v) {
     onstack[v] = false;
 }
 
-auto DirectedCycle::cycle() const -> const IntIterator * {
+IntIterator* DirectedCycle::cycle() const {
     return stack->iterator();
 }
 
-auto DirectedCycle::hasCycle() const -> bool {
+bool DirectedCycle::hasCycle() const {
     return stack != nullptr;
 }
