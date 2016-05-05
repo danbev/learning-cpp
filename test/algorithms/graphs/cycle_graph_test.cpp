@@ -13,7 +13,7 @@ TEST(CycleGraph, cyclic) {
     graph.addEdge(2, 3);
     graph.addEdge(1, 3);
     const CycleGraph cycle (&graph);
-    EXPECT_EQ(true, cycle.hasCycle());
+    EXPECT_EQ(true, cycle.cycle());
 }
 
 TEST(CycleGraph, acyclic) {
@@ -25,5 +25,5 @@ TEST(CycleGraph, acyclic) {
     graph.addEdge(2, 3);
     graph.addEdge(1, 3);
     const CycleGraph cycle (&graph);
-    EXPECT_EQ(false, cycle.hasCycle());
+    EXPECT_EQ(false, cycle.cycle());
 }

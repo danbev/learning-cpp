@@ -11,10 +11,10 @@ class CycleGraph {
         const Graph* graph;
         bool* visited;
         void dfs(const Graph* g, int v, int u);
-        bool cycle;
+        bool cycle_;
     public:
         CycleGraph(const Graph * graph);
-        bool hasCycle() const;
+        bool cycle() const;
 };
 
 CycleGraph::CycleGraph(const Graph *graph) {
@@ -44,11 +44,11 @@ void CycleGraph::dfs(const Graph *g, int v, int u) {
         // circled around. If w had not been visisted we could have recursed into dfs
         // again.
         else if (w != u) { 
-            cycle = true;
+            cycle_ = true;
         }
     }
 }
 
-bool CycleGraph::hasCycle() const {
-    return cycle;
+bool CycleGraph::cycle() const {
+    return cycle_;
 }
