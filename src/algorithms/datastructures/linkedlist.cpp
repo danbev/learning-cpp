@@ -70,12 +70,11 @@ class LinkedList {
         if (head == nullptr) {
             return false;
         }
-        IntNode *p = head;
-        do {
+        for (IntNode *p = head; p != nullptr; p = p->next) {
             if (p->value == nr) {
                 return true;
             }
-        } while (p->next != nullptr);
+        }
         return false;
     }
 
@@ -83,10 +82,8 @@ class LinkedList {
         if (head == nullptr) {
             std::cout << "[empty]" << std::endl;
         } else {
-            IntNode * node = head;
-            std::cout << "[" << node->value;
-            while(node->next) {
-                node = node->next;
+            std::cout << "[";
+            for (IntNode * node = head; node != nullptr; node = node->next) {
                 std::cout << ", " << node->value;
             }
             std::cout << "]" << std::endl;
@@ -99,9 +96,7 @@ class LinkedList {
         if (empty()) {
             return;
         }
-        IntNode * node = head;
-        while(node->next) {
-            node = node->next;
+        for (IntNode* node = head; node != nullptr; node = node->next) {
             f(node->value);
         }
     }
