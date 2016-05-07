@@ -317,6 +317,13 @@ topological_test_CXXFLAGS = $(GTEST_CXXFLAGS)
 topological_test_LDFLAGS = $(GTEST_LDFLAGS)
 topological_test_LDADD = $(GTEST_LIBS) -lgtest_main
 
+check_PROGRAMS += edge_test
+edge_test_SOURCES = ./algorithms/graphs/edge_test.cpp
+edge_test_CPPFLAGS = -I$(top_srcdir)/src/algorithms/graphs $(GTEST_CPPFLAGS)
+edge_test_CXXFLAGS = $(GTEST_CXXFLAGS)
+edge_test_LDFLAGS = $(GTEST_LDFLAGS)
+edge_test_LDADD = $(GTEST_LIBS) -lgtest_main
+
 # Declare libraries and define tests here...
 
 # Define programs run automatically by "make check"

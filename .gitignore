@@ -80,3 +80,4 @@ test/directed_cycle_test
 test/directed_depth_first_order_test
 test/topological_test
 src/concurrency/basic
+test/edge_test
