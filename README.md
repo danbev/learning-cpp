@@ -128,9 +128,7 @@ You can also add a condition so that it breaks when this condition applies:
   
 
 ## Adding unit tests
-You should be able to simply update the test/Makefile.am with the new test.
-__Note__ that .cpp files under test with a main function do not seem to be testable. Removing the main
-and just using the functions/classes of the .cpp files worked for me.
+You should be able to simply update the test/Makefile.am with the new test.  
 
 ## Troubleshooting
 Unresolved symbol:
