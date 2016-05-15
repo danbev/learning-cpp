@@ -112,7 +112,6 @@ NodeIterator<int>::NodeIterator(Node<int>* current) {
 
 template<>
 int NodeIterator<int>::next() {
-    //return current_->next()->value();
     int v = current_->value();
     current_ = current_->next();
     return v;

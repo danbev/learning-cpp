@@ -156,39 +156,6 @@ const DLinkedList& DLinkedList::print() const {
     return *this;
 }
 
-/*
-class DLinkedListIntIterator : public IntIterator {
-    private:
-        DLinkedList * list;
-        DIntNode *current;
-    public:
-        DLinkedListIntIterator(DLinkedList *list);
-        int next();
-        bool hasNext() const;
-};
-*/
-
-#ifndef NODE_ITERATOR
-#define NODE_ITERATOR
-template<>
-NodeIterator<int>::NodeIterator(Node<int>* current) {
-    this->current_ = current;
-}
-#endif
-
-/*
-int DLinkedListIntIterator::next() {
-    int value = current->value;
-    current = current->next;
-    return value;
-}
-
-
-bool DLinkedListIntIterator::hasNext() const {
-    return current != nullptr;
-}
-*/
-
 NodeIterator<int>* DLinkedList::iterator() {
     return new NodeIterator<int>(head);
 }
