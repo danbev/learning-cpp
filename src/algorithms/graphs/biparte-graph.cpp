@@ -48,7 +48,7 @@ BiparteGraph::BiparteGraph(const Graph *graph) : biparte(true) {
 
 void BiparteGraph::dfs(const Graph *g, int v) {
     visited[v] = true; // first step is to mark the vertex as visited
-    IntIterator *it = g->adjacent(v);
+    NodeIterator<int>* it = g->adjacent(v);
     while(it->hasNext()) {
         int w = it->next();
         if (!visited[w]) {

@@ -14,7 +14,7 @@ class DirectedBreadthFirstPathSearch {
         DirectedBreadthFirstPathSearch(const Digraph * graph, int s);
         bool isConnectedToSource(int v) const;
         int visitedVertices() const;
-        IntIterator* pathTo(int v) const;
+        NodeIterator<int>* pathTo(int v) const;
 };
 
 DirectedBreadthFirstPathSearch::DirectedBreadthFirstPathSearch(const Digraph *graph, int s) {
@@ -37,7 +37,7 @@ void DirectedBreadthFirstPathSearch::bfs(const Digraph *g, int s) {
     while (!queue.empty()) {
         count++;
         int v = queue.dequeue();
-        IntIterator *it = g->adjacent(v);
+        NodeIterator<int>* it = g->adjacent(v);
         while (it->hasNext()) {
             int w = it->next();
             if (!visited[w]) {
@@ -49,7 +49,7 @@ void DirectedBreadthFirstPathSearch::bfs(const Digraph *g, int s) {
     }
 }
 
-IntIterator* DirectedBreadthFirstPathSearch::pathTo(int v) const {
+NodeIterator<int>* DirectedBreadthFirstPathSearch::pathTo(int v) const {
     if (!isConnectedToSource(v)) {
         // TODO: return an empty IntIterator
         return nullptr;

@@ -18,7 +18,7 @@ TEST(Graph, adjaent) {
   graph.addEdge(0, 1);
   graph.addEdge(0, 2);
   graph.addEdge(0, 5);
-  IntIterator* iter = graph.adjacent(0);
+  NodeIterator<int>* iter = graph.adjacent(0);
   EXPECT_EQ(5, iter->next());
   EXPECT_EQ(2, iter->next());
   EXPECT_EQ(1, iter->next());

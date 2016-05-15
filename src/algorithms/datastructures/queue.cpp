@@ -1,7 +1,7 @@
-#include <iostream>
 #ifndef QUEUE
 #define QUEUE
 #include "dlinkedlist.cpp"
+#include <iostream>
 
 class Queue {
     private:
@@ -12,10 +12,11 @@ class Queue {
         int dequeue();
         int size() const;
         bool empty() const;
-        IntIterator* iterator() const;
+        NodeIterator<int>* iterator() const;
         void print() const;
 };
 
+/*
 class QueueIterator : public IntIterator {
     private:
         const Queue * queue;
@@ -24,6 +25,7 @@ class QueueIterator : public IntIterator {
         int next() const;
         bool hasNext() const;
 };
+*/
 
 Queue::Queue() {
     this->list = new DLinkedList();
@@ -50,7 +52,7 @@ void Queue::print() const {
     list->print();
 }
 
-IntIterator * Queue::iterator() const {
+NodeIterator<int>* Queue::iterator() const {
     return list->iterator();
 }
 #endif

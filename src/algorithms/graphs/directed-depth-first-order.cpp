@@ -25,9 +25,9 @@ namespace graphs {
             void dfs(const Digraph* g, int v);
         public:
             DirectedDepthFirstOrder(const Digraph * graph);
-            IntIterator* preOrder() const;
-            IntIterator* postOrder() const;
-            IntIterator* reverseOrder() const;
+            NodeIterator<int>* preOrder() const;
+            NodeIterator<int>* postOrder() const;
+            NodeIterator<int>* reverseOrder() const;
     };
 
     DirectedDepthFirstOrder::DirectedDepthFirstOrder(const Digraph *graph) {
@@ -47,7 +47,7 @@ namespace graphs {
     void DirectedDepthFirstOrder::dfs(const Digraph *g, int v) {
         pre->enqueue(v);
         visited[v] = true; // first step is to mark the vertex as visited
-        IntIterator *it = g->adjacent(v);
+        NodeIterator<int>* it = g->adjacent(v);
         while(it->hasNext()) {
             int w = it->next();
             if (!visited[w]) {
@@ -59,15 +59,15 @@ namespace graphs {
         reverse->push(v);
     }
 
-    IntIterator* DirectedDepthFirstOrder::preOrder() const {
+    NodeIterator<int>* DirectedDepthFirstOrder::preOrder() const {
         return pre->iterator();
     }
 
-    IntIterator* DirectedDepthFirstOrder::postOrder() const {
+    NodeIterator<int>* DirectedDepthFirstOrder::postOrder() const {
         return post->iterator();
     }
 
-    IntIterator* DirectedDepthFirstOrder::reverseOrder() const {
+    NodeIterator<int>* DirectedDepthFirstOrder::reverseOrder() const {
         return reverse->iterator();
     }
 

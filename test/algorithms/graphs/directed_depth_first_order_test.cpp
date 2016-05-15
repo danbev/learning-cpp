@@ -10,21 +10,21 @@ TEST(DirectedDepthFirstOrder, order) {
     graph.addEdge(2, 3);
     const graphs::DirectedDepthFirstOrder t (&graph);
 
-    IntIterator *pre = t.preOrder();
+    NodeIterator<int>* pre = t.preOrder();
     EXPECT_EQ(0, pre->next());
     EXPECT_EQ(1, pre->next());
     EXPECT_EQ(2, pre->next());
     EXPECT_EQ(3, pre->next());
     EXPECT_EQ(false, pre->hasNext());
 
-    IntIterator *post = t.postOrder();
+    NodeIterator<int>* post = t.postOrder();
     EXPECT_EQ(3, post->next());
     EXPECT_EQ(2, post->next());
     EXPECT_EQ(1, post->next());
     EXPECT_EQ(0, post->next());
     EXPECT_EQ(false, post->hasNext());
 
-    IntIterator *rev = t.reverseOrder();
+    NodeIterator<int>* rev = t.reverseOrder();
     EXPECT_EQ(0, rev->next());
     EXPECT_EQ(1, rev->next());
     EXPECT_EQ(2, rev->next());

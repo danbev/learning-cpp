@@ -1,7 +1,7 @@
-#include <iostream>
-#include "linkedlist.cpp"
 #ifndef STACK
 #define STACK
+#include <iostream>
+#include "linkedlist.cpp"
 
 class Stack {
     private:
@@ -11,10 +11,11 @@ class Stack {
         Stack &push(int value);
         int pop();
         int size() const;
-        IntIterator* iterator() const;
+        NodeIterator<int>* iterator() const;
         void print() const;
 };
 
+/*
 class StackIterator : public IntIterator {
     private:
         const Stack * stack;
@@ -23,6 +24,7 @@ class StackIterator : public IntIterator {
         int next() const;
         bool hasNext() const;
 };
+*/
 
 Stack::Stack() {
     this->list = new LinkedList();
@@ -45,7 +47,7 @@ void Stack::print() const {
     list->print();
 }
 
-IntIterator * Stack::iterator() const {
+NodeIterator<int>* Stack::iterator() const {
     return list->iterator();
 }
 #endif

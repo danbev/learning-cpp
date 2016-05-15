@@ -1,6 +1,6 @@
-#include "../datastructures/int-iterator.h"
 #ifndef DIGRAPH
 #define DIGRAPH
+#include "../datastructures/node-iterator.h"
 /*
  * A directed graph where edges are one way paths between vertices.
  *
@@ -18,7 +18,7 @@ class Digraph {
         virtual int vertices() const = 0;
         virtual int edges() const = 0;
         virtual void addEdge(int v, int w) = 0;
-        virtual IntIterator* adjacent(int v) const = 0;
+        virtual NodeIterator<int>* adjacent(int v) const = 0;
         virtual Digraph* reverse() const = 0;
         virtual ~Digraph() {};
 };

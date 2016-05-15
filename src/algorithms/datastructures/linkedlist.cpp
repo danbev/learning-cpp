@@ -1,24 +1,20 @@
 #include <iostream>
 #ifndef LINKED_LIST
 #define LINKED_LIST
-#include "int-iterator.h"
-class LinkedListIntIterator;
+#include "node-iterator.h"
 
-class IntNode {
+class IntNode : public Node<int> {
     friend class LinkedList;
     friend class LinkedListIntIterator;
-    private:
-        int value;
-        IntNode *next;
     public:
-        IntNode(int value, IntNode * next) : value(value), next(next) {}
+        IntNode(int value, Node<int> * next) : Node<int>(value, next) {}
         ~IntNode() {}
 };
 
 class LinkedList {
     friend class LinkedListIntIterator;
     private: 
-        IntNode * head;
+        Node<int>* head;
         int length;
     public:
         LinkedList() : head(nullptr), length(0) {}
@@ -31,21 +27,20 @@ class LinkedList {
         const LinkedList &print() const;
         template<class Func>
         void foreach(Func &f) const;
-        IntIterator* iterator();
+        NodeIterator<int>* iterator();
 };
 
 bool LinkedList::empty() const {
     return head == nullptr;
 }
 
-
 LinkedList& LinkedList::addFront(int value) {
-    IntNode *newNode = new IntNode(value, nullptr);
+    Node<int>* newNode = new IntNode(value, nullptr);
     if (head == nullptr) {
         head = newNode;
     } else {
-        IntNode *current = head;
-        newNode->next = current;
+        Node<int>* current = head;
+        newNode->next(current);
         head = newNode;
     }
     length++;
@@ -56,9 +51,9 @@ int LinkedList::removeFront() {
     if (head == nullptr) {
         return -1;
     }
-    IntNode *old = head;
-    head = old->next;
-    int value = old->value;
+    Node<int> *old = head;
+    head = old->next();
+    int value = old->value();
     delete old;
     length--;
     return value;
@@ -68,7 +63,7 @@ int LinkedList::front() const {
     if (head == nullptr) {
         return -1;
     }
-    return head->next->value;
+    return head->next()->value();
 }
 
 int LinkedList::size() const {
@@ -79,8 +74,8 @@ bool LinkedList::contains(int nr) const {
     if (head == nullptr) {
         return false;
     }
-    for (IntNode *p = head; p != nullptr; p = p->next) {
-        if (p->value == nr) {
+    for (Node<int>* p = head; p != nullptr; p = p->next()) {
+        if (p->value() == nr) {
             return true;
         }
     }
@@ -92,8 +87,8 @@ const LinkedList& LinkedList::print() const {
         std::cout << "[empty]" << std::endl;
     } else {
         std::cout << "[";
-        for (IntNode * node = head; node != nullptr; node = node->next) {
-            std::cout << ", " << node->value;
+        for (Node<int>* node = head; node != nullptr; node = node->next()) {
+            std::cout << ", " << node->value();
         }
         std::cout << "]" << std::endl;
     }
@@ -105,38 +100,31 @@ void LinkedList::foreach(Func &f) const {
     if (empty()) {
         return;
     }
-    for (IntNode* node = head; node != nullptr; node = node->next) {
-        f(node->value);
+    for (Node<int>* node = head; node != nullptr; node = node->next()) {
+        f(node->value());
     }
 }
 
-
-class LinkedListIntIterator : public IntIterator {
-    private:
-        IntNode *current;
-    public: 
-        LinkedListIntIterator(LinkedList *list);
-        int next();
-        bool hasNext() const;
-};
-
-LinkedListIntIterator::LinkedListIntIterator(LinkedList *list) {
-    this->current = list->head;
+template<>
+NodeIterator<int>::NodeIterator(Node<int>* current) {
+    this->current_ = current;
 }
 
-int LinkedListIntIterator::next() {
-    int value = current->value;
-    current = current->next;
-    return value;
+template<>
+int NodeIterator<int>::next() {
+    //return current_->next()->value();
+    int v = current_->value();
+    current_ = current_->next();
+    return v;
 }
 
-
-bool LinkedListIntIterator::hasNext() const {
-    return current != nullptr;
+template<>
+bool NodeIterator<int>::hasNext() {
+    return current_ != nullptr;
 }
 
-IntIterator * LinkedList::iterator() {
-    return new LinkedListIntIterator(this);
+NodeIterator<int>* LinkedList::iterator() {
+    return new NodeIterator<int>(head);
 }
 
 /*

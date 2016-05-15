@@ -1,3 +1,5 @@
+#ifndef DIRECTED_GRAPH
+#define DIRECTED_GRAPH
 #include <stdio.h>
 #include "digraph.h"
 #include "../datastructures/bag.cpp"
@@ -17,7 +19,7 @@ class DirectedGraph : public Digraph {
         int vertices() const;
         int edges() const;
         void addEdge(int v, int w);
-        IntIterator* adjacent(int v) const;
+        NodeIterator<int>* adjacent(int v) const;
         Digraph* reverse() const;
 };
 
@@ -48,7 +50,7 @@ void DirectedGraph::addEdge(int v, int w) {
     e++;
 }
 
-IntIterator* DirectedGraph::adjacent(int v) const {
+NodeIterator<int>* DirectedGraph::adjacent(int v) const {
     return bags[v]->iterator();
 }
 
@@ -58,10 +60,11 @@ IntIterator* DirectedGraph::adjacent(int v) const {
 Digraph* DirectedGraph::reverse() const {
     DirectedGraph* rev = new DirectedGraph(v);
     for (int i = 0; i < v; i++) {
-        IntIterator *it = adjacent(i);
+        NodeIterator<int>* it = adjacent(i);
         while (it->hasNext()) {
             rev->addEdge(it->next(), i);
         }
     }
     return rev;
 }
+#endif

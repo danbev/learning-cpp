@@ -14,7 +14,7 @@ class DepthFirstPathSearch {
         DepthFirstPathSearch(const Graph * graph, int s);
         bool isConnectedToSource(int v) const;
         int visitedVertices() const;
-        IntIterator* pathTo(int v) const;
+        NodeIterator<int>* pathTo(int v) const;
 };
 
 DepthFirstPathSearch::DepthFirstPathSearch(const Graph *graph, int s) {
@@ -39,7 +39,7 @@ DepthFirstPathSearch::DepthFirstPathSearch(const Graph *graph, int s) {
 void DepthFirstPathSearch::dfs(const Graph *g, int v) {
     visited[v] = true; // first step is to mark the vertex as visited
     count++;
-    IntIterator *it = g->adjacent(v);
+    NodeIterator<int>* it = g->adjacent(v);
     std::cout << __func__ << ": Processing v = " << v << std::endl;
     while(it->hasNext()) {
         int w = it->next();
@@ -51,7 +51,7 @@ void DepthFirstPathSearch::dfs(const Graph *g, int v) {
     }
 }
 
-IntIterator* DepthFirstPathSearch::pathTo(int v) const {
+NodeIterator<int>* DepthFirstPathSearch::pathTo(int v) const {
     if (!isConnectedToSource(v)) {
         // TODO: return an empty IntIterator
         return nullptr;

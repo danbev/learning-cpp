@@ -32,7 +32,7 @@ TEST(DeptFirstPathSearch, pathTo) {
     // the graph depth first. That is taking the first adjacent vertex and processing it and its 
     // subpaths recursively.
 
-    IntIterator* it = search.pathTo(5);
+    NodeIterator<int>* it = search.pathTo(5);
     EXPECT_EQ(0, it->next());
     EXPECT_EQ(2, it->next());
     EXPECT_EQ(3, it->next());

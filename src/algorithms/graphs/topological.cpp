@@ -7,11 +7,11 @@ namespace graphs {
 
     class Topological {
         private:
-            IntIterator *ord;
+            NodeIterator<int>* ord;
 
         public:
             Topological(const DirectedGraph *digraph);
-            IntIterator* order() const;
+            NodeIterator<int>* order() const;
     };
 
     Topological::Topological(const DirectedGraph* digraph) {
@@ -22,7 +22,7 @@ namespace graphs {
         }
     }
 
-    IntIterator * Topological::order() const {
+    NodeIterator<int>* Topological::order() const {
         return ord;
     }
 
