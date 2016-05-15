@@ -22,6 +22,7 @@ missing
 *.libs
 *.trs
 *.dSYM
+.tags
 src/types
 src/bs
 src/sorting
