@@ -22,6 +22,6 @@ void Bag::foreach(Func &f) const {
     list->foreach(f);
 }
 
-NodeIterator<int>* Bag::iterator() {
+Iterator<int>* Bag::iterator() {
     return list->iterator();
 }

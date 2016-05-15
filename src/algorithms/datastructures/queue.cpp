@@ -12,20 +12,9 @@ class Queue {
         int dequeue();
         int size() const;
         bool empty() const;
-        NodeIterator<int>* iterator() const;
+        Iterator<int>* iterator() const;
         void print() const;
 };
-
-/*
-class QueueIterator : public IntIterator {
-    private:
-        const Queue * queue;
-    public:
-        QueueIterator(const Queue *queue);
-        int next() const;
-        bool hasNext() const;
-};
-*/
 
 Queue::Queue() {
     this->list = new DLinkedList();
@@ -52,7 +41,7 @@ void Queue::print() const {
     list->print();
 }
 
-NodeIterator<int>* Queue::iterator() const {
+Iterator<int>* Queue::iterator() const {
     return list->iterator();
 }
 #endif

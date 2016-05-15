@@ -27,7 +27,7 @@ TEST(DirectedCycle, cyclic) {
     graph.addEdge(3, 0);
     const DirectedCycle cycle (&graph);
     EXPECT_EQ(true, cycle.hasCycle());
-    NodeIterator<int>* it = cycle.cycle();
+    Iterator<int>* it = cycle.cycle();
     EXPECT_EQ(3, it->next());
     EXPECT_EQ(0, it->next());
     EXPECT_EQ(1, it->next());

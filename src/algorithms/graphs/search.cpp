@@ -23,7 +23,7 @@ Search::Search(const Graph *graph, int s) {
 void Search::populateConnected() {
     int vertices = this->graph->vertices();
     connected = new bool[vertices] {false};
-    NodeIterator<int> *it = this->graph->adjacent(s);
+    Iterator<int> *it = this->graph->adjacent(s);
     while(it->hasNext()) {
         int v = it->next();
         connected[v] = true;

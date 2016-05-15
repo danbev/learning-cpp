@@ -11,20 +11,9 @@ class Stack {
         Stack &push(int value);
         int pop();
         int size() const;
-        NodeIterator<int>* iterator() const;
+        Iterator<int>* iterator() const;
         void print() const;
 };
-
-/*
-class StackIterator : public IntIterator {
-    private:
-        const Stack * stack;
-    public:
-        StackIterator(const Stack *stack);
-        int next() const;
-        bool hasNext() const;
-};
-*/
 
 Stack::Stack() {
     this->list = new LinkedList();
@@ -47,7 +36,7 @@ void Stack::print() const {
     list->print();
 }
 
-NodeIterator<int>* Stack::iterator() const {
+Iterator<int>* Stack::iterator() const {
     return list->iterator();
 }
 #endif

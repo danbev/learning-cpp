@@ -13,7 +13,7 @@ class DirectedDepthFirstPathSearch {
         DirectedDepthFirstPathSearch(const Digraph * graph, int s);
         bool isConnectedToSource(int v) const;
         int visitedVertices() const;
-        NodeIterator<int>* pathTo(int v) const;
+        Iterator<int>* pathTo(int v) const;
 };
 
 DirectedDepthFirstPathSearch::DirectedDepthFirstPathSearch(const Digraph *graph, int s) {
@@ -32,7 +32,7 @@ DirectedDepthFirstPathSearch::DirectedDepthFirstPathSearch(const Digraph *graph,
 void DirectedDepthFirstPathSearch::dfs(const Digraph *g, int v) {
     visited[v] = true; // first step is to mark the vertex as visited
     count++;
-    NodeIterator<int>* it = g->adjacent(v);
+    Iterator<int>* it = g->adjacent(v);
     while(it->hasNext()) {
         int w = it->next();
         if (!visited[w]) {
@@ -42,7 +42,7 @@ void DirectedDepthFirstPathSearch::dfs(const Digraph *g, int v) {
     }
 }
 
-NodeIterator<int>* DirectedDepthFirstPathSearch::pathTo(int v) const {
+Iterator<int>* DirectedDepthFirstPathSearch::pathTo(int v) const {
     if (!isConnectedToSource(v)) {
         // TODO: return an empty IntIterator
         return nullptr;

@@ -18,7 +18,7 @@ TEST(DirectedDepthFirstPathSearch, pathTo) {
     graph.addEdge(3, 5);
 
     const DirectedDepthFirstPathSearch search (&graph, 0);
-    NodeIterator<int>* it = search.pathTo(5);
+    Iterator<int>* it = search.pathTo(5);
     EXPECT_EQ(0, it->next());
     EXPECT_EQ(2, it->next());
     EXPECT_EQ(3, it->next());

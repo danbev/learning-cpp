@@ -1,7 +1,7 @@
 #include <iostream>
 #ifndef LINKED_LIST
 #define LINKED_LIST
-#include "node-iterator.h"
+#include "iterator.h"
 
 class IntNode : public Node<int> {
     friend class LinkedList;
@@ -27,7 +27,7 @@ class LinkedList {
         const LinkedList &print() const;
         template<class Func>
         void foreach(Func &f) const;
-        NodeIterator<int>* iterator();
+        Iterator<int>* iterator();
 };
 
 bool LinkedList::empty() const {
@@ -106,24 +106,24 @@ void LinkedList::foreach(Func &f) const {
 }
 
 template<>
-NodeIterator<int>::NodeIterator(Node<int>* current) {
+Iterator<int>::Iterator(Node<int>* current) {
     this->current_ = current;
 }
 
 template<>
-int NodeIterator<int>::next() {
+int Iterator<int>::next() {
     int v = current_->value();
     current_ = current_->next();
     return v;
 }
 
 template<>
-bool NodeIterator<int>::hasNext() {
+bool Iterator<int>::hasNext() {
     return current_ != nullptr;
 }
 
-NodeIterator<int>* LinkedList::iterator() {
-    return new NodeIterator<int>(head);
+Iterator<int>* LinkedList::iterator() {
+    return new Iterator<int>(head);
 }
 
 /*

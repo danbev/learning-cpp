@@ -30,7 +30,7 @@ CycleGraph::CycleGraph(const Graph *graph) {
 
 void CycleGraph::dfs(const Graph *g, int v, int u) {
     visited[v] = true; 
-    NodeIterator<int>* it = g->adjacent(v);
+    Iterator<int>* it = g->adjacent(v);
     while(it->hasNext()) {
         int w = it->next();
         if (!visited[w]) {

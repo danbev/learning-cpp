@@ -1,6 +1,5 @@
 #ifndef DNODE_H
 #define DNODE_H
-#include "node-iterator.h"
 template<typename T>
 class DNode : public Node<T> {
     protected:

@@ -1,29 +1,29 @@
-#ifndef NODE_ITERATOR
-#define NODE_ITERATOR
+#ifndef ITERATOR
+#define ITERATOR
 #include "node.h"
 template<typename T>
-class NodeIterator {
+class Iterator {
     protected:
         Node<T>* current_;
     public:
-        NodeIterator(Node<T>* current);
+        Iterator(Node<T>* current);
         T next();
         bool hasNext();
 };
 
 template<typename T>
-NodeIterator<T>::NodeIterator(Node<T>* current) : current_(current) {
+Iterator<T>::Iterator(Node<T>* current) : current_(current) {
 }
 
 template<typename T>
-T NodeIterator<T>::next() {
+T Iterator<T>::next() {
     T v = current_->value_;
     current_ = current_->next_;
     return v;
 }
 
 template<typename T>
-bool NodeIterator<T>::hasNext() {
+bool Iterator<T>::hasNext() {
     current_ != nullptr;
 }
 

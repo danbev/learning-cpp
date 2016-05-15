@@ -1,6 +1,5 @@
 #ifndef NODE_H
 #define NODE_H
-#include "node-iterator.h"
 template<typename T>
 class Node {
     protected:

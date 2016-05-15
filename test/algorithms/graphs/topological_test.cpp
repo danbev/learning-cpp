@@ -10,7 +10,7 @@ TEST(Toplogical, create) {
   graph.addEdge(2, 3);
   graph.addEdge(0, 4);
   const graphs::Topological topo {&graph};
-  NodeIterator<int>* it = topo.order();
+  Iterator<int>* it = topo.order();
   EXPECT_EQ(true, it->hasNext());
   EXPECT_EQ(0, it->next());
   EXPECT_EQ(1, it->next());

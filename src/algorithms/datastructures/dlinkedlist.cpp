@@ -1,13 +1,13 @@
 #ifndef DLINKED_LIST
 #define DLINKED_LIST
 #include <iostream>
-#include "node-iterator.h"
+#include "iterator.h"
 #include "dnode.h"
 
 class DIntNode : public DNode<int> {
     friend class DLinkedList;
     friend class DLinkedListIntIterator;
-    friend class NodeIterator<int>;
+    friend class Iterator<int>;
     public:
         DIntNode(int value, DIntNode* next, DIntNode* previous = nullptr) : DNode<int>(value, next, previous) { }
         ~DIntNode() {}
@@ -18,7 +18,7 @@ class DIntNode : public DNode<int> {
  */
 class DLinkedList {
     friend class DLinkedListIntIterator;
-    friend class NodeIterator<int>;
+    friend class Iterator<int>;
     private: 
         DNode<int>* head;
         DNode<int>* tail;
@@ -37,7 +37,7 @@ class DLinkedList {
         template<class Func>
         void forEach(Func &f);
         const DLinkedList &print() const;
-        NodeIterator<int>* iterator();
+        Iterator<int>* iterator();
 };
 
 bool DLinkedList::empty() const {
@@ -156,7 +156,7 @@ const DLinkedList& DLinkedList::print() const {
     return *this;
 }
 
-NodeIterator<int>* DLinkedList::iterator() {
-    return new NodeIterator<int>(head);
+Iterator<int>* DLinkedList::iterator() {
+    return new Iterator<int>(head);
 }
 #endif

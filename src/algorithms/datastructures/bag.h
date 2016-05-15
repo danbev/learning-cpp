@@ -15,6 +15,6 @@ class Bag {
         Bag& add(int value);
         template<class Func>
         void foreach(Func &f) const;
-        NodeIterator<int>* iterator();
+        Iterator<int>* iterator();
 };
 #endif

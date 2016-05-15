@@ -19,7 +19,7 @@ class DirectedGraph : public Digraph {
         int vertices() const;
         int edges() const;
         void addEdge(int v, int w);
-        NodeIterator<int>* adjacent(int v) const;
+        Iterator<int>* adjacent(int v) const;
         Digraph* reverse() const;
 };
 
@@ -50,7 +50,7 @@ void DirectedGraph::addEdge(int v, int w) {
     e++;
 }
 
-NodeIterator<int>* DirectedGraph::adjacent(int v) const {
+Iterator<int>* DirectedGraph::adjacent(int v) const {
     return bags[v]->iterator();
 }
 
@@ -60,7 +60,7 @@ NodeIterator<int>* DirectedGraph::adjacent(int v) const {
 Digraph* DirectedGraph::reverse() const {
     DirectedGraph* rev = new DirectedGraph(v);
     for (int i = 0; i < v; i++) {
-        NodeIterator<int>* it = adjacent(i);
+        Iterator<int>* it = adjacent(i);
         while (it->hasNext()) {
             rev->addEdge(it->next(), i);
         }
