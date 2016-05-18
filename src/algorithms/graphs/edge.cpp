@@ -1,11 +1,14 @@
 #include "edge.h"
 
+Edge::Edge(int v, int w, double weight) : v_(v), w_(w), weight_(weight) {
+}
+
 int Edge::either() const {
     return v_;
 }
 
-double Edge::weigth() const {
-    return weigth_;
+double Edge::weight() const {
+    return weight_;
 }
 
 int Edge::other(int vertex) const {
@@ -13,10 +16,10 @@ int Edge::other(int vertex) const {
 }
 
 int Edge::compare(const Edge that) const {
-    if (weigth_ < that.weigth_) {
+    if (weight_ < that.weight_) {
         return -1;
     }
-    if (weigth_ > that.weigth_) {
+    if (weight_ > that.weight_) {
         return +1;
     }
     return 0;

@@ -4,10 +4,10 @@ class Edge {
     private:
         int v_;
         int w_;
-        double weigth_;
+        double weight_;
     public:
-        Edge(int v, int w, double weigth) : v_(v), w_(w), weigth_(weigth) {};
-        double weigth() const;
+        Edge(int v, int w, double weight);
+        double weight() const;
         int either() const;
         int other(int vertex) const;
         int compare(const Edge that) const;
