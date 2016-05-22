@@ -2,7 +2,7 @@
 #define NODE_H
 template<typename T>
 class Node {
-    protected:
+    private:
         T value_;
         Node<T>* next_;
     public:

@@ -1,27 +1,35 @@
-#include <stdio.h>
+#ifndef BAG
+#define BAG
 #include "bag.h"
 
-Bag::Bag() {
-    this->list = new LinkedList();
+template<typename T>
+Bag<T>::Bag() {
+    this->list = new LinkedList<T>();
 }
 
-Bag::~Bag() {
+template<typename T>
+Bag<T>::~Bag() {
     delete list;
 }
 
-int Bag::size() const {
+template<typename T>
+int Bag<T>::size() const {
     return list->size();
 }
 
-Bag& Bag::add(int value) {
+template<typename T>
+Bag<T>& Bag<T>::add(T value) {
     list->addFront(value);
     return *this;
 }
+template<typename T>
 template<class Func>
-void Bag::foreach(Func &f) const {
+void Bag<T>::foreach(Func &f) const {
     list->foreach(f);
 }
 
-Iterator<int>* Bag::iterator() {
+template<typename T>
+Iterator<T>* Bag<T>::iterator() {
     return list->iterator();
 }
+#endif

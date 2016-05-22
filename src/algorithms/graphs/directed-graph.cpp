@@ -11,7 +11,7 @@ class DirectedGraph : public Digraph {
     private:
         int v;
         int e;
-        Bag** bags;
+        Bag<int>** bags;
 
     public:
         DirectedGraph(int vertices);
@@ -25,9 +25,9 @@ class DirectedGraph : public Digraph {
 
 DirectedGraph::DirectedGraph(int vertices) {
     this->v = vertices;
-    this->bags = new Bag*[vertices];
+    this->bags = new Bag<int>*[vertices];
     for (int i = 0; i < vertices; i++) {
-        bags[i] = new Bag();
+        bags[i] = new Bag<int>();
     }
     this->e = 0;
 }

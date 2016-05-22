@@ -5,7 +5,7 @@
 
 class Stack {
     private:
-        LinkedList * list;
+        LinkedList<int>* list;
     public:
         Stack();
         Stack &push(int value);
@@ -16,7 +16,7 @@ class Stack {
 };
 
 Stack::Stack() {
-    this->list = new LinkedList();
+    this->list = new LinkedList<int>();
 }
 
 Stack& Stack::push(int value) {

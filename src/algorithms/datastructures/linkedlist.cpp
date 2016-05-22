@@ -3,43 +3,42 @@
 #define LINKED_LIST
 #include "iterator.h"
 
-class IntNode : public Node<int> {
-    friend class LinkedList;
-    friend class LinkedListIntIterator;
-    public:
-        IntNode(int value, Node<int> * next) : Node<int>(value, next) {}
-        ~IntNode() {}
-};
-
+template<typename T = int>
 class LinkedList {
-    friend class LinkedListIntIterator;
     private: 
-        Node<int>* head;
+        Node<T>* head;
         int length;
     public:
-        LinkedList() : head(nullptr), length(0) {}
+        LinkedList<T>();
         bool empty() const;
-        LinkedList &addFront(int value);
-        int removeFront();
-        int front() const;
+        LinkedList<T> &addFront(T value);
+        T removeFront();
+        T front() const;
         int size() const;
-        bool contains(int nr) const;
-        const LinkedList &print() const;
+        bool contains(T nr) const;
+        const LinkedList<T> &print() const;
         template<class Func>
         void foreach(Func &f) const;
-        Iterator<int>* iterator();
+        Iterator<T>* iterator();
 };
 
-bool LinkedList::empty() const {
+
+template<typename T>
+LinkedList<T>::LinkedList() : head(nullptr), length(0) {
+}
+
+template<typename T>
+bool LinkedList<T>::empty() const {
     return head == nullptr;
 }
 
-LinkedList& LinkedList::addFront(int value) {
-    Node<int>* newNode = new IntNode(value, nullptr);
+template<typename T>
+LinkedList<T>& LinkedList<T>::addFront(T value) {
+    Node<T>* newNode = new Node<T>(value, nullptr);
     if (head == nullptr) {
         head = newNode;
     } else {
-        Node<int>* current = head;
+        Node<T>* current = head;
         newNode->next(current);
         head = newNode;
     }
@@ -47,34 +46,38 @@ LinkedList& LinkedList::addFront(int value) {
     return *this;
 }
 
-int LinkedList::removeFront() {
+template<typename T>
+T LinkedList<T>::removeFront() {
     if (head == nullptr) {
         return -1;
     }
-    Node<int> *old = head;
+    Node<T> *old = head;
     head = old->next();
-    int value = old->value();
+    T value = old->value();
     delete old;
     length--;
     return value;
 }
 
-int LinkedList::front() const {
+template<typename T>
+T LinkedList<T>::front() const {
     if (head == nullptr) {
         return -1;
     }
     return head->next()->value();
 }
 
-int LinkedList::size() const {
+template<typename T>
+int LinkedList<T>::size() const {
     return length;
 }
 
-bool LinkedList::contains(int nr) const {
+template<typename T>
+bool LinkedList<T>::contains(T nr) const {
     if (head == nullptr) {
         return false;
     }
-    for (Node<int>* p = head; p != nullptr; p = p->next()) {
+    for (Node<T>* p = head; p != nullptr; p = p->next()) {
         if (p->value() == nr) {
             return true;
         }
@@ -82,12 +85,13 @@ bool LinkedList::contains(int nr) const {
     return false;
 }
 
-const LinkedList& LinkedList::print() const {
+template<typename T>
+const LinkedList<T>& LinkedList<T>::print() const {
     if (head == nullptr) {
         std::cout << "[empty]" << std::endl;
     } else {
         std::cout << "[";
-        for (Node<int>* node = head; node != nullptr; node = node->next()) {
+        for (Node<T>* node = head; node != nullptr; node = node->next()) {
             std::cout << ", " << node->value();
         }
         std::cout << "]" << std::endl;
@@ -95,47 +99,58 @@ const LinkedList& LinkedList::print() const {
     return *this;
 }
 
+// the class template must come first it seems or you'll get a :
+// error: nested name specifier 'LinkedList<T>::' for declaration does not refer into a class, class
+//       template or class template partial specialization
+//       void LinkedList<T>::foreach(Func &f) const {
+template<typename T>
 template<class Func>
-void LinkedList::foreach(Func &f) const {
+void LinkedList<T>::foreach(Func &f) const {
     if (empty()) {
         return;
     }
-    for (Node<int>* node = head; node != nullptr; node = node->next()) {
+    for (Node<T>* node = head; node != nullptr; node = node->next()) {
         f(node->value());
     }
 }
 
-template<>
-Iterator<int>::Iterator(Node<int>* current) {
+/*
+template<typename T>
+Iterator<T>::Iterator(Node<T>* current) {
     this->current_ = current;
 }
 
-template<>
-int Iterator<int>::next() {
-    int v = current_->value();
+template<typename T>
+T Iterator<T>::next() {
+    T v = current_->value();
     current_ = current_->next();
     return v;
 }
 
-template<>
-bool Iterator<int>::hasNext() {
+template<typename T>
+bool Iterator<T>::hasNext() {
     return current_ != nullptr;
 }
+*/
 
-Iterator<int>* LinkedList::iterator() {
-    return new Iterator<int>(head);
+template<typename T>
+Iterator<T>* LinkedList<T>::iterator() {
+    return new Iterator<T>(head);
 }
 
 /*
  * Reverses the passed in array using the LinkedList
  */ 
-void reverseArray(int arr[], int size) {
-    LinkedList list;
-    for (int i = 0; i < size; i++) {
+/*
+template<typename T>
+void LinkedList<T>::reverseArray(T arr[], int size) const {
+    LinkedList<T> list;
+    for (T i = 0; i < size; i++) {
         list.addFront(arr[i]);
     }
-    for (int i = 0; i < size; i++) {
+    for (T i = 0; i < size; i++) {
         arr[i] = list.removeFront();
     }
 }
+*/
 #endif

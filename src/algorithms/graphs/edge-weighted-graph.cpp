@@ -5,7 +5,7 @@ EdgeWeightedGraph::EdgeWeightedGraph(int vertices) {
     this->v = vertices;
     this->bags = new Bag<Edge>*[vertices];
     for (int i = 0; i < vertices; i++) {
-        bags[i] = new Bag();
+        bags[i] = new Bag<Edge>();
     }
     this->e = 0;
 }

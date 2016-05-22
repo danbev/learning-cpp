@@ -23,7 +23,7 @@ TEST(DigraphDepthFirstSearch, sources) {
     graph.addEdge(1, 2);
     graph.addEdge(2, 3);
     graph.addEdge(4, 5);
-    Bag sources{};
+    Bag<int> sources{};
     sources.add(0);
     sources.add(4);
     DigraphDepthFirstSearch search (&graph, sources.iterator());

@@ -2,9 +2,9 @@
 #include "../datastructures/linkedlist.cpp"
 #include <iostream>
 
-LinkedList primefactors(int nr) {
+LinkedList<int> primefactors(int nr) {
     std::cout << "Factor " << nr << std::endl;
-    LinkedList list;
+    LinkedList<int> list;
     for (int i =2; i < nr; i++) {
         while (nr % i == 0) { 
             // nr is evenly divisable so i is a factor

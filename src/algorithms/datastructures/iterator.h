@@ -17,14 +17,14 @@ Iterator<T>::Iterator(Node<T>* current) : current_(current) {
 
 template<typename T>
 T Iterator<T>::next() {
-    T v = current_->value_;
-    current_ = current_->next_;
+    T v = current_->value();
+    current_ = current_->next();
     return v;
 }
 
 template<typename T>
 bool Iterator<T>::hasNext() {
-    current_ != nullptr;
+    return current_ != nullptr;
 }
 
 #endif

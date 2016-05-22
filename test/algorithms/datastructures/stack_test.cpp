@@ -22,6 +22,7 @@ TEST(Stack, popEmptyList) {
   EXPECT_EQ(-1, stack.pop());
 }
 
+/*
 TEST(linkedlist, reverseArray) {
   int arr[] {1, 2, 3, 4};
   reverseArray(arr, 4);
@@ -30,6 +31,7 @@ TEST(linkedlist, reverseArray) {
   EXPECT_EQ(2, arr[2]);
   EXPECT_EQ(1, arr[3]);
 }
+*/
 
 void printTowers(int move, Stack one, Stack two, Stack three) {
   std::cout << "Move: " << move << std::endl;
