@@ -21,14 +21,13 @@ int EdgeWeightedGraph::vertices() const {
 void EdgeWeightedGraph::addEdge(Edge edge) {
     int v = edge.either();
     int w = edge.other(v);
-    bags[v]->add(w);
-    bags[w]->add(v);
+    bags[v]->add(edge);
+    bags[w]->add(edge);
     e++;
 }
 
 Iterator<Edge>* EdgeWeightedGraph::adjacent(int v) const {
-    // TODO: implement this
-    return nullptr;
+    return bags[v]->iterator();
 }
 
 Iterator<Edge>* EdgeWeightedGraph::edges() const {

@@ -324,12 +324,12 @@ edge_test_CXXFLAGS = $(GTEST_CXXFLAGS)
 edge_test_LDFLAGS = $(GTEST_LDFLAGS)
 edge_test_LDADD = $(GTEST_LIBS) -lgtest_main
 
-#check_PROGRAMS += edge_weighted_graph_test
-#edge_weighted_graph_test_SOURCES = ./algorithms/graphs/edge_weighted_graph_test.cpp
-#edge_weighted_graph_test_CPPFLAGS = -I$(top_srcdir)/src/algorithms/graphs $(GTEST_CPPFLAGS)
-#edge_weighted_graph_test_CXXFLAGS = $(GTEST_CXXFLAGS)
-#edge_weighted_graph_test_LDFLAGS = $(GTEST_LDFLAGS)
-#edge_weighted_graph_test_LDADD = $(GTEST_LIBS) -lgtest_main
+check_PROGRAMS += edge_weighted_graph_test
+edge_weighted_graph_test_SOURCES = ./algorithms/graphs/edge_weighted_graph_test.cpp
+edge_weighted_graph_test_CPPFLAGS = -I$(top_srcdir)/src/algorithms/graphs $(GTEST_CPPFLAGS)
+edge_weighted_graph_test_CXXFLAGS = $(GTEST_CXXFLAGS)
+edge_weighted_graph_test_LDFLAGS = $(GTEST_LDFLAGS)
+edge_weighted_graph_test_LDADD = $(GTEST_LIBS) -lgtest_main
 
 # Declare libraries and define tests here...
 

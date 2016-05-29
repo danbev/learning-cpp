@@ -1,6 +1,6 @@
 #ifndef EDGE_WEIGHTED_GRAPH_H
 #define EDGE_WEIGHTED_GRAPH_H
-#include "edge.h"
+#include "edge.cpp"
 #include "../datastructures/bag.cpp"
 
 /**

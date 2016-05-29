@@ -82,3 +82,4 @@ test/directed_depth_first_order_test
 test/topological_test
 src/concurrency/basic
 test/edge_test
+test/edge_weighted_graph_test
