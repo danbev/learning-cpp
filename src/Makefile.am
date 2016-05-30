@@ -1,5 +1,3 @@
-bin_PROGRAMS = types 
-types_SOURCES = types.cpp
 CXX=clang++
 CXXFLAGS="-g" 
 LDFLAGS="-g"
