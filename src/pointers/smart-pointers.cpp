@@ -20,3 +20,7 @@ std::unique_ptr<std::string> uniquePointer() {
     return std::unique_ptr<std::string>(new std::string("bajja"));
 }
 
+std::shared_ptr<std::string> sharedPointer() {
+    return std::shared_ptr<std::string>(new std::string("bajja"));
+}
+

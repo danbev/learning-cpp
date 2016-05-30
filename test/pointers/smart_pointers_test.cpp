@@ -20,3 +20,15 @@ TEST(SmartPointers, uniquePointer) {
     str2 = std::move(str);
     EXPECT_EQ("bajja", *str2) << "unique_ptr should be movable to another pointer with out a compile time error";
 }
+
+TEST(SmartPointers, sharedPointer) {
+    std::shared_ptr<std::string> str = sharedPointer();
+    std::shared_ptr<std::string> str2 = str;
+    EXPECT_EQ("bajja", *str);
+    EXPECT_EQ("bajja", *str2);
+    EXPECT_EQ(2, str.use_count());
+    str.reset();
+    EXPECT_EQ(1, str2.use_count());
+    str2.reset();
+    EXPECT_EQ(nullptr, str2.get());
+}
