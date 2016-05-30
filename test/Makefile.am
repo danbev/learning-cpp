@@ -331,6 +331,13 @@ edge_weighted_graph_test_CXXFLAGS = $(GTEST_CXXFLAGS)
 edge_weighted_graph_test_LDFLAGS = $(GTEST_LDFLAGS)
 edge_weighted_graph_test_LDADD = $(GTEST_LIBS) -lgtest_main
 
+check_PROGRAMS += smart_pointers_test
+smart_pointers_test_SOURCES = ./pointers/smart_pointers_test.cpp
+smart_pointers_test_CPPFLAGS = -I$(top_srcdir)/src/pointers $(GTEST_CPPFLAGS)
+smart_pointers_test_CXXFLAGS = $(GTEST_CXXFLAGS)
+smart_pointers_test_LDFLAGS = $(GTEST_LDFLAGS)
+smart_pointers_test_LDADD = $(GTEST_LIBS) -lgtest_main
+
 # Declare libraries and define tests here...
 
 # Define programs run automatically by "make check"

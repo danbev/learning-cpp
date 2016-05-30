@@ -23,6 +23,7 @@ missing
 *.trs
 *.dSYM
 .tags
+tags
 src/types
 src/bs
 src/sorting
@@ -83,3 +84,4 @@ test/topological_test
 src/concurrency/basic
 test/edge_test
 test/edge_weighted_graph_test
+test/smart_pointers_test
