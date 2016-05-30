@@ -1,6 +1,5 @@
-bin_PROGRAMS = types pointer
+bin_PROGRAMS = types 
 types_SOURCES = types.cpp
-pointer_SOURCES = pointer.cpp
 CXX=clang++
 CXXFLAGS="-g" 
 LDFLAGS="-g"
