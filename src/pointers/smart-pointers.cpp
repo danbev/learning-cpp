@@ -20,6 +20,10 @@ std::unique_ptr<std::string> uniquePointer() {
     return std::unique_ptr<std::string>(new std::string("bajja"));
 }
 
+/**
+ * A shared pointer uses reference counting and when the count is 
+ * zero the pointed to objects destructor will be run.
+ */ 
 std::shared_ptr<std::string> sharedPointer() {
     return std::shared_ptr<std::string>(new std::string("bajja"));
 }
