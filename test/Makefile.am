@@ -338,6 +338,13 @@ smart_pointers_test_CXXFLAGS = $(GTEST_CXXFLAGS)
 smart_pointers_test_LDFLAGS = $(GTEST_LDFLAGS)
 smart_pointers_test_LDADD = $(GTEST_LIBS) -lgtest_main
 
+check_PROGRAMS += casts_test
+casts_test_SOURCES = ./casts/casts_test.cpp
+casts_test_CPPFLAGS = -I$(top_srcdir)/src/casts $(GTEST_CPPFLAGS)
+casts_test_CXXFLAGS = $(GTEST_CXXFLAGS)
+casts_test_LDFLAGS = $(GTEST_LDFLAGS)
+casts_test_LDADD = $(GTEST_LIBS) -lgtest_main
+
 # Declare libraries and define tests here...
 
 # Define programs run automatically by "make check"
