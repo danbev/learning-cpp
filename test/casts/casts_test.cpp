@@ -13,3 +13,8 @@ TEST(Casts, dynamic_cast_to_base_class) {
     EXPECT_EQ("derived", b->name()) << "dynamic_cast from derived to base should succeed. ";
 }
 
+TEST(Casts, dynamic_cast_to_derived_class) {
+    Base* b = new Base();
+    Derived* d = dynamic_cast<Derived*>(b);
+    EXPECT_EQ(nullptr, d) << "dynamic_cast from base to derived should not succeed. ";
+}
