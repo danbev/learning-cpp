@@ -27,3 +27,11 @@ TEST(Casts, typeinfo) {
     EXPECT_NE(nullptr, typeid(*b).name());
     EXPECT_EQ(typeid(Base), typeid(*b)) << "both should be of the same type";
 }
+
+TEST(Casts, const_cast) {
+    int n = 10;
+    const int* nr = &n;
+    int* nr2 = const_cast<int*>(nr);
+    *nr2 += 1;
+    EXPECT_EQ(11, *nr2) << "const_cast should allow for modifying a pointer";
+}
