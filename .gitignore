@@ -22,6 +22,7 @@ missing
 *.libs
 *.trs
 *.dSYM
+*.swo
 .tags
 tags
 src/types

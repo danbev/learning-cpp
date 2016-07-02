@@ -8,6 +8,7 @@ using std::string;
 class Base {
   private:
     static int instances_;
+    static int copied_;
     static int destroyed_;
     string name_;
   public:
@@ -18,6 +19,10 @@ class Base {
     ~Base() {
       cout << "Base descructor called " << destroyed_ << endl;
       destroyed_++;
+    }
+    Base(Base const& other) {
+      cout << "copy construction\n" << endl;
+      copied_++;
     }
 
     string name() {
@@ -31,9 +36,15 @@ class Base {
     static int destroyed() {
       return destroyed_;
     }
+
+    static int copied() {
+      return copied_;
+    }
+
 };
 int Base::instances_ = 0;
 int Base::destroyed_ = 0;
+int Base::copied_ = 0;
 
 class Derived : public Base {
   public: 
