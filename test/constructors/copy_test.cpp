@@ -6,8 +6,11 @@
 using namespace std;
 
 TEST(Copy, copy) {
-    Base b("Fletch");
-    EXPECT_EQ("Fletch", b.name()) << "Normal assignement should succeed";
-    EXPECT_EQ(1, b.instances()) << "1 instance should have been created";
+  {
+    Base a("Fletch");
+    Base b = a;
+  }
+  EXPECT_EQ(1, Base::instances()) << "1 instance should have been created";
+  EXPECT_EQ(2, Base::destroyed()) << "1 instance should have been created";
 }
 
