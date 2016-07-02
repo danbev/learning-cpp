@@ -35,3 +35,10 @@ TEST(Casts, const_cast) {
     *nr2 += 1;
     EXPECT_EQ(11, *nr2) << "const_cast should allow for modifying a pointer";
 }
+
+TEST(Casts, reinterpret_cast) {
+    int* i1 = new int(24);
+    void* v = reinterpret_cast<void*>(i1);
+    int* i2 = reinterpret_cast<int*>(v);
+    EXPECT_EQ(24, *i2) << "const_cast should allow for modifying a pointer";
+}

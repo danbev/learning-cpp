@@ -345,6 +345,13 @@ casts_test_CXXFLAGS = $(GTEST_CXXFLAGS)
 casts_test_LDFLAGS = $(GTEST_LDFLAGS)
 casts_test_LDADD = $(GTEST_LIBS) -lgtest_main
 
+check_PROGRAMS += copy_test
+copy_test_SOURCES = ./constructors/copy_test.cpp
+copy_test_CPPFLAGS = -I$(top_srcdir)/src/constructors $(GTEST_CPPFLAGS)
+copy_test_CXXFLAGS = $(GTEST_CXXFLAGS)
+copy_test_LDFLAGS = $(GTEST_LDFLAGS)
+copy_test_LDADD = $(GTEST_LIBS) -lgtest_main
+
 # Declare libraries and define tests here...
 
 # Define programs run automatically by "make check"
