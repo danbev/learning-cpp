@@ -55,5 +55,6 @@ class Derived : public Base {
     ~Derived() {
       cout << "Derived descructor called" << endl;
     }
+    Derived(Derived const& other) = delete;
 };
 
