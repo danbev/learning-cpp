@@ -23,9 +23,10 @@ class Base {
     Base(Base const& other) {
       cout << "copy construction\n" << endl;
       copied_++;
+      name_ = other.name();
     }
 
-    string name() {
+    string name() const {
       return name_;
     }
 
