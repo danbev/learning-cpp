@@ -359,6 +359,13 @@ array_test_CXXFLAGS = $(GTEST_CXXFLAGS)
 array_test_LDFLAGS = $(GTEST_LDFLAGS)
 array_test_LDADD = $(GTEST_LIBS) -lgtest_main
 
+check_PROGRAMS += decltype_test
+decltype_test_SOURCES = ./fundamentals/types/decltype_test.cpp
+decltype_test_CPPFLAGS = -I$(top_srcdir)/src/fundamentals/types $(GTEST_CPPFLAGS)
+decltype_test_CXXFLAGS = $(GTEST_CXXFLAGS)
+decltype_test_LDFLAGS = $(GTEST_LDFLAGS)
+decltype_test_LDADD = $(GTEST_LIBS) -lgtest_main
+
 # Declare libraries and define tests here...
 
 # Define programs run automatically by "make check"
