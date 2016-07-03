@@ -41,4 +41,6 @@ TEST(Casts, reinterpret_cast) {
     void* v = reinterpret_cast<void*>(i1);
     int* i2 = reinterpret_cast<int*>(v);
     EXPECT_EQ(24, *i2) << "const_cast should allow for modifying a pointer";
+    int a = 10;
+    char b = reinterpret_cast<int>(a);
 }

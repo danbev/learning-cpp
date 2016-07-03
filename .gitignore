@@ -88,3 +88,4 @@ test/edge_weighted_graph_test
 test/smart_pointers_test
 test/casts_test
 test/copy_test
+test/array_test

@@ -352,6 +352,13 @@ copy_test_CXXFLAGS = $(GTEST_CXXFLAGS)
 copy_test_LDFLAGS = $(GTEST_LDFLAGS)
 copy_test_LDADD = $(GTEST_LIBS) -lgtest_main
 
+check_PROGRAMS += array_test
+array_test_SOURCES = ./fundamentals/arrays/array_test.cpp
+array_test_CPPFLAGS = -I$(top_srcdir)/src/arrays/constructors $(GTEST_CPPFLAGS)
+array_test_CXXFLAGS = $(GTEST_CXXFLAGS)
+array_test_LDFLAGS = $(GTEST_LDFLAGS)
+array_test_LDADD = $(GTEST_LIBS) -lgtest_main
+
 # Declare libraries and define tests here...
 
 # Define programs run automatically by "make check"
