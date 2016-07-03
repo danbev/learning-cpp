@@ -20,10 +20,9 @@ class Base {
       cout << "Base descructor called " << destroyed_ << endl;
       destroyed_++;
     }
-    Base(Base const& other) {
+    Base(Base const& other) : name_(other.name_) {
       cout << "copy construction\n" << endl;
       copied_++;
-      name_ = other.name();
     }
 
     string name() const {
