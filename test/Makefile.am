@@ -332,22 +332,22 @@ edge_weighted_graph_test_LDFLAGS = $(GTEST_LDFLAGS)
 edge_weighted_graph_test_LDADD = $(GTEST_LIBS) -lgtest_main
 
 check_PROGRAMS += smart_pointers_test
-smart_pointers_test_SOURCES = ./pointers/smart_pointers_test.cpp
-smart_pointers_test_CPPFLAGS = -I$(top_srcdir)/src/pointers $(GTEST_CPPFLAGS)
+smart_pointers_test_SOURCES = ./fundamentals/pointers/smart_pointers_test.cpp
+smart_pointers_test_CPPFLAGS = -I$(top_srcdir)/src/fundamentals/pointers $(GTEST_CPPFLAGS)
 smart_pointers_test_CXXFLAGS = $(GTEST_CXXFLAGS)
 smart_pointers_test_LDFLAGS = $(GTEST_LDFLAGS)
 smart_pointers_test_LDADD = $(GTEST_LIBS) -lgtest_main
 
 check_PROGRAMS += casts_test
-casts_test_SOURCES = ./casts/casts_test.cpp
-casts_test_CPPFLAGS = -I$(top_srcdir)/src/casts $(GTEST_CPPFLAGS)
+casts_test_SOURCES = ./fundamentals/casts/casts_test.cpp
+casts_test_CPPFLAGS = -I$(top_srcdir)/src/fundamentals/casts $(GTEST_CPPFLAGS)
 casts_test_CXXFLAGS = $(GTEST_CXXFLAGS)
 casts_test_LDFLAGS = $(GTEST_LDFLAGS)
 casts_test_LDADD = $(GTEST_LIBS) -lgtest_main
 
 check_PROGRAMS += copy_test
-copy_test_SOURCES = ./constructors/copy_test.cpp
-copy_test_CPPFLAGS = -I$(top_srcdir)/src/constructors $(GTEST_CPPFLAGS)
+copy_test_SOURCES = ./fundamentals/constructors/copy_test.cpp
+copy_test_CPPFLAGS = -I$(top_srcdir)/src/fundamentals/constructors $(GTEST_CPPFLAGS)
 copy_test_CXXFLAGS = $(GTEST_CXXFLAGS)
 copy_test_LDFLAGS = $(GTEST_LDFLAGS)
 copy_test_LDADD = $(GTEST_LIBS) -lgtest_main
