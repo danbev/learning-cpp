@@ -90,3 +90,4 @@ test/casts_test
 test/copy_test
 test/array_test
 test/decltype_test
+test/template_function_test

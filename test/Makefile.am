@@ -366,6 +366,13 @@ decltype_test_CXXFLAGS = $(GTEST_CXXFLAGS)
 decltype_test_LDFLAGS = $(GTEST_LDFLAGS)
 decltype_test_LDADD = $(GTEST_LIBS) -lgtest_main
 
+check_PROGRAMS += template_function_test
+template_function_test_SOURCES = ./templates/template_function_test.cpp
+template_function_test_CPPFLAGS = -I$(top_srcdir)/src/templates $(GTEST_CPPFLAGS)
+template_function_test_CXXFLAGS = $(GTEST_CXXFLAGS)
+template_function_test_LDFLAGS = $(GTEST_LDFLAGS)
+template_function_test_LDADD = $(GTEST_LIBS) -lgtest_main
+
 # Declare libraries and define tests here...
 
 # Define programs run automatically by "make check"
