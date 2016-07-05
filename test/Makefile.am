@@ -373,6 +373,13 @@ template_function_test_CXXFLAGS = $(GTEST_CXXFLAGS)
 template_function_test_LDFLAGS = $(GTEST_LDFLAGS)
 template_function_test_LDADD = $(GTEST_LIBS) -lgtest_main
 
+check_PROGRAMS += const_test
+const_test_SOURCES = ./fundamentals/const_test.cc
+const_test_CPPFLAGS = -I$(top_srcdir)/src/fundamentals $(GTEST_CPPFLAGS)
+const_test_CXXFLAGS = $(GTEST_CXXFLAGS)
+const_test_LDFLAGS = $(GTEST_LDFLAGS)
+const_test_LDADD = $(GTEST_LIBS) -lgtest_main
+
 # Declare libraries and define tests here...
 
 # Define programs run automatically by "make check"
