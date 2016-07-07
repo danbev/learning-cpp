@@ -92,3 +92,4 @@ test/array_test
 test/decltype_test
 test/template_function_test
 test/const_test
+test/move_test

@@ -380,6 +380,13 @@ const_test_CXXFLAGS = $(GTEST_CXXFLAGS)
 const_test_LDFLAGS = $(GTEST_LDFLAGS)
 const_test_LDADD = $(GTEST_LIBS) -lgtest_main
 
+check_PROGRAMS += move_test
+move_test_SOURCES = ./fundamentals/constructors/move_test.cc
+move_test_CPPFLAGS = -I$(top_srcdir)/src/fundamentals/constructors $(GTEST_CPPFLAGS)
+move_test_CXXFLAGS = $(GTEST_CXXFLAGS)
+move_test_LDFLAGS = $(GTEST_LDFLAGS)
+move_test_LDADD = $(GTEST_LIBS) -lgtest_main
+
 # Declare libraries and define tests here...
 
 # Define programs run automatically by "make check"
