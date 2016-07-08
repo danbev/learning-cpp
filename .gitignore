@@ -44,7 +44,6 @@ test/breakpoints
 test/bst_test
 test/bts_test
 test/bu_mergesort_test
-test/classes/
 test/dlinkedlist_test
 test/gcd_test
 test/hash_table_chaining_test
@@ -93,3 +92,6 @@ test/decltype_test
 test/template_function_test
 test/const_test
 test/move_test
+test/hiding_test
+test/classes/Makefile.am
+test/classes/person_test.cpp
