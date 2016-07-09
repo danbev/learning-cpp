@@ -387,12 +387,12 @@ move_test_CXXFLAGS = $(GTEST_CXXFLAGS)
 move_test_LDFLAGS = $(GTEST_LDFLAGS)
 move_test_LDADD = $(GTEST_LIBS) -lgtest_main
 
-check_PROGRAMS += hiding_test
-hiding_test_SOURCES = ./classes/hiding_test.cc
-hiding_test_CPPFLAGS = -I$(top_srcdir)/src/classes $(GTEST_CPPFLAGS)
-hiding_test_CXXFLAGS = $(GTEST_CXXFLAGS)
-hiding_test_LDFLAGS = $(GTEST_LDFLAGS)
-hiding_test_LDADD = $(GTEST_LIBS) -lgtest_main
+check_PROGRAMS += ambig_test
+ambig_test_SOURCES = ./classes/ambig_test.cc
+ambig_test_CPPFLAGS = -I$(top_srcdir)/src/classes $(GTEST_CPPFLAGS)
+ambig_test_CXXFLAGS = $(GTEST_CXXFLAGS)
+ambig_test_LDFLAGS = $(GTEST_LDFLAGS)
+ambig_test_LDADD = $(GTEST_LIBS) -lgtest_main
 
 # Declare libraries and define tests here...
 
