@@ -153,3 +153,43 @@ __ZN11IntIterator7hasNextEv
 ```
 Lets just try adding an inline definition to see if that make it resolved. Yep that worked but this is not what I want. I want the implementation to be different depending on the underlying data structure used for the iterator.
 It turns out that I was trying to return an abstract class from my iterator() methods. This is not possible but I should have been returning a pointer or a reference. Thinking about this a little more it makes sense, to return a non-reference requires instantiating a ny instance but that won't work as the class is abstract.
+
+
+### Adding Google test to the project
+
+#### Build the gtest lib:
+
+    $ mkdir lib
+    $ mkdir deps ; cd deps
+    $ git clone git@github.com:google/googletest.git
+    $ cd lib/googletest/googletest
+    $ mkdir build ; cd build
+    $ clang -I`pwd`/../include -I`pwd`/../ -pthread -c `pwd`/../src/gtest-all.cc
+    $ ar -rv libgtest.a gtest-all.o
+    $ cp libgtest.a ../../../../lib
+
+#### Writing a test file
+
+    $ mkdir test
+    $ vi main.cc
+    #include "gtest/gtest.h"
+    
+    int main(int argc, char* argv[]) {
+      ::testing::InitGoogleTest(&argc, argv);
+      return RUN_ALL_TESTS();
+    }
+
+    $ vi context_test.cc
+    #include "gtest/gtest.h"
+
+    TEST(Context, test) {
+    }
+
+Add the test as an include in main.cc the compile using:
+    
+    $ clang++ -I`pwd`/../deps/googletest/googletest/include -pthread main.cc ../lib/gtest/libgtest.a -o context_test
+
+Run the test:
+    
+    ./context_test
+
