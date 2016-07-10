@@ -394,6 +394,13 @@ ambig_test_CXXFLAGS = $(GTEST_CXXFLAGS)
 ambig_test_LDFLAGS = $(GTEST_LDFLAGS)
 ambig_test_LDADD = $(GTEST_LIBS) -lgtest_main
 
+check_PROGRAMS += visibility_test
+visibility_test_SOURCES = ./fundamentals/visibility_test.cc
+visibility_test_CPPFLAGS = -I$(top_srcdir)/src/fundamentals $(GTEST_CPPFLAGS) -fvisibility=hidden -fvisibility-inlines-hidden
+visibility_test_CXXFLAGS = $(GTEST_CXXFLAGS) -std=c++11 -fvisibility=hidden -fvisibility-inlines-hidden
+visibility_test_LDFLAGS = $(GTEST_LDFLAGS) -std=c++11 -fvisibility=hidden -fvisibility-inlines-hidden
+visibility_test_LDADD = $(GTEST_LIBS) -lgtest_main
+
 # Declare libraries and define tests here...
 
 # Define programs run automatically by "make check"
