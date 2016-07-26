@@ -97,3 +97,4 @@ test/classes/Makefile.am
 test/classes/person_test.cpp
 test/ambig_test
 test/visibility_test
+test/non-virtual-destructor_test

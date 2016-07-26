@@ -162,7 +162,7 @@ It turns out that I was trying to return an abstract class from my iterator() me
     $ mkdir lib
     $ mkdir deps ; cd deps
     $ git clone git@github.com:google/googletest.git
-    $ cd lib/googletest/googletest
+    $ cd googletest/googletest
     $ mkdir build ; cd build
     $ clang -I`pwd`/../include -I`pwd`/../ -pthread -c `pwd`/../src/gtest-all.cc
     $ ar -rv libgtest.a gtest-all.o
@@ -173,6 +173,7 @@ It turns out that I was trying to return an abstract class from my iterator() me
     $ mkdir test
     $ vi main.cc
     #include "gtest/gtest.h"
+    #include "context_test.cc"
     
     int main(int argc, char* argv[]) {
       ::testing::InitGoogleTest(&argc, argv);
@@ -185,7 +186,7 @@ It turns out that I was trying to return an abstract class from my iterator() me
     TEST(Context, test) {
     }
 
-Add the test as an include in main.cc the compile using:
+Add the test as an include in main.cc, and then compile using:
     
     $ clang++ -I`pwd`/../deps/googletest/googletest/include -pthread main.cc ../lib/gtest/libgtest.a -o context_test
 
@@ -193,3 +194,6 @@ Run the test:
     
     ./context_test
 
+### Destructors
+C++ specifies that when a derived class object is deleted through a pointer to a base class with a non-virtual destructor, results are undefined.
+What typically happens at runtime is that the derived part of the object is never destroyed.

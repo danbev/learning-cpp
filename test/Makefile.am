@@ -401,6 +401,13 @@ visibility_test_CXXFLAGS = $(GTEST_CXXFLAGS) -std=c++11 -fvisibility=hidden -fvi
 visibility_test_LDFLAGS = $(GTEST_LDFLAGS) -std=c++11 -fvisibility=hidden -fvisibility-inlines-hidden
 visibility_test_LDADD = $(GTEST_LIBS) -lgtest_main
 
+check_PROGRAMS += non-virtual-destructor_test
+non_virtual_destructor_test_SOURCES = ./fundamentals/constructors/non-virtual-destructor_test.cc
+non_virtual_destructor_test_CPPFLAGS = -I$(top_srcdir)/src/fundamentals/constructors $(GTEST_CPPFLAGS)
+non_virtual_destructor_test_CXXFLAGS = $(GTEST_CXXFLAGS)
+non_virtual_destructor_test_LDFLAGS = $(GTEST_LDFLAGS)
+non_virtual_destructor_test_LDADD = $(GTEST_LIBS) -lgtest_main
+
 # Declare libraries and define tests here...
 
 # Define programs run automatically by "make check"
