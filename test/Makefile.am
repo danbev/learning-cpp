@@ -415,6 +415,13 @@ virtual_destructor_test_CXXFLAGS = $(GTEST_CXXFLAGS)
 virtual_destructor_test_LDFLAGS = $(GTEST_LDFLAGS)
 virtual_destructor_test_LDADD = $(GTEST_LIBS) -lgtest_main
 
+check_PROGRAMS += default-virtual-destructor_test
+default_virtual_destructor_test_SOURCES = ./fundamentals/constructors/default-virtual-destructor_test.cc
+default_virtual_destructor_test_CPPFLAGS = -I$(top_srcdir)/src/fundamentals/constructors $(GTEST_CPPFLAGS)
+default_virtual_destructor_test_CXXFLAGS = $(GTEST_CXXFLAGS)
+default_virtual_destructor_test_LDFLAGS = $(GTEST_LDFLAGS)
+default_virtual_destructor_test_LDADD = $(GTEST_LIBS) -lgtest_main
+
 # Declare libraries and define tests here...
 
 # Define programs run automatically by "make check"
