@@ -100,3 +100,4 @@ test/visibility_test
 test/non-virtual-destructor_test
 test/virtual-destructor_test
 test/default-virtual-destructor_test
+test/macros_test

@@ -422,6 +422,13 @@ default_virtual_destructor_test_CXXFLAGS = $(GTEST_CXXFLAGS)
 default_virtual_destructor_test_LDFLAGS = $(GTEST_LDFLAGS)
 default_virtual_destructor_test_LDADD = $(GTEST_LIBS) -lgtest_main
 
+check_PROGRAMS += macros_test
+macros_test_SOURCES = ./fundamentals/macros/macros_test.cc
+macros_test_CPPFLAGS = -I$(top_srcdir)/src/fundamentals/macros $(GTEST_CPPFLAGS)
+macros_test_CXXFLAGS = $(GTEST_CXXFLAGS)
+macros_test_LDFLAGS = $(GTEST_LDFLAGS)
+macros_test_LDADD = $(GTEST_LIBS) -lgtest_main
+
 # Declare libraries and define tests here...
 
 # Define programs run automatically by "make check"
