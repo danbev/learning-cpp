@@ -108,23 +108,23 @@ Sometime you want to exit lldb and recompile to make change in the tested code. 
 
 Adding a conditional break point:  
 
-  (lldb) breakpoint set --file heapsort.cpp --line 41 --condition 'end==1'
+    (lldb) breakpoint set --file heapsort.cpp --line 41 --condition 'end==1'
 
 Here _end_ is a local variable.
 
 Adding a watch point:  
 
-  (lldb) watchpoint set var end
+    (lldb) watchpoint set var end
 
 Every time the above variable _end_ is modified it will be displayed:
 
-  Watchpoint 1 hit:
-  old value: 2
-  new value: 1
+    Watchpoint 1 hit:
+    old value: 2
+    new value: 1
 
 You can also add a condition so that it breaks when this condition applies:  
 
-  (lldb) watchpoint modify -c 'end==1'
+    (lldb) watchpoint modify -c 'end==1'
   
 
 ## Adding unit tests
@@ -173,7 +173,6 @@ It turns out that I was trying to return an abstract class from my iterator() me
     $ mkdir test
     $ vi main.cc
     #include "gtest/gtest.h"
-    #include "context_test.cc"
     
     int main(int argc, char* argv[]) {
       ::testing::InitGoogleTest(&argc, argv);
@@ -186,7 +185,7 @@ It turns out that I was trying to return an abstract class from my iterator() me
     TEST(Context, test) {
     }
 
-Add the test as an include in main.cc, and then compile using:
+And then compile using:
     
     $ clang++ -I`pwd`/../deps/googletest/googletest/include -pthread main.cc ../lib/gtest/libgtest.a -o context_test
 
