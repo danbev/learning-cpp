@@ -11,8 +11,8 @@ class MacroExample {
 
    std::string getName() const;
 
-#define VS(PropertyName, StringValue) V(std::string, PropertyName, StringValue)
-#define V(TypeName, PropertyName, StringValue)                                \
+#define VS(PropertyName, StringValue) V(std::string, PropertyName)
+#define V(TypeName, PropertyName)                                \
   inline TypeName PropertyName() const;
   STRING_SYMBOL_PROPERTIES(VS)
 #undef V
@@ -20,8 +20,8 @@ class MacroExample {
 
  public:
  // The fields would normally be private
-#define VS(PropertyName, StringValue) V(std::string, PropertyName, StringValue)
-#define V(TypeName, PropertyName, StringValue)                                \
+#define VS(PropertyName, StringValue) V(std::string, PropertyName)
+#define V(TypeName, PropertyName)                                \
   TypeName PropertyName ## _;
   STRING_SYMBOL_PROPERTIES(VS)
 #undef V
@@ -32,8 +32,8 @@ class MacroExample {
 
 };
 
-#define VS(PropertyName, StringValue) V(std::string, PropertyName, StringValue)
-#define V(TypeName, PropertyName, StringValue)                                \
+#define VS(PropertyName, StringValue) V(std::string, PropertyName)
+#define V(TypeName, PropertyName)                                \
 inline TypeName MacroExample::PropertyName() const {                          \
    return PropertyName ## _;    \
  }
