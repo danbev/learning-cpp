@@ -101,3 +101,4 @@ test/non-virtual-destructor_test
 test/virtual-destructor_test
 test/default-virtual-destructor_test
 test/macros_test
+test/vararg_test

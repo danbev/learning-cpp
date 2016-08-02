@@ -429,6 +429,13 @@ macros_test_CXXFLAGS = $(GTEST_CXXFLAGS)
 macros_test_LDFLAGS = $(GTEST_LDFLAGS)
 macros_test_LDADD = $(GTEST_LIBS) -lgtest_main
 
+check_PROGRAMS += vararg_test
+vararg_test_SOURCES = ./fundamentals/macros/vararg_test.cc
+vararg_test_CPPFLAGS = -I$(top_srcdir)/src/fundamentals/macros $(GTEST_CPPFLAGS)
+vararg_test_CXXFLAGS = $(GTEST_CXXFLAGS)
+vararg_test_LDFLAGS = $(GTEST_LDFLAGS)
+vararg_test_LDADD = $(GTEST_LIBS) -lgtest_main
+
 # Declare libraries and define tests here...
 
 # Define programs run automatically by "make check"
