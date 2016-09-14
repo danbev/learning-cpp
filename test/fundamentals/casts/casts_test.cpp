@@ -10,6 +10,15 @@ TEST(Casts, cast) {
     EXPECT_EQ("derived", b->name()) << "normal cast should succeed ";
 }
 
+TEST(Casts, static_cast) {
+    Base* b = new Base();
+    Derived* d = static_cast<Derived*>(b);
+    EXPECT_EQ("base", d->name()) << "static_cast can downcast but no checks will be performed";
+    EXPECT_EQ("dname", d->dname());
+    Base* c = static_cast<Base*>(d);
+    EXPECT_EQ("base", c->name()) << "static_cast can upcast";
+}
+
 TEST(Casts, dynamic_cast_to_base_class) {
     Derived* d = new Derived();
     Base* b = dynamic_cast<Base*>(d);

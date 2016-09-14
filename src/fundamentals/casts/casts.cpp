@@ -13,6 +13,10 @@ class Derived : public Base {
         std::string name() {
             return "derived";
         }
+
+        std::string dname() {
+          return "dname";
+        }
 };
 
 /**
@@ -20,6 +24,6 @@ class Derived : public Base {
  */
 Base* cast() {
     Derived* d = new Derived();
-    return (Base*)d;
+    return (Base*) d;
 }
 
