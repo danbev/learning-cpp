@@ -2,21 +2,32 @@
 #include <string>
 
 class Base {
+  private: 
+    std::string _name;
+
     public:
-        virtual std::string name() {
-            return "base";
-        }
+      Base(std::string name = "base"): _name(name) {
+      }
+
+      virtual std::string name() {
+        return _name;
+      }
+
 };
 
 class Derived : public Base {
-    public: 
-        std::string name() {
-            return "derived";
-        }
+  public: 
+    Derived(std::string name = "derived") : Base(name) {
+    }
 
-        std::string dname() {
-          return "dname";
-        }
+    std::string name() {
+        return "derived";
+    }
+
+    std::string dname() {
+      return "dname";
+    }
+
 };
 
 /**
