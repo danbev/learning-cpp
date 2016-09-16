@@ -102,3 +102,5 @@ test/virtual-destructor_test
 test/default-virtual-destructor_test
 test/macros_test
 test/vararg_test
+test/util_test
+test/member_pointer_test
