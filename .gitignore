@@ -104,3 +104,4 @@ test/macros_test
 test/vararg_test
 test/util_test
 test/member_pointer_test
+test/protected_test

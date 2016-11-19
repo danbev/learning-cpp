@@ -438,7 +438,7 @@ vararg_test_LDADD = $(GTEST_LIBS) -lgtest_main
 
 check_PROGRAMS += util_test
 util_test_SOURCES = ./fundamentals/casts/util_test.cc
-util_test_CPPFLAGS = -I$(top_srcdir)/src/fundamentals/casts $(GTEST_CPPFLAGS)
+util_test_CPPFLAGS = -I$(top_srcdir)/src/fundamentals/casts -I$(top_srcdir)/src/algorithms/datastructures $(GTEST_CPPFLAGS)
 util_test_CXXFLAGS = $(GTEST_CXXFLAGS)
 util_test_LDFLAGS = $(GTEST_LDFLAGS)
 util_test_LDADD = $(GTEST_LIBS) -lgtest_main
@@ -449,6 +449,13 @@ member_pointer_test_CPPFLAGS = -I$(top_srcdir)/src/fundamentals/pointers $(GTEST
 member_pointer_test_CXXFLAGS = $(GTEST_CXXFLAGS)
 member_pointer_test_LDFLAGS = $(GTEST_LDFLAGS)
 member_pointer_test_LDADD = $(GTEST_LIBS) -lgtest_main
+
+check_PROGRAMS += protected_test
+protected_test_SOURCES = ./fundamentals/protected_test.cc
+protected_test_CPPFLAGS = -I$(top_srcdir)/src/pointers $(GTEST_CPPFLAGS)
+protected_test_CXXFLAGS = $(GTEST_CXXFLAGS)
+protected_test_LDFLAGS = $(GTEST_LDFLAGS)
+protected_test_LDADD = $(GTEST_LIBS) -lgtest_main
 
 # Declare libraries and define tests here...
 
