@@ -105,3 +105,4 @@ test/vararg_test
 test/util_test
 test/member_pointer_test
 test/protected_test
+test/malloc_test

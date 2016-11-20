@@ -457,6 +457,13 @@ protected_test_CXXFLAGS = $(GTEST_CXXFLAGS)
 protected_test_LDFLAGS = $(GTEST_LDFLAGS)
 protected_test_LDADD = $(GTEST_LIBS) -lgtest_main
 
+check_PROGRAMS += malloc_test
+malloc_test_SOURCES = ./fundamentals/malloc_test.cc
+malloc_test_CPPFLAGS = -I$(top_srcdir)/src/pointers $(GTEST_CPPFLAGS)
+malloc_test_CXXFLAGS = $(GTEST_CXXFLAGS)
+malloc_test_LDFLAGS = $(GTEST_LDFLAGS)
+malloc_test_LDADD = $(GTEST_LIBS) -lgtest_main
+
 # Declare libraries and define tests here...
 
 # Define programs run automatically by "make check"
