@@ -464,6 +464,13 @@ malloc_test_CXXFLAGS = $(GTEST_CXXFLAGS)
 malloc_test_LDFLAGS = $(GTEST_LDFLAGS)
 malloc_test_LDADD = $(GTEST_LIBS) -lgtest_main
 
+check_PROGRAMS += forward_list_test
+forward_list_test_SOURCES = ./stl/forward_list_test.cc
+forward_list_test_CPPFLAGS = $(GTEST_CPPFLAGS)
+forward_list_test_CXXFLAGS = $(GTEST_CXXFLAGS)
+forward_list_test_LDFLAGS = $(GTEST_LDFLAGS)
+forward_list_test_LDADD = $(GTEST_LIBS) -lgtest_main
+
 # Declare libraries and define tests here...
 
 # Define programs run automatically by "make check"
