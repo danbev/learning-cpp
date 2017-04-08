@@ -471,6 +471,13 @@ forward_list_test_CXXFLAGS = $(GTEST_CXXFLAGS)
 forward_list_test_LDFLAGS = $(GTEST_LDFLAGS)
 forward_list_test_LDADD = $(GTEST_LIBS) -lgtest_main
 
+check_PROGRAMS += varargs_test
+varargs_test_SOURCES = ./fundamentals/varargs/varargs_test.cc
+varargs_test_CPPFLAGS = -I$(top_srcdir)/src/fundamentals/varargs $(GTEST_CPPFLAGS)
+varargs_test_CXXFLAGS = $(GTEST_CXXFLAGS)
+varargs_test_LDFLAGS = $(GTEST_LDFLAGS)
+varargs_test_LDADD = $(GTEST_LIBS) -lgtest_main
+
 # Declare libraries and define tests here...
 
 # Define programs run automatically by "make check"
