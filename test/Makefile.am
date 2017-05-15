@@ -367,11 +367,18 @@ decltype_test_LDFLAGS = $(GTEST_LDFLAGS)
 decltype_test_LDADD = $(GTEST_LIBS) -lgtest_main
 
 check_PROGRAMS += template_function_test
-template_function_test_SOURCES = ./templates/template_function_test.cpp
+template_function_test_SOURCES = ./templates/template_function_test.cpp 
 template_function_test_CPPFLAGS = -I$(top_srcdir)/src/templates $(GTEST_CPPFLAGS)
 template_function_test_CXXFLAGS = $(GTEST_CXXFLAGS)
 template_function_test_LDFLAGS = $(GTEST_LDFLAGS)
 template_function_test_LDADD = $(GTEST_LIBS) -lgtest_main
+
+check_PROGRAMS += template_class_test
+template_class_test_SOURCES = ./templates/template_class_test.cc ../src/templates/template-class.cc
+template_class_test_CPPFLAGS = -I$(top_srcdir)/src/templates $(GTEST_CPPFLAGS)
+template_class_test_CXXFLAGS = $(GTEST_CXXFLAGS)
+template_class_test_LDFLAGS = $(GTEST_LDFLAGS)
+template_class_test_LDADD = $(GTEST_LIBS) -lgtest_main
 
 check_PROGRAMS += const_test
 const_test_SOURCES = ./fundamentals/const_test.cc
