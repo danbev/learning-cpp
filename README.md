@@ -196,3 +196,12 @@ Run the test:
 ### Destructors
 C++ specifies that when a derived class object is deleted through a pointer to a base class with a non-virtual destructor, results are undefined.
 What typically happens at runtime is that the derived part of the object is never destroyed.
+
+
+### Templates
+
+#### Instantiation
+This is the process were the compiler will generate a specialization of the template, for example create
+/compile a function that take concrete types.
+This can be implicit/automatic which is when there is a usage of the template. Note that is usage
+and not just a declaration of a pointer to the template.
