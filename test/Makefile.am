@@ -485,6 +485,13 @@ varargs_test_CXXFLAGS = $(GTEST_CXXFLAGS)
 varargs_test_LDFLAGS = $(GTEST_LDFLAGS)
 varargs_test_LDADD = $(GTEST_LIBS) -lgtest_main
 
+check_PROGRAMS += pimpl_test
+pimpl_test_SOURCES = ./patterns/pimpl_test.cc ../src/patterns/pimpl.cc
+pimpl_test_CPPFLAGS = -I$(top_srcdir)/src/patterns $(GTEST_CPPFLAGS) 
+pimpl_test_CXXFLAGS = $(GTEST_CXXFLAGS)
+pimpl_test_LDFLAGS = $(GTEST_LDFLAGS)
+pimpl_test_LDADD = $(GTEST_LIBS) -lgtest_main
+
 # Declare libraries and define tests here...
 
 # Define programs run automatically by "make check"
