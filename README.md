@@ -205,3 +205,25 @@ This is the process were the compiler will generate a specialization of the temp
 /compile a function that take concrete types.
 This can be implicit/automatic which is when there is a usage of the template. Note that is usage
 and not just a declaration of a pointer to the template.
+
+
+### Plain Old Data
+Is a struct or a class without constructors, destructors, or any virtual member functions.
+Member variables declared later in a structure must be at higher addresses. These types of objects are compatible with C.
+You can check if a type is a POD using:
+
+    std::is_pod<Type>();
+
+Recall that the only different in C++ between a struct and a class is the default access of members. For a struct the default
+is public, but for a class the default is private. This makes sense if you think of a class which is supposed to expose an 
+interface and hide its members. The interface for a struct is its data members.
+
+If a struct or class inherits from another, for exemple
+
+    struct Derived : public Base {
+    }
+
+Adding member functions to a struct/class (non-virtual) does not effect the size of the struct class. The reason for this
+is that the compiler transforms the function to a free (not tied to the class/struct) which takes a this pointer as its
+first argument. It also name mangles this function and at the call site passes in the this argument
+
