@@ -5,10 +5,14 @@
 
 class Pimpl {
  public:
-  Pimpl(const std::string& message);
+  explicit Pimpl(const std::string& message);
   std::string message() const;
   ~Pimpl();
  private:
+  // Copy constructor should disabled
+  Pimpl(const Pimpl&);
+  // Assignment operator should disabled
+  const Pimpl operator=(const Pimpl&);
   class Impl;
   Impl* impl;
 };

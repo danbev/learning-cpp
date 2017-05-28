@@ -4,11 +4,8 @@
 
 using namespace std;
 
-TEST(Pimpl, basic) {
+TEST(Pimpl, message) {
   Pimpl p("testing");
   std::string m = p.message();
-  std::cout << m << '\n';
-  //EXPECT_EQ("public", v.doitPublic());
-  //EXPECT_EQ("private", v.doitPrivate());
+  EXPECT_EQ("testing", p.message());
 }
-
