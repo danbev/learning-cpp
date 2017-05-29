@@ -110,3 +110,4 @@ test/forward_list_test
 test/varargs_test
 test/template_class_test
 test/pimpl_test
+test/simple_factory_test

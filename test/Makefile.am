@@ -492,6 +492,13 @@ pimpl_test_CXXFLAGS = $(GTEST_CXXFLAGS)
 pimpl_test_LDFLAGS = $(GTEST_LDFLAGS)
 pimpl_test_LDADD = $(GTEST_LIBS) -lgtest_main
 
+check_PROGRAMS += simple_factory_test
+simple_factory_test_SOURCES = ./patterns/simple_factory_test.cc ../src/patterns/openssl_1_0_2e.cc ../src/patterns/simple_factory.cc
+simple_factory_test_CPPFLAGS = -I$(top_srcdir)/src/patterns $(GTEST_CPPFLAGS) 
+simple_factory_test_CXXFLAGS = $(GTEST_CXXFLAGS)
+simple_factory_test_LDFLAGS = $(GTEST_LDFLAGS)
+simple_factory_test_LDADD = $(GTEST_LIBS) -lgtest_main
+
 # Declare libraries and define tests here...
 
 # Define programs run automatically by "make check"
