@@ -112,3 +112,4 @@ test/template_class_test
 test/pimpl_test
 test/simple_factory_test
 test/extend_factory_test
+src/fundamentals/symbols-main

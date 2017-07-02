@@ -227,3 +227,139 @@ Adding member functions to a struct/class (non-virtual) does not effect the size
 is that the compiler transforms the function to a free (not tied to the class/struct) which takes a this pointer as its
 first argument. It also name mangles this function and at the call site passes in the this argument
 
+## Symbols
+This section takes a closer look at what an object file looks like and the sybols it uses. 
+The sources files are located in src/fundamentals and are symbols and symbols-main.cc.
+
+    #include "symbols.h"
+
+    int main(int argc, char* argv[]) {
+      Something s{8};
+      return 0;
+    }
+
+Lets take a look at the symbols for symbols.h:
+
+    $ objdump -D symbols.o
+
+    symbols.o:file format Mach-O 64-bit x86-64
+
+But if we look at symbols-main.o we get:
+
+    $ nm symbols-main
+    0000000100000f70 t __ZN9SomethingC1Ei
+    0000000100000fa0 t __ZN9SomethingC2Ei
+    0000000100000000 T __mh_execute_header
+    0000000100000f30 T _main
+                 U dyld_stub_binder
+
+The first entry is the addresses of the symbols.
+The second column is where the symbol is located.
+
+`t` means that the symbol is only visible within this file.
+`T` means that the symbol is in the text/code section.
+`D` means that the symbol is in the data section.
+'U' means that the symbol is undefined and will be attempted to be resolved at runtime.
+
+The third colum is the name of the mangled symbol.
+`__Z` is just a prefix
+`N` nested ?.
+`9Something` this is length of the function name followed by the function name. 
+`C1` complete object constructor
+`C2` base object constructor
+`E` end nested ?
+`i` parameters `int`
+
+Construtor/destructor values:
+C1 complete object constructor
+C2 base object constructor
+C3 complete base allocating constructor
+D0 deleting constructor
+D1 complete object destructor
+D2 base object destructor
+
+What is a base object constructor?
+G++ emits two copies of constructors and destructors.
+
+In general there are three types of constructors (and destructors).
+1. The complete object constructor/destructor.
+It additionally constructs virtual base classes.
+
+2. The base object constructor/destructor.
+It creates the object itself, as well as data members and non-virtual base classes.
+
+3. The allocating constructor/deallocating destructor.
+It does everything the complete object constructor does, plus it calls operator new to actually allocate the memory
+
+The first two are different, when virtual base classes are involved.
+If you have no virtual base classes, [the first two] are are identical; GCC will, on sufficient optimization levels, actually alias the symbols to the same code for both.
+
+    $ c++filt __ZN9SomethingC1Ei
+    Something::Something(int)
+
+    $ c++filt __ZN9SomethingC2Ei
+    Something::Something(int)
+
+Are there two symbols for the constructor, what is going on?
+Well, remember that when we compiled these we used:
+    
+    $ clang++ -I. symbols.o symbols-main.cc -o symbols-main --std=c++11
+
+To inspect the text section:
+```console
+$ otool -Vt symbols-main
+symbols-main:
+(__TEXT,__text) section
+_main:
+0000000100000f30  pushq%rbp
+0000000100000f31  movq%rsp, %rbp
+0000000100000f34  subq$0x20, %rsp
+0000000100000f38  leaq-0x18(%rbp), %rax
+0000000100000f3c  movl$0x8, %ecx
+0000000100000f41  movl$0x0, -0x4(%rbp)
+0000000100000f48  movl%edi, -0x8(%rbp)
+0000000100000f4b  movq%rsi, -0x10(%rbp)
+0000000100000f4f  movq%rax, %rdi
+0000000100000f52  movl%ecx, %esi
+0000000100000f54  callq__ZN9SomethingC1Ei ## Something::Something(int)
+0000000100000f59  xorl%eax, %eax
+0000000100000f5b  addq$0x20, %rsp
+0000000100000f5f  popq%rbp
+0000000100000f60  retq
+0000000100000f61  nopw%cs:(%rax,%rax)
+
+__ZN9SomethingC1Ei:
+0000000100000f70  pushq%rbp
+0000000100000f71  movq%rsp, %rbp
+0000000100000f74  subq$0x10, %rsp
+0000000100000f78  movq%rdi, -0x8(%rbp)
+0000000100000f7c  movl%esi, -0xc(%rbp)
+0000000100000f7f  movq-0x8(%rbp), %rdi
+0000000100000f83  movl-0xc(%rbp), %esi
+0000000100000f86  callq__ZN9SomethingC2Ei ## Something::Something(int)
+0000000100000f8b  addq$0x10, %rsp
+0000000100000f8f  popq%rbp
+0000000100000f90  retq
+0000000100000f91  nopw%cs:(%rax,%rax)
+
+__ZN9SomethingC2Ei:
+0000000100000fa0  pushq%rbp
+0000000100000fa1  movq%rsp, %rbp
+0000000100000fa4  movq%rdi, -0x8(%rbp)
+0000000100000fa8  movl%esi, -0xc(%rbp)
+0000000100000fab  movq-0x8(%rbp), %rdi
+0000000100000faf  movl-0xc(%rbp), %esi
+0000000100000fb2  movl%esi, (%rdi)
+0000000100000fb4popq%rbp
+0000000100000fb5retq
+```
+If we look at:
+  
+    324 0000000100000f54callq__ZN9SomethingC1Ei ## Something::Something(int)
+
+And if we look at __ZN9Something we can see it calls:
+
+    338 0000000100000f86callq__ZN9SomethingC2Ei ## Something::Something(int)
+
+
+
