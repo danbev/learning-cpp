@@ -263,11 +263,11 @@ The second column is where the symbol is located.
 
 The third colum is the name of the mangled symbol.
 `__Z` is just a prefix
-`N` nested ?.
+`N` is nested inside a scope of a namespace or a class
 `9Something` this is length of the function name followed by the function name. 
 `C1` complete object constructor
 `C2` base object constructor
-`E` end nested ?
+`E` end nested (namespace or class).
 `i` parameters `int`
 
 Construtor/destructor values:
