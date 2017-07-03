@@ -4,27 +4,32 @@
 using namespace std;
 
 TEST(consts, constInt) {
-    const int a = 10;
-    int const b = a;
-    EXPECT_EQ(10, a);
-    EXPECT_EQ(10, b);
+  const int a = 10;
+  int const b = a;
+  EXPECT_EQ(10, a);
+  EXPECT_EQ(10, b);
 }
 
 TEST(consts, pointerToConst) {
-    const int a = 10;
-    const int *b = &a;
-    EXPECT_EQ(10, a);
-    EXPECT_EQ(10, *b);
+  int const a = 10;
+  const int *b;  // pointer is not const so does not have to be initilized.
+  int const *c;
+  b = &a;
+  c = &a;
+  EXPECT_EQ(10, a);
+  EXPECT_EQ(10, *b);
+  EXPECT_EQ(10, *c);
 }
 
 TEST(consts, constPointer) {
     int a = 10;
-    int b = 20;
-    EXPECT_EQ(10, a);
-    EXPECT_EQ(20, b);
-    a = 30;
     int * const c = &a;
+    *c = 30;
     EXPECT_EQ(30, *c);
-    *c = 40;
-    EXPECT_EQ(40, *c) << "Should be able to assign to the int";
+}
+
+TEST(consts, constPointerToConst) {
+    const int a = 10;
+    const int * const b = &a;
+    EXPECT_EQ(10, *b);
 }

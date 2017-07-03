@@ -363,3 +363,29 @@ And if we look at __ZN9Something we can see it calls:
 
 
 
+## const
+There is a [const_test.cc](./test/fundamentals/const_test.cc) for referense regarding using const. 
+
+const can go before or after after the type:
+
+    const T t;
+    T const t;
+
+The above are the same as it the following example with int data type:
+
+    int const number = 10;
+    const int number = 10;
+
+One thing to not is when using const with pointers and where you put the const. This determines if you want the pointer to be const of the things the pointer is pointing to to be const.
+
+Pointer to const:
+
+    int const *number;
+    const int *number;
+
+Here the pointer is not const but what it points to is (int const).
+
+Const pointer to variable you have to put const after the *:
+
+    int* const number;
+   
