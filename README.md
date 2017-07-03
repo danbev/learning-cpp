@@ -247,7 +247,7 @@ The compiler will insert this:
 
 And since the function is const:
 
-    int Something::doit(Something const * this) {
+    int Something::doit(Something const* const this) {
        return this->some;
     }
 
@@ -257,6 +257,18 @@ At the call site/function invocation:
 
 The function itself will be name mangled and the function invocation name will also be updated with
 this name.
+
+### CV-Qualifiers (Const and Volatile)
+These are type qualifiers.
+const makes the type constant and it cannot be modified. For a pointer it means the pointer cannot point
+to anything else, but what is pointed to might be non-const.
+
+#### volatile
+Tells the compiler that it cannot optimize read/writes to a variable as it might change by some
+means unknow to the compiler. Lets say that we have an int set in our program and there is no
+code that changes it (that the compiler can detect). The compiler might avoid fetching the value
+from memory and this might not be what you want.
+
 
 ## Symbols
 This section takes a closer look at what an object file looks like and the sybols it uses. 
