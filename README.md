@@ -227,6 +227,37 @@ Adding member functions to a struct/class (non-virtual) does not effect the size
 is that the compiler transforms the function to a free (not tied to the class/struct) which takes a this pointer as its
 first argument. It also name mangles this function and at the call site passes in the this argument
 
+
+### Function members
+When you have a function as a member of a class or a struct the compiler will generate "free" functions. These
+are functions that are not part of the class/struct and don't effect the size of the class.
+
+    int Something::doit() const {
+       return some;
+    }
+
+    Something s{};
+    int result = s.doit();
+
+The compiler will insert this:
+
+    int Something::doit(Something* this) const {
+       return some;
+    }
+
+And since the function is const:
+
+    int Something::doit(Something const * this) {
+       return this->some;
+    }
+
+At the call site/function invocation:
+
+    int result = doit(&s);
+
+The function itself will be name mangled and the function invocation name will also be updated with
+this name.
+
 ## Symbols
 This section takes a closer look at what an object file looks like and the sybols it uses. 
 The sources files are located in src/fundamentals and are symbols and symbols-main.cc.
