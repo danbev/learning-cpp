@@ -432,3 +432,14 @@ Const pointer to variable you have to put const after the *:
 
     int* const number;
    
+
+### Strings
+A std::string usually stores a pointer to a location on the heap. It also needs to store the size of the data, and the capacity.
+So: 
+size = the length of the string.
+capacity = how many chars the string can hold before it has to allocate a new, larger buffer from the heap.
+data = pointer to the char array.
+
+Some implementations allow for storing strings as local variables on the stack (not too large though as that might overflow the stack). 
+This is called Small String Optimization.
+In this case there would be a char[20] for example.
