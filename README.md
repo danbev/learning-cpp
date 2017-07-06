@@ -47,6 +47,16 @@ TEST(BinaryHeap, DISABLED_insert) {
 }
 ```
 
+### C++ Standard API
+https://gcc.gnu.org/onlinedocs/libstdc++/latest-doxygen/index.html
+
+Since I'm using clang and it has its own [version](http://libcxx.llvm.org/docs/) of the standard C++
+library.
+
+The headers are availabe on my system in [/usr/include/c++/4.2.1/](/usr/include/c++/4.2.1/) and the
+source code can be found [here](https://github.com/llvm-mirror/libcxx).
+
+
 ### Debugging
 
     lldb test/.libs/mergesort_test
@@ -443,3 +453,37 @@ data = pointer to the char array.
 Some implementations allow for storing strings as local variables on the stack (not too large though as that might overflow the stack). 
 This is called Small String Optimization.
 In this case there would be a char[20] for example.
+
+### std::Allocator
+Was originally designed for near and far pointers that were used in the segmented memory model that Intel used to have.
+Near and far pointer were removed from the C++ spec but std::allocator was not.
+
+std::Allocator is the default memory allocator for the standard library containers.
+They provide an interface to allocate, create, destroy, and deallocate objects. With allocators, containers and algorithms can be 
+parameterized by the way the elements are stored. For example, you could implement allocators that use shared memory or that map the 
+elements to a persistent database.
+
+The purpose of the allocator is to allocate raw memory without construction of objects, as well as simply deallocate memory without 
+he need to destroy them, hence the usage of operator new and operator delete directly is preferred over the usage of the keywords new 
+and delete.
+
+### new/delete
+
+    A* a = new A;
+    delete a;
+
+The compiler will interpret that as:
+
+    A* a = ::operator new(sizeof(A)); 
+    a->A::A();
+    if ( a != 0 ) {  // a check is necessary for delete
+      a->~A();
+      ::operator delete(a);
+    }
+
+You can declare `new` and `delete` yourself which we do in [stringsize.cc](./src/fundamentals/stringsize.cc).
+One thing to not is that new does not only allocate memory, it also calls the constructor. And same with delete, it will
+not only reclaim the memory but will first call the destructor.
+
+
+
