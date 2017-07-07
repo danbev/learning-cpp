@@ -454,6 +454,89 @@ Some implementations allow for storing strings as local variables on the stack (
 This is called Small String Optimization.
 In this case there would be a char[20] for example.
 
+Lets take a look at the following string:
+
+    #include <string>
+    ...
+    std::string s{"bajja"};
+
+What does the compiler interpret this as?
+What is std::string actually?
+I believe it is a template in /usr/include/c++/4.2.1/bits/stringfwd.h:
+
+    typedef basic_string<char> string;
+
+And what then is basic_string? :
+
+    template<typename _CharT, typename _Traits = char_traits<_CharT>,
+             typename _Alloc = allocator<_CharT> >
+      class basic_string;
+
+    template<> struct char_traits<char>;
+    template<class _CharT> struct char_traits;
+    template<typename _Alloc> class allocator;
+
+If we now run nm this (see [string-type.cc](./src/fundamentals/string-type.cc) we find:
+
+    $ nm string-type
+    0000000100000f40 t __ZNSt3__111char_traitsIcE6lengthEPKc
+                 U __ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEE6__initEPKcm
+                 U __ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEED1Ev
+    0000000100000000 T __mh_execute_header
+    0000000100000e80 T _main
+                 U _memset
+                 U _strlen
+                 U dyld_stub_binder
+
+    $ c++filt __ZNSt3__111char_traitsIcE6lengthEPKc
+    std::__1::char_traits<char>::length(char const*)
+
+    $ c++filt __ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEE6__initEPKcm
+    std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> >::__init(char const*, unsigned long)
+
+    $ c++filt __ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEED1Ev
+    std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> >::~basic_string()
+
+So `/usr/include/c++/4.2.1/string` includes `bits/char_traits.h` and `bits/basic_string.tcc` (t = template, cc = c++ source).
+
+    (lldb) set set target.process.thread.step-avoid-regexp ""
+    (lldb) 
+    (lldb) s
+    Process 91451 stopped
+    * thread #1: tid = 0x2a8e37, 0x0000000100000eb9 string-type`main [inlined] std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> >::basic_string(this="�_�\x7f\0\0\x01\0\0\0\0\0\0\0\x98�_�\x7f\0\0\x98�_�\x7f\0\0\x01\0\0\0\0\0\0\0�\x0f\0\0\x01\0\0\0\b�_�\x7f\0\0\0\0\0\0\0\0\0\0\0", __s="bajja") at string:2019, queue = 'com.apple.main-thread', stop reason = step in
+        frame #0: 0x0000000100000eb9 string-type`main [inlined] std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> >::basic_string(this="�_�\x7f\0\0\x01\0\0\0\0\0\0\0\x98�_�\x7f\0\0\x98�_�\x7f\0\0\x01\0\0\0\0\0\0\0�\x0f\0\0\x01\0\0\0\b�_�\x7f\0\0\0\0\0\0\0\0\0\0\0", __s="bajja") at string:2019
+       2016 template <class _CharT, class _Traits, class _Allocator>
+       2017 inline _LIBCPP_INLINE_VISIBILITY
+       2018 basic_string<_CharT, _Traits, _Allocator>::basic_string(const value_type* __s)
+    -> 2019 {
+       2020    _LIBCPP_ASSERT(__s != nullptr, "basic_string(const char*) detected nullptr");
+       2021    __init(__s, traits_type::length(__s));
+       2022 #if _LIBCPP_DEBUG_LEVEL >= 2
+
+We can see that traits_type::length(__s) is being called so the compiler must generate a specialization for it which it did:
+
+    std::__1::char_traits<char>::length(char const*)
+
+And then we hvae the call to __init:
+
+    std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> >::__init(char const*, unsigned long)
+
+The last symbol is for destructor/deallocator. Need to understand allocators work.
+
+I've been wondering about `std::__1` and where it comes from?
+In `/src/string.cpp` where have the following namespace declaration:
+
+    _LIBCPP_BEGIN_NAMESPACE_STD
+
+In `include/__config` we find:
+
+    #define _LIBCPP_BEGIN_NAMESPACE_STD namespace std {inline namespace _LIBCPP_NAMESPACE
+    #define _LIBCPP_NAMESPACE _LIBCPP_CONCAT(__,_LIBCPP_ABI_VERSION)
+    #define _LIBCPP_ABI_VERSION 1
+
+
+### Inline namespaces
+
 ### std::Allocator
 Was originally designed for near and far pointers that were used in the segmented memory model that Intel used to have.
 Near and far pointer were removed from the C++ spec but std::allocator was not.
@@ -485,5 +568,131 @@ You can declare `new` and `delete` yourself which we do in [stringsize.cc](./src
 One thing to not is that new does not only allocate memory, it also calls the constructor. And same with delete, it will
 not only reclaim the memory but will first call the destructor.
 
+### Type traits
+Were introduced with TR1 and extended with C++11 and provide a way to define behaviour depending
+on types.
+
+A type trait is a templated struct and its member variables give you information about 
+the type it the type template is templated on.
+
+A type trait provides a way to deal with the properties of a type. It is a template, which at
+compile time yields a specific type or value based on one or more passed template arguments,
+which are usually types.
 
 
+    template<typename> struct is_pointer : public false_type { };
+    _DEFINE_SPEC(1, is_pointer, _Tp*, true)
+
+false_type is a typedef:
+
+    typedef integral_constant<bool, false> false_type;
+
+And integral_constant is a struct:
+
+    template<typename _Tp, _Tp __v>
+    struct integral_constant
+    {
+      static const _Tp                      value = __v;
+      typedef _Tp                           value_type;
+      typedef integral_constant<_Tp, __v>   type;
+    };
+
+Which would be specialized as:
+
+    template<typename bool, bool false>
+    struct integral_constant
+    {
+      static const bool                      value = false;
+      typedef bool                           value_type;
+      typedef integral_constant<bool, false> type;
+    };
+
+And that is what will be passed to the macro:
+
+    _DEFINE_SPEC(1, is_pointer, _Tp*, true)
+
+Just remember that this is a macro to `_Tp*` is passed into the next macro and does not refer
+to a template parameter name. 
+
+    #define _DEFINE_SPEC(_Order, _Trait, _Type, _Value)                  \
+    // #define _DEFINE_SPEC(1, is_pointer, _Tp*, true)                   \
+      _DEFINE_SPEC_##_Order##_HELPER(_Trait<_Type>, _Value)              \
+    //_DEFINE_SPEC_1_HELPER(is_pointer<_Tp*>, true)                      \
+
+    #define _DEFINE_SPEC_1_HELPER(is_pionter<_Tp*>, true)                \
+      template<typename _Tp>                                             \
+        struct _Spec                                                     \
+        _DEFINE_SPEC_BODY(_Value)
+
+    #define _DEFINE_SPEC_BODY(_Value)                                    \
+    : public integral_constant<bool, _Value> { };
+
+
+
+      _DEFINE_SPEC_##_Order##_HELPER(_Trait<_Type const>, _Value)        \
+      _DEFINE_SPEC_##_Order##_HELPER(_Trait<_Type volatile>, _Value)     \
+      _DEFINE_SPEC_##_Order##_HELPER(_Trait<_Type const volatile>, _Value)
+
+    #define _DEFINE_SPEC_1_HELPER(_Spec, _Value)                         \
+      template<typename _Tp>                                             \
+        struct _Spec                                                     \
+        _DEFINE_SPEC_BODY(_Value)
+
+Header: /usr/include/c++/4.2.1/tr1/type_traits
+
+#### enable_if
+Take this example:
+
+    template <typename T>
+    typename std::enable_if<std::is_integral<T>::value, int>::type doit(T value) {
+      std::cout << "template doit(...)" << '\n';
+      return 1;
+    }
+
+So we can see that this is a templated function. What is new is the return type:
+   
+    typename std::enable_if<std::is_integral<T>::value, int>::type
+
+So the compiler will try to match this function (it is overloaded) and substitute the
+value passed in at the call site. Let say that was `doit(20)`.
+
+Lets create our own enable_if:
+
+    template <bool, typename T = void>
+    struct _enable_if {
+    };
+
+    template <typename T>
+    struct _enable_if<true, T> {
+      typedef T type;
+    }; 
+
+I had some trouble understanding this but what is happening is that we have two structs
+that are templated, one taking a bool and and a type, and the other taking the bool value
+true and a type.
+If we look at this:
+
+    std::is_integral<T>::value
+
+This will be substituted with either true or false depending on the type of T.
+
+Lets look at the definition of `enable_if` (include/type_traits):
+
+    template <bool, class T = void> struct enable_if;
+
+
+### Substitution Failure Is Not An Error (SFINAE)
+Take a look at [enable-if.cc](./src/fundamentals/enable-if.cc) and the third overloaded 
+function. This is invalid code if there is a call like `doit(10)`:
+
+    template <typename T>
+    typename T::value_type doit(T value) {
+      return value;
+    };
+
+int does not have a value_type so that should be a compile time error. When the compiler looks
+for a match it has to substitute T with int but type decuction will fail but no error will
+occur and instead the compiler will continue looking for a match.
+
+### Types
+Chart: http://howardhinnant.github.io/TypeHiearchy.pdf

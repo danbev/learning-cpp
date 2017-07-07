@@ -114,3 +114,6 @@ test/simple_factory_test
 test/extend_factory_test
 src/fundamentals/symbols-main
 src/fundamentals/stringsize
+src/fundamentals/type-traits
+src/fundamentals/string-type
+src/fundamentals/enable-if
