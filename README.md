@@ -669,7 +669,8 @@ Lets create our own enable_if:
 
 I had some trouble understanding this but what is happening is that we have two structs
 that are templated, one taking a bool and and a type, and the other taking the bool value
-true and a type.
+true and a type (with a default value). If the compiler while 
+
 If we look at this:
 
     std::is_integral<T>::value
@@ -696,3 +697,16 @@ occur and instead the compiler will continue looking for a match.
 
 ### Types
 Chart: http://howardhinnant.github.io/TypeHiearchy.pdf
+
+
+### Signed vs unsigned
+An int is signed by default, meaning it can represent both positive and negative values. 
+An unsigned is an integer that can never be negative. If you take an unsigned 0 and subtract 1 from it, the result wraps around, leaving a very large number (2^32-1 with the typical 32-bit integer size).
+
+Intuitively the two types seem to map fairly reasonably to mathematical notions of integers and natural numbers, leading many programmers to choose unsigned types for any values that "feel" like they should never be negative, such as loop indices or measurements of size. Unfortunately, this is not a reliable intuition.
+
+size_t is unsigned so it can't represent negative
+ssize_t is signed so it can represent negative
+
+If you know that a ssize_t is greater than 0 you can safely cast it to a size_t because the
+range of size_t is greater then the positive values of ssize_t
