@@ -1,7 +1,9 @@
+// clang++ -g -o enable-if -std=c++11 enable-if.cc
 #include <iostream>
 
 template <bool, typename T = void>
 struct _enable_if {
+  bool value = false;
 };
 
 template <typename T>
@@ -30,5 +32,7 @@ int main(int argc, char* argv[]) {
   int first = doit("bajja");
   int second = doit(10);
   int third = doit(true);
+  _enable_if<false> f;
+  std::cout << (f.value ? "true":"false") << '\n';
   return 0;
 }
