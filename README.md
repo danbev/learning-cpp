@@ -135,6 +135,11 @@ Every time the above variable _end_ is modified it will be displayed:
 You can also add a condition so that it breaks when this condition applies:  
 
     (lldb) watchpoint modify -c 'end==1'
+
+
+Watch read and writes:
+
+    (lldb) wa s v --watch read_write mp->nm_modname
   
 
 ## Adding unit tests
@@ -445,6 +450,7 @@ Const pointer to variable you have to put const after the *:
 
 ### Strings
 A std::string usually stores a pointer to a location on the heap. It also needs to store the size of the data, and the capacity.
+
 So: 
 size = the length of the string.
 capacity = how many chars the string can hold before it has to allocate a new, larger buffer from the heap.
@@ -460,7 +466,7 @@ Lets take a look at the following string:
     ...
     std::string s{"bajja"};
 
-What does the compiler interpret this as?
+How does the compiler interpret this?
 What is std::string actually?
 I believe it is a template in /usr/include/c++/4.2.1/bits/stringfwd.h:
 
@@ -710,3 +716,7 @@ ssize_t is signed so it can represent negative
 
 If you know that a ssize_t is greater than 0 you can safely cast it to a size_t because the
 range of size_t is greater then the positive values of ssize_t
+
+### Memory
+Accessing memory is not done on a byte basis. Instead computers compensate for slow memory access by fetching bigger chunks of data, for example 64 bytes 
+at a time.
