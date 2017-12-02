@@ -140,7 +140,16 @@ You can also add a condition so that it breaks when this condition applies:
 Watch read and writes:
 
     (lldb) wa s v --watch read_write mp->nm_modname
+
+Creating variables:
+If you prefix a variable with $ you can use it in future commands, for example:
+
+    (lldb) expr -- int* $d = new int{20}
+    (lldb) expr $d
   
+
+Calling a function:
+    (lldb) expr -- printf("bajja\n")
 
 ## Adding unit tests
 You should be able to simply update the test/Makefile.am with the new test.  
@@ -429,17 +438,17 @@ const can go before or after after the type:
     const T t;
     T const t;
 
-The above are the same as it the following example with int data type:
+The above are the same as is the following example with int data type:
 
     int const number = 10;
     const int number = 10;
 
-One thing to not is when using const with pointers and where you put the const. This determines if you want the pointer to be const of the things the pointer is pointing to to be const.
+One thing to note is when using const with pointers and where you put the const. This determines if you want the pointer to be const of the things the pointer is pointing to to be const.
 
 Pointer to const:
 
-    int const *number;
-    const int *number;
+    int const* number;
+    const int* number;
 
 Here the pointer is not const but what it points to is (int const).
 
@@ -720,3 +729,65 @@ range of size_t is greater then the positive values of ssize_t
 ### Memory
 Accessing memory is not done on a byte basis. Instead computers compensate for slow memory access by fetching bigger chunks of data, for example 64 bytes 
 at a time.
+
+
+### decltype
+The compiler tries to decuce types when is sees template. For example:
+
+    template<typename T>
+    void doit(T* something) {
+    }
+    ...
+    const int a = 10;
+    doit(a);
+
+The compiler actually has to deduce the type for T and the type for something. The type of something
+could have things like const or reference qualifiers. The way T is decuced depends on the parameters 
+type.
+
+### Casting
+
+#### reinterpret_cast
+Does compile to any CPU instruction and is just a compiler directive which instructs the compiler to threat
+the sequence of bits as if it had the new type.
+
+
+### sizeof
+When sizeof's operand is a type, it has to be enclosed in parentheses. But when sizeof's operand is a variable, this is not required.
+  
+    sizeof expression
+    sizeof(typename)
+
+### Iterators
+
+
+
+
+  std::string path() const {
+    std::string ret;
+    for (auto const& i : context_.path) {
+      ret += '/';
+      ret += i;
+    }
+    return ret;
+  }
+
+
+### nullptr
+
+### Pointer to pointer
+Lets say you have a function that needs to reassing a pointer that it is passed. If the function only takes a pointer to the object
+this is only a copy of the pointer:
+
+    int* org =  new int{10};
+    func(org);
+
+    void fun(int* ptr) { ...};
+
+Now, func will get a copy of org (pointing to the same int. But changing that pointer to point somewhere else does not affect
+But, if we pass a pointer to to org the we can update that value which will update our original as we are changing what it 
+points to:
+
+    void fun(int** ptr) { ...};
+
+

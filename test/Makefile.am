@@ -387,6 +387,13 @@ const_test_CXXFLAGS = $(GTEST_CXXFLAGS)
 const_test_LDFLAGS = $(GTEST_LDFLAGS)
 const_test_LDADD = $(GTEST_LIBS) -lgtest_main
 
+check_PROGRAMS += refs_test
+refs_test_SOURCES = ./fundamentals/refs_test.cc
+refs_test_CPPFLAGS = -I$(top_srcdir)/src/fundamentals $(GTEST_CPPFLAGS)
+refs_test_CXXFLAGS = $(GTEST_CXXFLAGS)
+refs_test_LDFLAGS = $(GTEST_LDFLAGS)
+refs_test_LDADD = $(GTEST_LIBS) -lgtest_main
+
 check_PROGRAMS += move_test
 move_test_SOURCES = ./fundamentals/constructors/move_test.cc
 move_test_CPPFLAGS = -I$(top_srcdir)/src/fundamentals/constructors $(GTEST_CPPFLAGS)
