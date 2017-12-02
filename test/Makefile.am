@@ -520,6 +520,13 @@ extend_factory_test_CXXFLAGS = $(GTEST_CXXFLAGS)
 extend_factory_test_LDFLAGS = $(GTEST_LDFLAGS)
 extend_factory_test_LDADD = $(GTEST_LIBS) -lgtest_main
 
+check_PROGRAMS += readarr_test
+readarr_test_SOURCES = ./fundamentals/readarr_test.cc
+readarr_test_CPPFLAGS = -I$(top_srcdir)/src/fundamentals $(GTEST_CPPFLAGS)
+readarr_test_CXXFLAGS = $(GTEST_CXXFLAGS)
+readarr_test_LDFLAGS = $(GTEST_LDFLAGS)
+readarr_test_LDADD = $(GTEST_LIBS) -lgtest_main
+
 # Declare libraries and define tests here...
 
 # Define programs run automatically by "make check"
