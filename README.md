@@ -433,10 +433,26 @@ And if we look at __ZN9Something we can see it calls:
 ## const
 There is a [const_test.cc](./test/fundamentals/const_test.cc) for referense regarding using const. 
 
+#### Const pointer
+Is a pointer that cannot changed the address it holds:
+
+    <type of pointer>* const <variable name>
+
+
+#### Pointer to const
+Is a pointer that cannot change the value it points to.
+
+    const <type of pointer>* <variable name>
+    <type of pointer> const* <variable name>
+
+Notice that const always comes before the *.
+
 const can go before or after after the type:
 
     const T t;
     T const t;
+
+`t` is of type const int.
 
 The above are the same as is the following example with int data type:
 
@@ -448,6 +464,9 @@ One thing to note is when using const with pointers and where you put the const.
 Pointer to const:
 
     int const* number;
+
+`number` is of type pointer to const int.
+
     const int* number;
 
 Here the pointer is not const but what it points to is (int const).
@@ -456,6 +475,8 @@ Const pointer to variable you have to put const after the *:
 
     int* const number;
    
+`number` a pointer to a const int. The pointer can be updated to point elsewhere but what it points to 
+cannot change.
 
 ### Strings
 A std::string usually stores a pointer to a location on the heap. It also needs to store the size of the data, and the capacity.
@@ -790,4 +811,32 @@ points to:
 
     void fun(int** ptr) { ...};
 
+
+### Argument-dependant lookup (ADL)
+The set or rules for looking up unquailified function names in function call expressions. It's about finding the correct function, 
+and not about resolving the function parameters. 
+The idea is that a function taking a user-defined type is often defined in the same namespace. So if the function is not found
+in the context where it is is used, the namespace of the arguments will be searched.
+
+### Unqualified name lookup
+Is a name that does not use the `::` (scope resolution operator).
+The look up will continue until the first resolution is done and then stop. Any name specified with the using directive
+will be closest in scope when performing the lookup.
+
+From the C++ specification:
+```
+8 For the members of a class X, a name used in a member function body, in a default argument, in a noexceptspecifier,
+in the brace-or-equal-initializer of a non-static data member (12.2), or in the definition of a class
+member outside of the definition of X, following the member’s declarator-id32, shall be declared in one of the
+following ways:
+(8.1) — before its use in the block in which it is used or in an enclosing block (9.3), or
+(8.2) — shall be a member of class X or be a member of a base class of X (13.2), or
+(8.3) — if X is a nested class of class Y (12.2.5), shall be a member of Y, or shall be a member of a base class of
+Y (this lookup applies in turn to Y’s enclosing classes, starting with the innermost enclosing class),33 or
+(8.4) — if X is a local class (12.4) or is a nested class of a local class, before the definition of class X in a block
+enclosing the definition of class X, or
+(8.5) — if X is a member of namespace N, or is a nested class of a class that is a member of N, or is a local class
+or a nested class within a local class of a function that is a member of N, before the use of the name, in
+namespace N or in one of N’s enclosing namespaces
+```
 
