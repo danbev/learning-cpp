@@ -1114,3 +1114,62 @@ head_.prev_->next_ = that;
         |   next_  |------>|    next_   |---->
         +----------+       +------------+
 ```
+
+
+### lldb unresolved symbols
+
+```console
+(lldb) expr env.options()
+(std::__1::shared_ptr<node::EnvironmentOptions>) $3 = std::__1::shared_ptr<node::EnvironmentOptions>::element_type @ 0x0000000105a01440 strong=3 weak=1 {
+  __ptr_ = 0x0000000105a01440
+}
+(lldb) expr *env()->options_
+error: Couldn't lookup symbols:
+  __ZNKSt3__110shared_ptrIN4node18EnvironmentOptionsEEdeEv
+```
+```console
+$ c++filt __ZNKSt3__110shared_ptrIN4node18EnvironmentOptionsEEdeEv
+std::__1::shared_ptr<node::EnvironmentOptions>::operator*() const
+```
+So lldb cannot call this function is bascially what the above is saying. But we can see that the pointer address, `__ptr_` and perhaps we can simply cast that to the correcty
+type:
+```console
+(lldb) expr (node::EnvironmentOptions*) 0x0000000105a01440
+(node::EnvironmentOptions *) $1 = 0x0000000105a01440
+(lldb) expr $1
+(node::EnvironmentOptions *) $1 = 0x0000000105a01440
+(lldb) expr *$1
+(node::EnvironmentOptions) $2 = {
+  debug_options = std::__1::shared_ptr<node::DebugOptions>::element_type @ 0x0000000105a014f0 strong=2 weak=1 {
+    __ptr_ = 0x0000000105a014f0
+  }
+  experimental_modules = false
+  experimental_repl_await = false
+  experimental_vm_modules = false
+  experimental_worker = false
+  expose_internals = false
+  no_deprecation = false
+  no_force_async_hooks_checks = true
+  no_warnings = false
+  pending_deprecation = true
+  preserve_symlinks = false
+  preserve_symlinks_main = false
+  prof_process = false
+  redirect_warnings = ""
+  throw_deprecation = false
+  trace_deprecation = false
+  trace_sync_io = false
+  trace_warnings = false
+  userland_loader = ""
+  syntax_check_only = false
+  has_eval_string = false
+  eval_string = ""
+  print_eval = false
+  force_repl = false
+  preload_modules = size=0 {}
+  user_argv = size=0 {}
+}
+```
+
+
+
