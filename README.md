@@ -1117,6 +1117,8 @@ head_.prev_->next_ = that;
 
 
 ### lldb unresolved symbols
+I sometimes find that I'm not able to display symbols when debugging, for example when trying to inspect a std::shared_ptr. This section shows one way to 
+work around this. This example is taken from debugging node.
 
 ```console
 (lldb) expr env.options()
@@ -1135,8 +1137,6 @@ So lldb cannot call this function is bascially what the above is saying. But we 
 type:
 ```console
 (lldb) expr (node::EnvironmentOptions*) 0x0000000105a01440
-(node::EnvironmentOptions *) $1 = 0x0000000105a01440
-(lldb) expr $1
 (node::EnvironmentOptions *) $1 = 0x0000000105a01440
 (lldb) expr *$1
 (node::EnvironmentOptions) $2 = {
