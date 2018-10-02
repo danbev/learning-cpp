@@ -11,13 +11,25 @@ struct OnScopeLeave {
 // $ clang++ -std=c++11 -o lambda lambda.cc
 
 int main(int argc, char** argv) {
-  int s = 0;
+  int ret = 0;
   std::cout << "lambda..." << '\n';
   {
-    OnScopeLeave cleanup([&s] {
-        std::cout << "cleanup...s=" << s << '\n';
+    OnScopeLeave cleanup([&ret] {
+        std::cout << "ret = " << ret << '\n';
+        if (!ret) {
+          std::cout << "cleanup..." << '\n';
+        } else {
+          std::cout << "no cleanup" << '\n';
+        }
     });
-    s = 10;
+    ret = 1;
   }
+  /*
+  ret = 0;
+  bool b = ret;
+  std::cout << std::boolalpha;
+  std::cout << "b = " << b << '\n';
+  std::cout << "b = " << !b << '\n';
+  */
   return 0;
 }
