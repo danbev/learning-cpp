@@ -10,7 +10,7 @@ AC_CONFIG_MACRO_DIR([m4])
 echo "                             Testing for a C++ compiler"
 AC_PROG_CXX
 AC_LANG_PUSH([C++])
-CXXFLAGS="-std=c++0x -g"
+CXXFLAGS="-std=c++14 -g"
 AC_CONFIG_FILES([Makefile
                  lib/Makefile lib/gtest-1.6.0/Makefile lib/gmock-1.6.0/Makefile
                  src/classes/Makefile 

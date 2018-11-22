@@ -5,13 +5,16 @@
 class Pimpl::Impl {
  public:
    Impl(const std::string& message) : message_(message) {};
+
    std::string message() const {
      return message_;
    }
+ private:
    std::string message_;
 };
 
-Pimpl::Pimpl(const std::string& message) : impl(new Pimpl::Impl(message)) {
+Pimpl::Pimpl(const std::string& message) : 
+  impl(std::make_unique<Pimpl::Impl>(message)) {
 }
 
 std::string Pimpl::message() const {
@@ -19,5 +22,4 @@ std::string Pimpl::message() const {
 }
 
 Pimpl::~Pimpl() {
-  delete impl;
 }
