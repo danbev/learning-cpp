@@ -52,4 +52,31 @@ TEST(Casts, reinterpret_cast) {
     EXPECT_EQ(24, *i2) << "const_cast should allow for modifying a pointer";
     int a = 10;
     char b = reinterpret_cast<int>(a);
+    delete i1;
+}
+
+TEST(Casts, pointer_to_pointer) {
+    int* p = new int(4);
+    int** d_ptr = &p;
+    EXPECT_EQ(4, *p);
+    EXPECT_EQ(4, **d_ptr);
+    int* p2 = new int(2);
+    *d_ptr = p2;
+    EXPECT_EQ(2, *p);
+    EXPECT_EQ(2, *p2);
+    EXPECT_EQ(2, **d_ptr);
+    delete p;
+}
+
+TEST(Casts, DISABLED_reinterpret_cast_pointer_to_pointer) {
+    int* p = new int(4);
+    int** d_ptr = reinterpret_cast<int**>(p);
+    EXPECT_EQ(4, *p);
+    EXPECT_EQ(4, **d_ptr);
+    int* p2 = new int(2);
+    *d_ptr = p2;
+    EXPECT_EQ(2, *p);
+    EXPECT_EQ(2, *p2);
+    EXPECT_EQ(2, **d_ptr);
+    delete p;
 }
