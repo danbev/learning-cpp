@@ -767,6 +767,25 @@ ssize_t is signed so it can represent negative
 If you know that a ssize_t is greater than 0 you can safely cast it to a size_t because the
 range of size_t is greater then the positive values of ssize_t
 
+
+CHECK_EQ(static_cast<int32_t>(offset), offset);
+```console
+../src/stream_base.cc:295:3: warning: comparison of integers of different signs: 'int32_t' (aka 'int') and 'size_t' (aka 'unsigned long') [-Wsign-compare]
+  CHECK_EQ(static_cast<int32_t>(offset), offset);
+  ^        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~  ~~~~~~
+```
+```c++
+void StreamBase::CallJSOnreadMethod(ssize_t nread,
+                                    Local<ArrayBuffer> ab,
+                                    size_t offset) {
+  CHECK_EQ(static_cast<int32_t>(offset), offset);
+```
+So, we can see that `offset` is declared as `size_t` which is unsigned (can only represent positive values. We are checking that it can be casted to a `int32_t` which is a fixed integer type. 
+Instead perhaps we can check that the offset is within the range without casting:
+```c++
+  CHECK_LE(INT32_MAX, offset);
+```
+
 ### Memory
 Accessing memory is not done on a byte basis. Instead computers compensate for slow memory access by fetching bigger chunks of data, for example 64 bytes 
 at a time.
@@ -1173,3 +1192,17 @@ type:
 
 
 
+### Lambda
+A lambda 
+```c++
+class Functor {
+ public:
+  inline int operator()(int a) {
+    return a + 3;
+  }
+};
+```
+The above should be the equivalent of creating a lambda. When the compiler finds a lambda it will create 
+and instance of some lambda type (internal type) and it knows the operator() function and should be able to
+inline it. 
+But how can I be sure?
