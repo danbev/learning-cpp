@@ -315,7 +315,7 @@ from memory and this might not be what you want.
 
 
 ## Symbols
-This section takes a closer look at what an object file looks like and the sybols it uses. 
+This section takes a closer look at what an object file looks like and the symbols it uses. 
 The sources files are located in src/fundamentals and are symbols and symbols-main.cc.
 
     #include "symbols.h"
@@ -342,13 +342,15 @@ But if we look at symbols-main.o we get:
 
 The first entry is the addresses of the symbols.
 The second column is where the symbol is located.
-
+```
 `t` means that the symbol is only visible within this file.
 `T` means that the symbol is in the text/code section.
 `D` means that the symbol is in the data section.
 'U' means that the symbol is undefined and will be attempted to be resolved at runtime.
+```
 
-The third colum is the name of the mangled symbol.
+The third colum is the name of the mangled symbol:
+```
 `__Z` is just a prefix
 `N` is nested inside a scope of a namespace or a class
 `9Something` this is length of the function name followed by the function name. 
@@ -356,6 +358,7 @@ The third colum is the name of the mangled symbol.
 `C2` base object constructor
 `E` end nested (namespace or class).
 `i` parameters `int`
+```
 
 Construtor/destructor values:
 C1 complete object constructor
