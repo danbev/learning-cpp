@@ -361,12 +361,14 @@ The third colum is the name of the mangled symbol:
 ```
 
 Construtor/destructor values:
+```
 C1 complete object constructor
 C2 base object constructor
 C3 complete base allocating constructor
 D0 deleting constructor
 D1 complete object destructor
 D2 base object destructor
+```
 
 What is a base object constructor?
 G++ emits two copies of constructors and destructors.
@@ -482,7 +484,9 @@ The above are the same as is the following example with int data type:
     int const number = 10;
     const int number = 10;
 
-One thing to note is when using const with pointers and where you put the const. This determines if you want the pointer to be const of the things the pointer is pointing to to be const.
+One thing to note is when using const with pointers and where you put the const.
+This determines if you want the pointer to be const or the thing the pointer is 
+pointing to to be const.
 
 Pointer to const:
 
@@ -502,16 +506,19 @@ Const pointer to variable you have to put const after the *:
 cannot change.
 
 ### Strings
-A std::string usually stores a pointer to a location on the heap. It also needs to store the size of the data, and the capacity.
+A `std::string` usually stores a pointer to a location on the heap. It also
+needs to store the `size` of the data, and the `capacity`.
 
 So: 
+```
 size = the length of the string.
 capacity = how many chars the string can hold before it has to allocate a new, larger buffer from the heap.
 data = pointer to the char array.
+```
 
-Some implementations allow for storing strings as local variables on the stack (not too large though as that might overflow the stack). 
-This is called Small String Optimization.
-In this case there would be a char[20] for example.
+Some implementations allow for storing strings as local variables on the stack
+(not too large though as that might overflow the stack). This is called Small 
+String Optimization. In this case there would be a char[20] for example.
 
 Lets take a look at the following string:
 
@@ -520,8 +527,8 @@ Lets take a look at the following string:
     std::string s{"bajja"};
 
 How does the compiler interpret this?
-What is std::string actually?
-I believe it is a template in /usr/include/c++/4.2.1/bits/stringfwd.h:
+What is `std::string` actually?
+I believe it is a template in `/usr/include/c++/4.2.1/bits/stringfwd.h`:
 
     typedef basic_string<char> string;
 
@@ -535,7 +542,7 @@ And what then is basic_string? :
     template<class _CharT> struct char_traits;
     template<typename _Alloc> class allocator;
 
-If we now run nm this (see [string-type.cc](./src/fundamentals/string-type.cc) we find:
+If we now run nm this (see [string-type.cc](./src/fundamentals/string-type.cc)) we find:
 
     $ nm string-type
     0000000100000f40 t __ZNSt3__111char_traitsIcE6lengthEPKc
@@ -624,7 +631,7 @@ The compiler will interpret that as:
     }
 
 You can declare `new` and `delete` yourself which we do in [stringsize.cc](./src/fundamentals/stringsize.cc).
-One thing to not is that new does not only allocate memory, it also calls the constructor. And same with delete, it will
+One thing to not is that new does note only allocate memory, it also calls the constructor. And same with delete, it will
 not only reclaim the memory but will first call the destructor.
 
 ### Type traits
