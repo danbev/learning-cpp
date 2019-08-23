@@ -3,6 +3,17 @@
 class Obj {
 };
 
+void f(const int& ref, const int * out) {
+  //ref = 100; compile time error
+  // error: cannot assign to variable 'ref' with const-qualified type 'const int &'
+  std::cout << "f() ref = " << ref << '\n';
+}
+
+void g(int& ref, const int * out) {
+  ref = 100;
+  std::cout << "g() ref = " << ref << '\n';
+}
+
 int main(int argc, char** argv) {
 
   int a = 10;
@@ -48,6 +59,11 @@ int main(int argc, char** argv) {
   std::cout << "cp = " << &cp << '\n';
 
   delete p;
+
+  const int& z = a;
+  f(z, t);
+  g(y, t);
+
 
   return 0;
 }
