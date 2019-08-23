@@ -50,3 +50,43 @@ name_("testing")
 {
   std::cout << "MacroExample Constructor...." << std::endl;
 }
+
+typedef enum {
+  napi_ok
+} napi_status;
+
+/*
+#define STRINGIFY_(x) #x
+#define STRINGIFY(x) STRINGIFY_(x)
+
+#define NAPI_STATUS_TO_STRING(status)                                    \
+ STRINGIFY(status)
+
+char* napi_status_to_string(napi_status status) {
+  switch (status) {
+    case napi_ok: 
+      return NAPI_STATUS_TO_STRING(napi_ok);
+  }
+}
+*/
+
+#define FOREACH_STATUS(STATUS) \
+        STATUS(napi_ok)        \
+
+#define GENERATE_ENUM(ENUM) ENUM,
+#define GENERATE_STRING(STRING) #STRING,
+
+/*
+enum STATUS_ENUM {
+    FOREACH_STATUS(GENERATE_ENUM)
+};
+*/
+
+static const char* STATUS_STRING[] = {
+    FOREACH_STATUS(GENERATE_STRING)
+};
+
+static const char* something(napi_status status) {
+  return STATUS_STRING[status];
+}
+
