@@ -171,6 +171,19 @@ To work around this you can:
 (const char *const) args[3] = 0x000000010262077c "static void node::TCPWrap::New(const FunctionCallbackInfo<v8::Value> &)"
 ```
 
+#### Add command on breakpoint
+```console
+(lldb) br s -n somebreakpoint
+(lldb) br command add 1.1
+> expr timer_
+DONE
+```
+
+#### Print/echo something in command/script
+```console
+(lldb) script print "something"
+```
+
 ## Adding unit tests
 You should be able to simply update the test/Makefile.am with the new test.  
 
