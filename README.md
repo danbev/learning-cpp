@@ -179,6 +179,19 @@ To work around this you can:
 DONE
 ```
 
+Alternative to adding print statements.
+```console
+(lldb) br s -f node_quic_util.h -l 461 -C 'frame info' -C 'expr *this' -C continue
+```
+Sometimes it can be needed to have print statements if the
+issue/bug is timing dependent.
+
+
+#### Adding aliases
+```console
+(lldb) command alias beve br s -f %1 -l %2 -C 'expr %4' -C continue
+```
+
 #### Print/echo something in command/script
 ```console
 (lldb) script print "something"
