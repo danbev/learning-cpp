@@ -872,19 +872,21 @@ When sizeof's operand is a type, it has to be enclosed in parentheses. But when 
 ### nullptr
 
 ### Pointer to pointer
-Lets say you have a function that needs to reassing a pointer that it is passed. If the function only takes a pointer to the object
-this is only a copy of the pointer:
+Lets say you have a function that needs to reassign a pointer that it is passed. 
+If the function only takes a pointer to the object this is only a copy of the pointer:
 
     int* org =  new int{10};
     func(org);
 
     void fun(int* ptr) { ...};
 
-Now, func will get a copy of org (pointing to the same int. But changing that pointer to point somewhere else does not affect
-But, if we pass a pointer to to org the we can update that value which will update our original as we are changing what it 
+Now, func will get a copy of org (pointing to the same int. But changing that 
+pointer to point somewhere else does not affect But, if we pass a pointer to the 
+org the we can update that value which will update our original as we are changing what it 
 points to:
 
     void fun(int** ptr) { ...};
+
 
 
 ### Argument-dependant lookup (ADL)
