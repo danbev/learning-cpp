@@ -1244,3 +1244,130 @@ The above should be the equivalent of creating a lambda. When the compiler finds
 and instance of some lambda type (internal type) and it knows the operator() function and should be able to
 inline it. 
 But how can I be sure?
+
+
+#### unordered_set
+```c++
+  std::unordered_set<CleanupHookCallback,
+                     CleanupHookCallback::Hash,
+                     CleanupHookCallback::Equal> cleanup_hooks_;
+```
+Just remember that an unordered set is templated with its key, 
+
+### std::endl and std::flush
+```c++
+std::cout "something" << std::endl
+```
+This is the same as doing:
+```c++
+std::cout << '\n' << std::flush
+```
+Notice that we sending std::cout a char and not a string. If we instead passed
+`"\n"` it would be forced to loop over all the characters looking for null.
+
+Now, buffering can cause output to be delayed. The write system call (man 2 write)
+```c
+ssize_t write(int fildes, const void *buf, size_t nbyte);
+```
+This function takes a file descriptor and a bytebuffer and writes in the byte
+buffer to the file decsriptor. Normal functions call are very fast but system
+calls are not. Buffering exists to try to make this cost lower, so that the
+actual call, with the context switch, is only done once the buffer is full.
+
+File descriptors can be unbuffered, fully-buffered with a fixed size, or
+line-buffered which means that it waits until it sees a newline character.
+Line-buffered is what I've been interested in for programs that use std::endl
+in combination with stdout/stderr.
+
+stdin is line-buffered.
+stdout (TTY) is line-buffered.
+stdout (not a TTY) is fully-buffered.
+stderr is line-buffered.
+
+For line-buffered, data will be added to the buffer until a newline is encountered
+which will cause a flush. Normally there will also be a max buffer size so with
+either comes first.
+
+TODO: Can we actually see where this is done, looking for a '\n' I mean?  
+Well, the source code for libc++ is specific to the compiler, so GNU G++ would
+have its own and llvm would have its. For llvm there is a github mirror named
+llvm-project which I've cloned. 
+
+The modes names are:
+`_IOFBF` which is full-buffering  
+`_IOLBF` which is line-buffering  
+`_IONBF` which is no buffering  
+
+The default streams stdin and stdout are fully buffered by default if they are
+known to not refer to an interactive device. Otherwise, they may either be line
+buffered or unbuffered by default, depending on the system and library
+implementation. 
+The same is true for stderr, which is always either line buffered or unbuffered
+by default.
+
+This can be and set using http://www.cplusplus.com/reference/cstdio/setvbuf/
+
+### iostream
+The "serial" nature of streams is a very important element of their interface.
+You cannot directly make random access random reads or writes in a stream 
+(unlike, say, using an array index to access any value you want) although you
+can seek to a position in a stream and perform a read at that point.
+
+class ios_base
+This class has a number of static membersof type `fmtflags`
+```c++
+  typedef T1 fmtflags;
+  tatic constexpr fmtflags boolalpha;
+```
+If we look in `iomanip` we have the following:
+```c++
+namespace std {
+
+// types T1, T2, ... are unspecified implementation types
+T1 resetiosflags(ios_base::fmtflags mask);
+```
+
+### I/O Manipulators (ios) and (iomanip)
+Manipulators allow you to change flags using operator<< and operator>> instead
+of flags(fmtflags) or setf()
+
+```console
+$ cd ~/work/llvm/llvm-project
+$ mkdir build && cd build
+$ cmake -DLLVM_ENABLE_PROJECTS='libxxc, clang' -DCMAKE_INSTALL_PREFIX=~/work/llvm/local_build -DCMAKE_BUILD_TYPE=Debug ../llvm
+$ make -j8
+$ make install
+
+```console
+$ clang++ -M main.cc
+main.o: main.cc \
+  /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../include/c++/v1/iostream \
+  /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../include/c++/v1/__config \
+  /usr/include/pthread.h \
+  /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../include/c++/v1/ios \
+  /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../include/c++/v1/iosfwd \
+  /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../include/c++/v1/wchar.h \
+```
+
+```console
+-M, --dependencies
+```
+
+
+Building libcxx:
+``console
+$ mkdir build
+$ cmake ..
+
+
+
+
+
+
+
+ 
+
+There are automatic flushes that cover most use cases. For example, if a
+program writes to the console, the system by default flushes after every newline.
+
+
