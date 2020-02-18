@@ -1360,14 +1360,70 @@ $ mkdir build
 $ cmake ..
 
 
-
-
-
-
-
- 
-
 There are automatic flushes that cover most use cases. For example, if a
 program writes to the console, the system by default flushes after every newline.
 
+### Preprocessor
+Lets take a look at the output of the preprocessor using an empty main
+function:
+```
+g++ -E preprocessor.cc 
+# 1 "preprocessor.cc"
+# 1 "<built-in>"
+# 1 "<command-line>"
+# 1 "/usr/include/stdc-predef.h" 1 3 4
+# 1 "<command-line>" 2
+# 1 "preprocessor.cc"
+
+int main(int argc, char** argv) {
+  return 0;
+}
+```
+
+Show all the predefined macros (one that were not specified by us):
+```console
+$ touch empty.h
+$ cpp -dM empty.h
+```
+`dM` will generate a list of #define directives for all the macros defined
+during the preprocessor. 
+
+```console
+$ cpp  -dD empty.h 
+# 1 "empty.h"
+# 1 "<built-in>"
+#define __STDC__ 1
+#define __STDC_VERSION__ 201710L
+#define __STDC_UTF_16__ 1
+#define __STDC_UTF_32__ 1
+#define __STDC_HOSTED__ 1
+#define __GNUC__ 9
+```
+Reading the docs for cpp you might think that the format of these should
+be:
+```
+# linenum filename flags
+```
+flags can be one of:
+```
+1) Indicates the start of a new file
+2) Indicates the returning for an included file
+3) That the text following comes from a system header so some warnings will be
+supressed.
+4) Specifies that the text following should be treated as being wrapped in
+an implicit extern "C" block.
+
+
+In which case `"<built-in>"` would be a file name, but this is on the case.
+For example, if we add a variable on the command line:
+```console
+...
+# 1 "<command-line>"
+#define something 10
+```
+So where do these build-ins come from?  
+If we look in libcpp and the `init.c` file we can find the following line:
+```c
+532     _cpp_define_builtin (pfile, "__STDC__ 1");                                  
+```
 
