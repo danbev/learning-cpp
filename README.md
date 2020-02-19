@@ -1417,13 +1417,135 @@ an implicit extern "C" block.
 In which case `"<built-in>"` would be a file name, but this is on the case.
 For example, if we add a variable on the command line:
 ```console
+$ cpp -Dsomething=10 -dD empty.h 
+cpp -Dsomething=10 -dD empty.h 
+# 1 "empty.h"
+# 1 "<built-in>"
+#define __STDC__ 1
+#define __STDC_VERSION__ 201710L
 ...
 # 1 "<command-line>"
 #define something 10
+# 1 "/usr/include/stdc-predef.h" 1 3 4
+# 19 "/usr/include/stdc-predef.h" 3 4
+#define _STDC_PREDEF_H 1
+# 38 "/usr/include/stdc-predef.h" 3 4
+#define __STDC_IEC_559__ 1
+
+
+
+
+
+
+
+#define __STDC_IEC_559_COMPLEX__ 1
+# 58 "/usr/include/stdc-predef.h" 3 4
+#define __STDC_ISO_10646__ 201706L
+# 1 "<command-line>" 2
+# 1 "empty.h"
 ```
+
 So where do these build-ins come from?  
 If we look in libcpp and the `init.c` file we can find the following line:
 ```c
 532     _cpp_define_builtin (pfile, "__STDC__ 1");                                  
 ```
 
+So if we look in `vi +19 /usr/include/stdc-predef.h` we will find:
+```c
+ 19 #define _STDC_PREDEF_H  1                                                       
+```
+
+### Global Constructors
+These are functions that are called before the main function of our program and
+not to be confused to C++ class constructors. There can be muliple constructors
+that are to be run so they are stored as an array of function pointers.
+
+Five objects files handle the program initialization and are called `crt0.o`,
+`crti.o`, `crtbegin.o`, `crtend.o`, and crtn.o`.
+Together these object files implement two functions: _init which runs the global
+constructors and other initialization tasks, and _fini that runs the global
+destructors and other termination tasks.
+
+```console
+$ ld crt0.o crti.o crtbegin.o sections.o crtend.o crtn.o
+```
+
+### LD linker scripts
+Remember that this linkers job is to combine object input files into a single
+object output file.
+Each object file has a list of sections and each section has a name and a size.
+If a section is marked LOAD it will be loaded into memory when the file is
+run. A section can also be marked as ALLOC and in this case memory will
+be set aside for the section but nothing will be loaded into it. A section that
+is not marked as loadable or allocatable most often contains debugging info.
+
+Each of the loadable/allocatable sections have two addresses:
+````
+1) Virtual Memory Address (VMA)
+This is the address the section will have when the output object file is run.
+
+2) Load Memory Address (LMA)
+This is the section that the section will be loaded and will most often be the
+same as the VMA.
+```
+```
+$ gcc -c -o sections.o sections.cc 
+$ objdump -h sections.o -w
+
+sections.o:     file format elf64-x86-64
+
+Sections:
+Idx Name            Size      VMA               LMA               File off  Algn  Flags
+  0 .text           00000012  0000000000000000  0000000000000000  00000040  2**0  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .data           00000004  0000000000000000  0000000000000000  00000054  2**2  CONTENTS, ALLOC, LOAD, DATA
+  2 .bss            00000000  0000000000000000  0000000000000000  00000058  2**0  ALLOC
+  3 .comment        0000002d  0000000000000000  0000000000000000  00000058  2**0  CONTENTS, READONLY
+  4 .note.GNU-stack 00000000  0000000000000000  0000000000000000  00000085  2**0  CONTENTS, READONLY
+  5 .eh_frame       00000038  0000000000000000  0000000000000000  00000088  2**3  CONTENTS, ALLOC, LOAD, RELOC, READONLY, DATA
+```
+
+Each object file also has a list of symbols:
+```console
+
+sections.o:     file format elf64-x86-64
+
+SYMBOL TABLE:
+0000000000000000 l    df *ABS*	          0000000000000000 sections.cc
+0000000000000000 l    d  .text	          0000000000000000 .text
+0000000000000000 l    d  .data	          0000000000000000 .data
+0000000000000000 l    d  .bss	          0000000000000000 .bss
+0000000000000000 l    O  .data	          0000000000000004 _ZL5BAJJA
+0000000000000000 l    d  .note.GNU-stack  0000000000000000 .note.GNU-stack
+0000000000000000 l    d  .eh_frame	  0000000000000000 .eh_frame
+0000000000000000 l    d  .comment	  0000000000000000 .comment
+0000000000000000 g    F .text             0000000000000012 main
+```
+
+Now linker scripts are just text files with commands.
+
+#### SECTION command
+Is used to describe the memory layout of the output file.
+
+```
+SECTIONS
+{
+  . = 0x10000;
+  .text : { *(.text) }
+  . = 0x8000000;
+  .data : { *(.data) }
+  .bss : { *(.bss) }
+}
+```
+The dot (`.`) is a special symbol which is the location counter.  If this is not
+set it will be get the default value of 0.
+Next we have `.text` which starts an output section. Here we are saying that
+all .text sections from the input object files should be included into the .text
+section of the output object file.
+
+You can list the linker script using:
+```console
+$ ld --verbose
+```
+This can be interesting if you want to see what sections are supported for
+the current linker as well as the search paths it is using.
