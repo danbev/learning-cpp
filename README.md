@@ -628,6 +628,11 @@ In `include/__config` we find:
 
 
 ### Inline namespaces
+Is a namespace that automatically exports all symbols to the parent namespace.
+Examples can be found in [inline-ns](./src/fundamentals/inline-ns).
+
+There is an example that demonstrates versioning, where one can move from an
+older version to newer version by adding inline namespaces.
 
 ### std::Allocator
 Was originally designed for near and far pointers that were used in the segmented memory model that Intel used to have.
@@ -1463,6 +1468,9 @@ that are to be run so they are stored as an array of function pointers.
 
 Five objects files handle the program initialization and are called `crt0.o`,
 `crti.o`, `crtbegin.o`, `crtend.o`, and crtn.o`.
+
+crt0.o will contain the `_start` symbol which is the entry point.
+
 Together these object files implement two functions: _init which runs the global
 constructors and other initialization tasks, and _fini that runs the global
 destructors and other termination tasks.
@@ -1470,6 +1478,185 @@ destructors and other termination tasks.
 ```console
 $ ld crt0.o crti.o crtbegin.o sections.o crtend.o crtn.o
 ```
+
+A global constructor in c can look like this:
+```c
+#include <stdio.h>
+
+__attribute__ ((constructor)) void bajja(void) {
+  printf("bajja is running\n");
+}
+ 
+int main(int argc, char** argv) {
+  printf("%s: main...\n", argv[0]);
+}
+```
+We can compile but not link this using:
+```console
+$ gcc -c -o global.o global.c 
+```
+And we can take a look at the section headers using objdump:
+```console
+$ objdump -h global.o -w
+
+global.o:     file format elf64-x86-64
+
+Sections:
+Idx Name            Size      VMA               LMA               File off  Algn  Flags
+  0 .text           00000040  0000000000000000  0000000000000000  00000040  2**0  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+  1 .data           00000000  0000000000000000  0000000000000000  00000080  2**0  CONTENTS, ALLOC, LOAD, DATA
+  2 .bss            00000000  0000000000000000  0000000000000000  00000080  2**0  ALLOC
+  3 .rodata         0000001e  0000000000000000  0000000000000000  00000080  2**0  CONTENTS, ALLOC, LOAD, READONLY, DATA
+  4 .init_array     00000008  0000000000000000  0000000000000000  000000a0  2**3  CONTENTS, ALLOC, LOAD, RELOC, DATA
+  5 .comment        0000002d  0000000000000000  0000000000000000  000000a8  2**0  CONTENTS, READONLY
+  6 .note.GNU-stack 00000000  0000000000000000  0000000000000000  000000d5  2**0  CONTENTS, READONLY
+  7 .eh_frame       00000058  0000000000000000  0000000000000000  000000d8  2**3  CONTENTS, ALLOC, LOAD, RELOC, READONLY, DATA
+$ 
+```
+If we did not have a global constructor there would not be a `.init_array` 
+section:
+```console
+$ objdump -h noglobal.o -w
+
+noglobal.o:     file format elf64-x86-64
+
+Sections:
+Idx Name            Size      VMA               LMA               File off  Algn  Flags
+  0 .text           0000002f  0000000000000000  0000000000000000  00000040  2**0  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+  1 .data           00000000  0000000000000000  0000000000000000  0000006f  2**0  CONTENTS, ALLOC, LOAD, DATA
+  2 .bss            00000000  0000000000000000  0000000000000000  0000006f  2**0  ALLOC
+  3 .rodata         0000000d  0000000000000000  0000000000000000  0000006f  2**0  CONTENTS, ALLOC, LOAD, READONLY, DATA
+  4 .comment        0000002d  0000000000000000  0000000000000000  0000007c  2**0  CONTENTS, READONLY
+  5 .note.GNU-stack 00000000  0000000000000000  0000000000000000  000000a9  2**0  CONTENTS, READONLY
+  6 .eh_frame       00000038  0000000000000000  0000000000000000  000000b0  2**3  CONTENTS, ALLOC, LOAD, RELOC, READONLY, DATA
+$ 
+```
+If we take a look at the linker script in use (ld --verbose) we can find that
+these sections, `.init_array` are configured as follows:
+```
+ .init_array    :                                                              
+  {                                                                             
+    PROVIDE_HIDDEN (__init_array_start = .);                                    
+    KEEP (*(SORT_BY_INIT_PRIORITY(.init_array.*) SORT_BY_INIT_PRIORITY(.ctors.*)))
+    KEEP (*(.init_array EXCLUDE_FILE (*crtbegin.o *crtbegin?.o *crtend.o *crtend?.o ) .ctors))
+    PROVIDE_HIDDEN (__init_array_end = .);                                      
+  }                                         
+```
+The provide keyword defines a symbol, in this case `__init_array_start` which
+is set to the address of this section.
+When using the option `-gc-sections` which is link time garbage collection, keep
+marks sections that should not be removed. So this is saying keep all `.init_array`
+sections in all input object files
+
+`~/work/gcc/gcc/libgcc/config/ia64/crtbegin.S`. Note that the capital S indicates
+that this file needs to be preprocessed as it contains #include/#define which
+have to be processed. A lower case s assembly file is just normal assembly.
+So we have to preprocess such fils with `cpp`:
+
+```console
+$ cpp hello.S | as -o hello.o -
+$ ld -o hello hello.o
+$ ./hello
+Hello, world!
+```
+
+
+
+```console
+objdump -t globalc -w
+
+globalc:     file format elf64-x86-64
+
+SYMBOL TABLE:
+00000000004002a8 l    d  .interp	0000000000000000              .interp
+00000000004002c4 l    d  .note.gnu.build-id	0000000000000000              .note.gnu.build-id
+00000000004002e8 l    d  .note.ABI-tag	0000000000000000              .note.ABI-tag
+0000000000400308 l    d  .gnu.hash	0000000000000000              .gnu.hash
+0000000000400328 l    d  .dynsym	0000000000000000              .dynsym
+00000000004003a0 l    d  .dynstr	0000000000000000              .dynstr
+00000000004003e4 l    d  .gnu.version	0000000000000000              .gnu.version
+00000000004003f0 l    d  .gnu.version_r	0000000000000000              .gnu.version_r
+0000000000400410 l    d  .rela.dyn	0000000000000000              .rela.dyn
+0000000000400440 l    d  .rela.plt	0000000000000000              .rela.plt
+0000000000401000 l    d  .init	0000000000000000              .init
+0000000000401020 l    d  .plt	0000000000000000              .plt
+0000000000401050 l    d  .text	0000000000000000              .text
+00000000004011f8 l    d  .fini	0000000000000000              .fini
+0000000000402000 l    d  .rodata	0000000000000000              .rodata
+0000000000402030 l    d  .eh_frame_hdr	0000000000000000              .eh_frame_hdr
+0000000000402078 l    d  .eh_frame	0000000000000000              .eh_frame
+0000000000403e08 l    d  .init_array	0000000000000000              .init_array
+0000000000403e18 l    d  .fini_array	0000000000000000              .fini_array
+0000000000403e20 l    d  .dynamic	0000000000000000              .dynamic
+0000000000403ff0 l    d  .got	0000000000000000              .got
+0000000000404000 l    d  .got.plt	0000000000000000              .got.plt
+0000000000404028 l    d  .data	0000000000000000              .data
+000000000040402c l    d  .bss	0000000000000000              .bss
+0000000000000000 l    d  .comment	0000000000000000              .comment
+0000000000406030 l    d  .gnu.build.attributes	0000000000000000              .gnu.build.attributes
+0000000000000000 l    df *ABS*	0000000000000000              /usr/lib/gcc/x86_64-redhat-linux/9/../../../../lib64/crt1.o
+000000000040107f l       .text	0000000000000000              .hidden .annobin_init.c
+000000000040107f l       .text	0000000000000000              .hidden .annobin_init.c_end
+0000000000401050 l       .text	0000000000000000              .hidden .annobin_init.c.hot
+0000000000401050 l       .text	0000000000000000              .hidden .annobin_init.c_end.hot
+0000000000401050 l       .text	0000000000000000              .hidden .annobin_init.c.unlikely
+0000000000401050 l       .text	0000000000000000              .hidden .annobin_init.c_end.unlikely
+0000000000401050 l       .text	0000000000000000              .hidden .annobin_init.c.startup
+0000000000401050 l       .text	0000000000000000              .hidden .annobin_init.c_end.startup
+0000000000401050 l       .text	0000000000000000              .hidden .annobin_init.c.exit
+0000000000401050 l       .text	0000000000000000              .hidden .annobin_init.c_end.exit
+0000000000401080 l       .text	0000000000000000              .hidden .annobin_static_reloc.c
+0000000000401085 l       .text	0000000000000000              .hidden .annobin_static_reloc.c_end
+0000000000401050 l       .text	0000000000000000              .hidden .annobin_static_reloc.c.hot
+0000000000401050 l       .text	0000000000000000              .hidden .annobin_static_reloc.c_end.hot
+0000000000401050 l       .text	0000000000000000              .hidden .annobin_static_reloc.c.unlikely
+0000000000401050 l       .text	0000000000000000              .hidden .annobin_static_reloc.c_end.unlikely
+0000000000401050 l       .text	0000000000000000              .hidden .annobin_static_reloc.c.startup
+0000000000401050 l       .text	0000000000000000              .hidden .annobin_static_reloc.c_end.startup
+0000000000401050 l       .text	0000000000000000              .hidden .annobin_static_reloc.c.exit
+0000000000401050 l       .text	0000000000000000              .hidden .annobin_static_reloc.c_end.exit
+0000000000401080 l       .text	0000000000000000              .hidden .annobin__dl_relocate_static_pie.start
+0000000000401085 l       .text	0000000000000000              .hidden .annobin__dl_relocate_static_pie.end
+0000000000000000 l    df *ABS*	0000000000000000              crtstuff.c
+0000000000401090 l     F .text	0000000000000000              deregister_tm_clones
+00000000004010c0 l     F .text	0000000000000000              register_tm_clones
+0000000000401100 l     F .text	0000000000000000              __do_global_dtors_aux
+000000000040402c l     O .bss	0000000000000001              completed.7392
+0000000000403e18 l     O .fini_array	0000000000000000              __do_global_dtors_aux_fini_array_entry
+0000000000401130 l     F .text	0000000000000000              frame_dummy
+0000000000403e08 l     O .init_array	0000000000000000              __frame_dummy_init_array_entry
+0000000000000000 l    df *ABS*	0000000000000000              global.c
+0000000000000000 l    df *ABS*	0000000000000000              crtstuff.c
+000000000040217c l     O .eh_frame	0000000000000000              __FRAME_END__
+0000000000000000 l    df *ABS*	0000000000000000              
+0000000000403e18 l       .init_array	0000000000000000              __init_array_end
+0000000000403e20 l     O .dynamic	0000000000000000              _DYNAMIC
+0000000000403e08 l       .init_array	0000000000000000              __init_array_start
+0000000000402030 l       .eh_frame_hdr	0000000000000000              __GNU_EH_FRAME_HDR
+0000000000404000 l     O .got.plt	0000000000000000              _GLOBAL_OFFSET_TABLE_
+00000000004011f0 g     F .text	0000000000000005              __libc_csu_fini
+0000000000404028  w      .data	0000000000000000              data_start
+0000000000000000       F *UND*	0000000000000000              puts@@GLIBC_2.2.5
+000000000040402c g       .data	0000000000000000              _edata
+00000000004011f8 g     F .fini	0000000000000000              .hidden _fini
+0000000000000000       F *UND*	0000000000000000              printf@@GLIBC_2.2.5
+0000000000000000       F *UND*	0000000000000000              __libc_start_main@@GLIBC_2.2.5
+0000000000404028 g       .data	0000000000000000              __data_start
+0000000000000000  w      *UND*	0000000000000000              __gmon_start__
+0000000000402008 g     O .rodata	0000000000000000              .hidden __dso_handle
+0000000000402000 g     O .rodata	0000000000000004              _IO_stdin_used
+0000000000401180 g     F .text	0000000000000065              __libc_csu_init
+0000000000404030 g       .bss	0000000000000000              _end
+0000000000401080 g     F .text	0000000000000005              .hidden _dl_relocate_static_pie
+0000000000401050 g     F .text	000000000000002f              _start
+000000000040402c g       .bss	0000000000000000              __bss_start
+0000000000401147 g     F .text	000000000000002f              main
+0000000000404030 g     O .data	0000000000000000              .hidden __TMC_END__
+0000000000401136 g     F .text	0000000000000011              bajja
+0000000000401000 g     F .init	0000000000000000              .hidden _init
+```
+
+
 
 ### LD linker scripts
 Remember that this linkers job is to combine object input files into a single
