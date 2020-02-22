@@ -626,6 +626,7 @@ In `include/__config` we find:
     #define _LIBCPP_NAMESPACE _LIBCPP_CONCAT(__,_LIBCPP_ABI_VERSION)
     #define _LIBCPP_ABI_VERSION 1
 
+So this is an inline namespace used for versioning in libc++.
 
 ### Inline namespaces
 Is a namespace that automatically exports all symbols to the parent namespace.
@@ -1513,8 +1514,11 @@ Idx Name            Size      VMA               LMA               File off  Algn
   7 .eh_frame       00000058  0000000000000000  0000000000000000  000000d8  2**3  CONTENTS, ALLOC, LOAD, RELOC, READONLY, DATA
 $ 
 ```
-If we did not have a global constructor there would not be a `.init_array` 
-section:
+If we did not have a global constructor there would not be a `.init_array` and 
+that it was added by the link editor. Since we only have a single global constructor
+the size will be one 8 byte pointer. Adding a second would make it 16 (hex 10).
+
+Now without an global constructors:
 ```console
 $ objdump -h noglobal.o -w
 
@@ -1545,8 +1549,164 @@ these sections, `.init_array` are configured as follows:
 The provide keyword defines a symbol, in this case `__init_array_start` which
 is set to the address of this section.
 When using the option `-gc-sections` which is link time garbage collection, keep
-marks sections that should not be removed. So this is saying keep all `.init_array`
+marks sections that are unused which would otherwise be removed. So this is saying keep all `.init_array`
 sections in all input object files
+```
+    KEEP (*(SORT_BY_INIT_PRIORITY(.init_array.*) SORT_BY_INIT_PRIORITY(.ctors.*)))
+```
+This is in the output section `.init_array`, so we are specifying things that
+will be added to that section in the ouput object file. These things are input
+sections from the input object files (all of them). So in this case we want
+to place all `.init_array.*` and `.ctors.*` into the output `.init_array` section.
+
+The same goes for destructors, but the section name is then `.fini_array`.
+
+We can take a look at the `.init_array` section and find the following:
+```console
+$ objdump -s -j .init_array global -w
+
+global:     file format elf64-x86-64
+
+Contents of section .init_array:
+ 403e00 30114000 00000000 36114000 00000000  0.@.....6.@.....
+```
+Notite that `403e00` is referenced in `__libc_csu_init`:
+```
+0000000000401190 <__libc_csu_init>:                                             
+  401190:       f3 0f 1e fa             endbr64                                 
+  401194:       41 57                   push   %r15                             
+  401196:       4c 8d 3d 63 2c 00 00    lea    0x2c63(%rip),%r15        # 403e00 <__frame_dummy_init_array_entry>
+```
+So this is loading the address of the `.init_array` memory location that will
+contain function pointers.
+
+
+Lets try to figure out exactly what is going when we compile global.c:
+```console
+$ /usr/libexec/gcc/x86_64-redhat-linux/9/cc1 -quiet global.c -quiet -dumpbase global.c "-mtune=generic" "-march=x86-64" -auxbase global -o global.s
+```
+So this has generated an assembly source file named `global.s`.
+Now, lets assemble it into an object file:
+```console
+$  as --64 -o global.o global.s
+```
+Next, we need to link this into an executable:
+```console
+$ /usr/libexec/gcc/x86_64-redhat-linux/9/collect2 -plugin /usr/libexec/gcc/x86_64-redhat-linux/9/liblto_plugin.so "-plugin-opt=/usr/libexec/gcc/x86_64-redhat-linux/9/lto-wrapper" "-plugin-opt=-fresolution=global.res" "-plugin-opt=-pass-through=-lgcc" "-plugin-opt=-pass-through=-lgcc_s" "-plugin-opt=-pass-through=-lc" "-plugin-opt=-pass-through=-lgcc" "-plugin-opt=-pass-through=-lgcc_s" --build-id --no-add-needed --eh-frame-hdr "--hash-style=gnu" -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -o global /usr/lib64/crt1.o /usr/lib64/crti.o /usr/lib/gcc/x86_64-redhat-linux/9/crtbegin.o -L/usr/lib/gcc/x86_64-redhat-linux/9 -L/usr/lib64 -L/lib64 -L/usr/lib64 -L/usr/lib global.o -lgcc --push-state --as-needed -lgcc_s --pop-state -lc -lgcc --push-state --as-needed -lgcc_s --pop-state /usr/lib/gcc/x86_64-redhat-linux/9/crtend.o /usr/lib64/crtn.o
+```
+TODO: what are these plugins?
+TODO: understand collect2. collect2 wraps ld but I'm not exactly sure about the importance of it. 
+
+```console
+-o global /usr/lib64/crt1.o /usr/lib64/crti.o /usr/lib/gcc/x86_64-redhat-linux/9/crtbegin.o -L/usr/lib/gcc/x86_64-redhat-linux/9 -L/usr/lib64 -L/lib64 -L/usr/lib64 -L/usr/lib global.o -lgcc --push-state --as-needed -lgcc_s --pop-state -lc -lgcc --push-state --as-needed -lgcc_s --pop-state /usr/lib/gcc/x86_64-redhat-linux/9/crtend.o /usr/lib64/crtn.o
+```
+Notice that we have `crt1.o` and crti.o` from /usr/lib64, followed by `crtbegin.o`
+from gcc. The we have our global.o followed by `crtend.o` and then `crtn.o`
+
+Linking order:
+```
+crt1.0 crti.o crtbegin.o [-L paths] [user objs] [gcc libs] [c libs] crtend.o crtn.o 
+```
+crt1.o provides the `_start` entry point. 
+`crti.o` provides the prologe for .init and .fini.
+`crtbegin.o` is for gcc functions with __attribute__ ((constructor))
+`crtend.o` is for gcc functions with __attribute__ ((destructor))
+`crtn.o` is the epilouge for the .init and .fini functions.
+
+The `init` section in an ELF object file contains executable instructions
+for the initialization process. The dynamic linker will call this section
+before code, and when it will call .fini when unloaded (via the exit() function
+call I think).
+Remember that when we execute a an object, we call execve and the operating
+system will do stuff before checking the object for an interpreter:
+```console
+ objdump -s -j .interp global -w
+
+global:     file format elf64-x86-64
+
+Contents of section .interp:
+ 4002a8 2f6c6962 36342f6c 642d6c69 6e75782d  /lib64/ld-linux-
+ 4002b8 7838362d 36342e73 6f2e3200           x86-64.so.2. 
+```
+/lib64/ld-linux-x86-64.so.2  is the interpreter (runtime linker) to be used (INTERPR headers).
+```console
+$ objdump -x global | grep INTERP
+  INTERP off    0x00000000000002a8 vaddr 0x00000000004002a8 paddr 0x00000000004002a8 align 2**0
+```
+
+crtbegin is part of libgcc and is created from crtstuff.c, as is certend actually.
+The are passed -DCRT_BEGIN and -DCRT_END respectively as compiler argument.
+`crti` is located in glibc/csu (c startup code). 
+In Makeconfig we can find:
+```
+start-installed-name = crt1.o 
+```
+crt1.o is built from start.c
+So we know that our start address is `_start` which has code to setup the
+call to `__libc_start_main`.
+```c
+int __libc_start_main(int *(main) (int, char * *, char * *),
+                      int argc,
+                      char** ubp_av,
+                      void (*init) (void),
+                      void (*fini) (void),
+                      void (*rtld_fini) (void),
+                      void (* stack_end));
+```
+The fourth argument will be `__libc_csu_init`, for which the source can
+be found in elf-init.c. It bascially just calls `_init()`:
+```c
+void __libc_csu_init (int argc, char **argv, char **envp) { 
+#if ELF_INITFINI
+  _init ();
+#endif
+
+  const size_t size = __init_array_end - __init_array_start;
+  for (size_t i = 0; i < size; i++)
+    (*__init_array_start [i]) (argc, argv, envp);
+}
+```
+Notice that we are looping over the function pointers and executing them. 
+Also, notice these functions accept arguments.
+
+`_init` will be added by the by the linker.
+```c
+extern void _init (void); 
+```
+
+
+And we can run the executable using:
+```console
+$ ./global
+bajja is running
+./global: main...
+bajja is ending
+```
+
+We can see what the gcc compiler tool chain does by using the `-###` option, 
+this will show the commands but not run them:
+```
+ gcc -### -g -o global global.c
+Using built-in specs.
+COLLECT_GCC=/usr/bin/gcc
+COLLECT_LTO_WRAPPER=/usr/libexec/gcc/x86_64-redhat-linux/9/lto-wrapper
+OFFLOAD_TARGET_NAMES=nvptx-none
+OFFLOAD_TARGET_DEFAULT=1
+Target: x86_64-redhat-linux
+Configured with: ../configure --enable-bootstrap --enable-languages=c,c++,fortran,objc,obj-c++,ada,go,d,lto --prefix=/usr --mandir=/usr/share/man --infodir=/usr/share/info --with-bugurl=http://bugzilla.redhat.com/bugzilla --enable-shared --enable-threads=posix --enable-checking=release --enable-multilib --with-system-zlib --enable-__cxa_atexit --disable-libunwind-exceptions --enable-gnu-unique-object --enable-linker-build-id --with-gcc-major-version-only --with-linker-hash-style=gnu --enable-plugin --enable-initfini-array --with-isl --enable-offload-targets=nvptx-none --without-cuda-driver --enable-gnu-indirect-function --enable-cet --with-tune=generic --with-arch_32=i686 --build=x86_64-redhat-linux
+Thread model: posix
+gcc version 9.2.1 20190827 (Red Hat 9.2.1-1) (GCC) 
+COLLECT_GCC_OPTIONS='-g' '-o' 'global' '-mtune=generic' '-march=x86-64'
+ /usr/libexec/gcc/x86_64-redhat-linux/9/cc1 -quiet global.c -quiet -dumpbase global.c "-mtune=generic" "-march=x86-64" -auxbase global -g -o /tmp/cc4zbSB5.s
+COLLECT_GCC_OPTIONS='-g' '-o' 'global' '-mtune=generic' '-march=x86-64'
+ as --64 -o /tmp/cchnVA43.o /tmp/cc4zbSB5.s
+COMPILER_PATH=/usr/libexec/gcc/x86_64-redhat-linux/9/:/usr/libexec/gcc/x86_64-redhat-linux/9/:/usr/libexec/gcc/x86_64-redhat-linux/:/usr/lib/gcc/x86_64-redhat-linux/9/:/usr/lib/gcc/x86_64-redhat-linux/
+LIBRARY_PATH=/usr/lib/gcc/x86_64-redhat-linux/9/:/usr/lib/gcc/x86_64-redhat-linux/9/../../../../lib64/:/lib/../lib64/:/usr/lib/../lib64/:/usr/lib/gcc/x86_64-redhat-linux/9/../../../:/lib/:/usr/lib/
+COLLECT_GCC_OPTIONS='-g' '-o' 'global' '-mtune=generic' '-march=x86-64'
+ /usr/libexec/gcc/x86_64-redhat-linux/9/collect2 -plugin /usr/libexec/gcc/x86_64-redhat-linux/9/liblto_plugin.so "-plugin-opt=/usr/libexec/gcc/x86_64-redhat-linux/9/lto-wrapper" "-plugin-opt=-fresolution=/tmp/cc5Np044.res" "-plugin-opt=-pass-through=-lgcc" "-plugin-opt=-pass-through=-lgcc_s" "-plugin-opt=-pass-through=-lc" "-plugin-opt=-pass-through=-lgcc" "-plugin-opt=-pass-through=-lgcc_s" --build-id --no-add-needed --eh-frame-hdr "--hash-style=gnu" -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -o global /usr/lib/gcc/x86_64-redhat-linux/9/../../../../lib64/crt1.o /usr/lib/gcc/x86_64-redhat-linux/9/../../../../lib64/crti.o /usr/lib/gcc/x86_64-redhat-linux/9/crtbegin.o -L/usr/lib/gcc/x86_64-redhat-linux/9 -L/usr/lib/gcc/x86_64-redhat-linux/9/../../../../lib64 -L/lib/../lib64 -L/usr/lib/../lib64 -L/usr/lib/gcc/x86_64-redhat-linux/9/../../.. /tmp/cchnVA43.o -lgcc --push-state --as-needed -lgcc_s --pop-state -lc -lgcc --push-state --as-needed -lgcc_s --pop-state /usr/lib/gcc/x86_64-redhat-linux/9/crtend.o /usr/lib/gcc/x86_64-redhat-linux/9/../../../../lib64/crtn.o
+COLLECT_GCC_OPTIONS='-g' '-o' 'global' '-mtune=generic' '-march=x86-64'
+```
+
 
 `~/work/gcc/gcc/libgcc/config/ia64/crtbegin.S`. Note that the capital S indicates
 that this file needs to be preprocessed as it contains #include/#define which
@@ -1559,8 +1719,6 @@ $ ld -o hello hello.o
 $ ./hello
 Hello, world!
 ```
-
-
 
 ```console
 objdump -t globalc -w
