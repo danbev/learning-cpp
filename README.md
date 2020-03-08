@@ -666,12 +666,25 @@ You can declare `new` and `delete` yourself which we do in [stringsize.cc](./src
 One thing to not is that new does note only allocate memory, it also calls the constructor. And same with delete, it will
 not only reclaim the memory but will first call the destructor.
 
-### Type traits
-Were introduced with TR1 and extended with C++11 and provide a way to define behaviour depending
-on types.
 
-A type trait is a templated struct and its member variables give you information about 
-the type it the type template is templated on.
+### static_assert
+Is a way to check a constant condition at compile time. For example:
+```c++
+static_assert(my_not<true>::value == false, "Compile time error if false");   
+```
+This could also be done prior to c++11 using `#error`. For example:
+```c++
+#if !defined(something) 
+#error "something was not defined" 
+#endif 
+```
+
+### Type traits
+Were introduced with TR1 and extended with C++11 and provide a way to define
+behaviour depending on types.
+
+A type trait is a templated struct and its member variables give you information
+about the type the type template is templated on.
 
 A type trait provides a way to deal with the properties of a type. It is a template, which at
 compile time yields a specific type or value based on one or more passed template arguments,
