@@ -1907,3 +1907,48 @@ $ ld --verbose
 ```
 This can be interesting if you want to see what sections are supported for
 the current linker as well as the search paths it is using.
+
+### libstdc++
+The GNU c++ library implementation can be found in `gcc/libstdc++-v3`.
+
+Lets find out where unique_ptr is declared. This would be inlcude using the
+memory header file. `bits/unique_ptr.h` is include from `include/memory` 
+
+
+### new operator and constructors
+When create a new object on the heap using new:
+```console
+Something* s1 = new Something{5};
+```
+The new operator will make the compiler produce one function call with the
+size of the memory to be allocated.
+```console
+ 401146:	bf 04 00 00 00       	mov    $0x4,%edi
+  40114b:	e8 e0 fe ff ff       	callq  401030 <operator new(unsigned long)@plt>
+  401150:	48 89 c3             	mov    %rax,%rbx
+  401153:	be 05 00 00 00       	mov    $0x5,%esi
+  401158:	48 89 df             	mov    %rbx,%rdi
+  40115b:	e8 26 00 00 00       	callq  401186 <Something::Something(int)>
+  ...
+
+0000000000401186 <Something::Something(int)>:
+  401186:	55                   	push   %rbp
+  401187:	48 89 e5             	mov    %rsp,%rbp
+  40118a:	48 89 7d f8          	mov    %rdi,-0x8(%rbp)
+  40118e:	89 75 f4             	mov    %esi,-0xc(%rbp)
+  401191:	48 8b 45 f8          	mov    -0x8(%rbp),%rax
+  401195:	8b 55 f4             	mov    -0xc(%rbp),%edx
+  401198:	89 10                	mov    %edx,(%rax)
+  40119a:	90                   	nop
+  40119b:	5d                   	pop    %rbp
+  40119c:	c3                   	retq   
+  40119d:	0f 1f 00             	nopl   (%rax)
+```
+Notice that the first argument to Something::Something, in rdi, is the memory
+pointer returned by the new operator. The second is 5 which is stored in esi.
+The constuctor stores the address as a local variable, and also the 5. It then
+moves the pointer to the memory address where our instance type is stored into
+rax, and then the local variable 5 into rdx. It then moves edx into the memory
+pointed to (dereferenced) by rax.
+So this is really all or class instance is in memory.
+
