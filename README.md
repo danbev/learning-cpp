@@ -1952,3 +1952,26 @@ rax, and then the local variable 5 into rdx. It then moves edx into the memory
 pointed to (dereferenced) by rax.
 So this is really all or class instance is in memory.
 
+### constexpr
+You can verify that a constexpr is actually performed at compile time using:
+```console
+$ g++ -c -o constexpr constexpr.cc 
+$ objdump -d constexpr
+
+constexpr:     file format elf64-x86-64
+
+Disassembly of section .text:
+
+0000000000000000 <main>:
+   0:	55                   	push   %rbp
+   1:	48 89 e5             	mov    %rsp,%rbp
+   4:	89 7d ec             	mov    %edi,-0x14(%rbp)
+   7:	48 89 75 e0          	mov    %rsi,-0x20(%rbp)
+   b:	c7 45 fc 05 00 00 00 	movl   $0x5,-0x4(%rbp)
+  12:	b8 00 00 00 00       	mov    $0x0,%eax
+  17:	5d                   	pop    %rbp
+  18:	c3                   	retq   
+```
+
+
+
