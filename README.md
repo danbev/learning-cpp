@@ -186,6 +186,10 @@ Alternative to adding print statements.
 Sometimes it can be needed to have print statements if the
 issue/bug is timing dependent.
 
+Running a shell command from within lldg:
+```console
+(lldb) platform shell find ../v8_src/v8 -name v8.cc
+```
 
 #### Adding aliases
 ```console
@@ -1972,6 +1976,5 @@ Disassembly of section .text:
   17:	5d                   	pop    %rbp
   18:	c3                   	retq   
 ```
-
 
 
