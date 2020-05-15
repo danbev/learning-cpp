@@ -4,7 +4,7 @@
 using Callback = std::function<int(int x)>;
 
 void doit(Callback cb) {
-  if (cb != nullptr) {
+  if (cb) {
     int ret = cb(10);
     std::cout << "ret:" << ret << '\n';
   }
