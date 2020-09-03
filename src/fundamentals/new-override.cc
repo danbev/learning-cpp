@@ -11,11 +11,11 @@ class Something {
   }
 
   void* operator new(size_t size) {
-    std::cout << "Overridden operartor new. size: " << size << '\n';
+    std::cout << "Overloaded operartor new. size: " << size << '\n';
     return malloc(size);
   }
   void operator delete(void* ptr) {
-    std::cout << "Overridden operartor delete. ptr: " << ptr << '\n';
+    std::cout << "Overloaded operartor delete. ptr: " << ptr << '\n';
     free(ptr);
   }
 
