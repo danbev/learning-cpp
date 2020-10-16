@@ -1,18 +1,24 @@
 #include <iostream>
+#include <memory>
 
-// $ clang++ -Wmost -std=c++11 -o virtuald virtual-desctructor.cc
+// $ g++ -g -fsanitize=address -o virtual-desctructor virtual-desctructor.cc
 class Base { 
   public: 
-    Base() { std::cout << "Constructing Base " << '\n'; } 
-    virtual void doit() { std::cout << "Base doit..." << '\n'; }
-    virtual ~Base() { std::cout << "Destructing Base " << '\n'; }      
+    Base() {
+      std::cout << "Constructing Base " << '\n'; 
+    }
+    ~Base() { std::cout << "Destructing Base " << '\n'; }      
+    // Without a virtual destructor asan will produce an error
+    //
+    //virtual ~Base() { std::cout << "Destructing Base " << '\n'; }      
 }; 
   
 class Derived: public Base { 
   public: 
     Derived() { std::cout << "Constructing Derived " << '\n'; } 
     ~Derived() { std::cout << "Destructing Derived " << '\n'; } 
-    void doit() { std::cout << "Derived doit..." << '\n'; }
+  private:
+    int x;
 }; 
   
 int main(void) 
@@ -20,5 +26,8 @@ int main(void)
   Derived *d = new Derived();   
   Base *b = d; 
   delete b; 
+
+  std::unique_ptr<Base> ptr1 = std::make_unique<Derived>();
+
   return 0; 
 } 
