@@ -9,7 +9,6 @@ class Base {
     }
     ~Base() { std::cout << "Destructing Base " << '\n'; }      
     // Without a virtual destructor asan will produce an error
-    //
     //virtual ~Base() { std::cout << "Destructing Base " << '\n'; }      
 }; 
   
@@ -25,6 +24,8 @@ int main(void)
 { 
   Derived *d = new Derived();   
   Base *b = d; 
+  // we are deleting a Derived object through Base pointer. If the Base class's
+  // destructor is not virtual the Derived class's destructor will not be run.
   delete b; 
 
   std::unique_ptr<Base> ptr1 = std::make_unique<Derived>();
