@@ -1,34 +1,56 @@
 #include <iostream>
 #include <memory>
 
+/*
+extern "C" const char* __asan_default_options() {
+  return "new_delete_type_mismatch=0";
+}
+*/
+
 // $ g++ -g -fsanitize=address -o virtual-desctructor virtual-desctructor.cc
 class Base { 
   public: 
     Base() {
-      std::cout << "Constructing Base " << '\n'; 
+      std::cout << "Constructing Base " << this << '\n'; 
     }
-    ~Base() { std::cout << "Destructing Base " << '\n'; }      
+    ~Base() { std::cout << "~Base " << this << '\n'; }      
     // Without a virtual destructor asan will produce an error
-    //virtual ~Base() { std::cout << "Destructing Base " << '\n'; }      
+    //virtual ~Base() { std::cout << "~Base " << this <<  '\n'; }      
+    //virtual ~Base() { std::cout << "~Base " << this <<  '\n'; }      
 }; 
   
 class Derived: public Base { 
   public: 
-    Derived() { std::cout << "Constructing Derived " << '\n'; } 
-    ~Derived() { std::cout << "Destructing Derived " << '\n'; } 
+    Derived() { std::cout << "Constructing Derived " << this << '\n'; } 
+    ~Derived() { std::cout << "~Derived (Important that this gets called) " << this << '\n'; } 
   private:
     int x;
+    bool b : 1;
 }; 
-  
+
+class Derived2: public Base {
+  public: 
+    Derived2() { std::cout << "Constructing Derived2 " << this << '\n'; } 
+    ~Derived2() { 
+      std::cout << "~Derived2 " << this << '\n';
+      Derived* d= reinterpret_cast<Derived*>(this);
+      d->~Derived();
+    } 
+    char s[10000];
+}; 
+
 int main(void) 
 { 
-  Derived *d = new Derived();   
-  Base *b = d; 
-  // we are deleting a Derived object through Base pointer. If the Base class's
-  // destructor is not virtual the Derived class's destructor will not be run.
-  delete b; 
+  Derived* d = new Derived();   
+  Derived2* d2 = reinterpret_cast<Derived2*>(d);
+  delete d2;
 
-  std::unique_ptr<Base> ptr1 = std::make_unique<Derived>();
+  /*
+  Derived2* d3 = new Derived2();
+  delete d3;
+  */
+  // Deallocation size different from allocation size
+
 
   return 0; 
 } 
