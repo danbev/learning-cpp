@@ -22,7 +22,7 @@ class Some {
     }
 
     ~Some() {
-      std::cout << "Some descructor called " << "name_: " << name_ << ", mutex_: " << mutex_.get() << '\n';
+      std::cout << "Some descructor called " << "name_: " << name_ << ", mutex_.use_count: " << mutex_.use_count() << '\n';
     }
 
     explicit Some(string name) : name_(name) {
@@ -45,7 +45,7 @@ class Some {
 
     Some& operator=(Some&& that) {
       std::cout << "Some move operator=\n";
-      mutex_ = std::move(that.mutex_);
+      mutex_ = that.mutex_;
       return *this;
     }
 
@@ -59,8 +59,11 @@ class Some {
 };
 
 int main(int argc, char** argv)  {
-  Some s1("s1");
-  Some s2 = s1;
+  Some s1("s1");      // will call the explicit constructor
+  Some s2 = s1;       // will call copy constructor->operator=
+
+  s2 = s1;            // will call lvalue operator=
+  s2 = std::move(s1); // will call rvalue operator=
 
   return 0;
 }
