@@ -1833,7 +1833,7 @@ SYMBOL TABLE:
 
 
 
-### LD linker scripts
+### LD Linker Scripts
 Remember that this linkers job is to combine object input files into a single
 object output file.
 Each object file has a list of sections and each section has a name and a size.
@@ -1843,7 +1843,7 @@ be set aside for the section but nothing will be loaded into it. A section that
 is not marked as loadable or allocatable most often contains debugging info.
 
 Each of the loadable/allocatable sections have two addresses:
-````
+```
 1) Virtual Memory Address (VMA)
 This is the address the section will have when the output object file is run.
 
@@ -1851,7 +1851,7 @@ This is the address the section will have when the output object file is run.
 This is the section that the section will be loaded and will most often be the
 same as the VMA.
 ```
-```
+```console
 $ gcc -c -o sections.o sections.cc 
 $ objdump -h sections.o -w
 
@@ -1866,6 +1866,7 @@ Idx Name            Size      VMA               LMA               File off  Algn
   4 .note.GNU-stack 00000000  0000000000000000  0000000000000000  00000085  2**0  CONTENTS, READONLY
   5 .eh_frame       00000038  0000000000000000  0000000000000000  00000088  2**3  CONTENTS, ALLOC, LOAD, RELOC, READONLY, DATA
 ```
+
 
 Each object file also has a list of symbols:
 ```console
