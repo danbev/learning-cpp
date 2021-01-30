@@ -23,7 +23,6 @@ AC_CONFIG_FILES([Makefile
                  src/algorithms/graphs/Makefile
                  src/concurrency/Makefile
                  src/Makefile 
-                 test/classes/Makefile 
                  test/Makefile])
 
 AC_COMPILE_IFELSE([AC_LANG_SOURCE(
