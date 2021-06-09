@@ -1834,11 +1834,12 @@ SYMBOL TABLE:
 
 
 ### LD Linker Scripts
-Remember that this linkers job is to combine object input files into a single
+Remember that the linkers job is to combine object input files into a single
 object output file.
+
 Each object file has a list of sections and each section has a name and a size.
-If a section is marked LOAD it will be loaded into memory when the file is
-run. A section can also be marked as ALLOC and in this case memory will
+If a section is marked `LOAD` it will be loaded into memory when the file is
+run. A section can also be marked as `ALLOC` and in this case memory will
 be set aside for the section but nothing will be loaded into it. A section that
 is not marked as loadable or allocatable most often contains debugging info.
 
@@ -1886,6 +1887,17 @@ SYMBOL TABLE:
 ```
 
 Now linker scripts are just text files with commands.
+
+A linker script will always be used, and if one is not specified the default
+one will be used. The default linker script can be seen with --verbose:
+```console
+$ ld --verbose
+```
+
+Also, you can specify linker scripts just as you do object files when linking,
+and when the linker opens the file and it does not recoginize the file as an
+object file or an archive, the linker will try to read it as a linker script.
+
 
 #### SECTION command
 Is used to describe the memory layout of the output file.
