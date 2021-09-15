@@ -1,12 +1,12 @@
 #include <iostream>
 
-template<typename T>
+template<typename T, char C>
 struct SomeType {
   using type = T;
 };
 
 int main(int argc, char** argv) {
-  SomeType<int>::type v = 18;
+  SomeType<int, 'c'>::type v = 18;
   std::cout << "v: " << v << '\n';
   return 0;
 }
