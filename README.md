@@ -1991,3 +1991,197 @@ Disassembly of section .text:
 ```
 
 
+
+### typename
+One this that was not clear to me was that when we have a typename in a
+template, for example:
+```c++
+template <typename T>
+struct Something {
+  use type = T;
+};
+
+SomeType<int>::type v = 18;
+```
+One can add more types using a separated by a comma: 
+```c++
+template <typename T, typename U>
+struct Something {
+  use type = T;
+};
+
+SomeType<int, char>::type v = 18;
+```
+Or we could add more template parameters of a concrete type:
+```c++
+template <typename T, int I>
+struct Something {
+  use type = T;
+};
+
+SomeType<int, 'c'>::type a = 18;
+SomeType<char, 'd'>::type b = 18;
+```
+Lets take a look at what the compiler generates for:
+```console
+$ cat type-template-pure.cc 
+template<typename T, char C>
+struct SomeType {
+  using type = T;
+};
+
+int main(int argc, char** argv) {
+  SomeType<int, 'c'>::type a = 18;
+  SomeType<char, 'd'>::type b = 22;
+
+  return 0;
+}
+```
+We can inspect the structs that the compiler generates for the two
+instantiations above:
+```console
+$ clang++ -Xclang -ast-print -fsyntax-only type-template-pure.cc 
+
+template <typename T, char C> struct SomeType {
+    using type = T;
+};
+
+template<> struct SomeType<int, 'c'> {
+    using type = int;
+};
+
+template<> struct SomeType<char, 'd'> {
+    using type = char;
+};
+
+int main(int argc, char **argv) {
+    SomeType<int, 'c'>::type a = 18;
+    SomeType<char, 'd'>::type b = 22;
+    return 0;
+}
+```
+Lets take a look at what a type template compiles down to.
+```console
+$ g++ -g -o type-template-pure type-template-pure.cc
+$ objdump -dC type-template-pure
+```
+
+One way to look at the expression:
+```c++
+    SomeType<int, 'c'>::type a = 18;
+```
+Is to think of SometType as a function:
+```c++
+    SomeType(int, 'c')::return_value a = 18;
+```
+SO we have a function name, which is the name of the struct, and it takes
+arguments which are the template parameters and the we have :: followed by the
+return value.
+
+
+### typenum
+target/debug/build/typenum-1e3c22f3e18bf64a/out/consts.rs
+```rust
+pub mod consts {
+  use crate::uint::{UInt, UTerm};                                             
+  use crate::int::{PInt, NInt};
+  pub type True = B1;                                                         
+  pub type False = B0;                                                        
+  pub type U0 = UTerm;
+  ...
+  pub type U4 = UInt<UInt<UInt<UTerm, B1>, B0>, B0>; 
+  pub type N4 = NInt<U4>;  
+```
+Lets start by taking a look at Uint (src/uint.rs):
+```rust
+pub struct UInt<U, B> {                                                         
+    /// The more significant bits of `Self`.                                    
+    pub(crate) msb: U,                                                          
+    /// The least significant bit of `Self`.                                    
+    pub(crate) lsb: B,                                                          
+}
+```
+Notice that UInt takes two type parameters which was not obvious when I looked
+at this the first time. But we can separate these:
+```rust
+                   U     U    U     B    B      B 
+pub type U4 = UInt<UInt<UInt<UTerm, B1>, B0>, B0>; 
+                              0     1    0    0
+
+pub type U3 = UInt<UInt<UTerm, B1>, B1>;
+                         0     1     1
+
+pub type U2 = UInt<UInt<UTerm, B1>, B0>;
+                          0    1     0
+```
+
+###  stringop-truncation
+```
+The -Wstringop-truncation warning added in GCC 8.0 via r254630 for bug 81117 is
+specifically intended to highlight likely unintended uses of the strncpy
+function that truncate the terminating NUL charcter from the source string.
+```
+gt
+
+Note that we have to compile with optimizations to produce this warning:
+```console
+$ gcc -Wall -O3 -o stringop-trunaction stringop-truncation.cc 
+stringop-truncation.cc: In function ‘int main(int, char**)’:
+stringop-truncation.cc:22:10: warning: ‘char* strncpy(char*, const char*, size_t)’ output truncated before terminating nul copying 5 bytes from a string of the same length [-Wstringop-truncation]
+   22 |   strncpy(id, _id, len);
+      |   ~~~~~~~^~~~~~~~~~~~~~
+```
+In the example [stringop-truncation.cc](src/fundamentals/stringop-truncation.cc)
+we are using strlen to get the length of a string which does not include the
+null-terminator. This length is then used with strncpy which will copy into the
+destination, the characters from source but only upto the length. So is the
+intention was to preserve the null-terminator then this warning makes us aware
+of this. So this may be what the user intended or not. If this is intenational
+then we can ignore the warning using a pragma:
+```c
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wstringop-truncation"
+  ...
+#pragma GCC diagnostic pop
+
+```
+
+```console
+cstring.h:43:70: warning: ‘char* strncpy(char*, const char*, size_t)’ output truncated before terminating nul copying as many bytes from a string as its length [-Wstringop-truncation]
+   43 | #define uprv_strncpy(dst, src, size) U_STANDARD_CPP_NAMESPACE strncpy(dst, src, size)
+ucurr.cpp:385:9: note: in expansion of macro ‘uprv_strncpy’
+  385 |         uprv_strncpy(id, _id, len);
+      |         ^~~~~~~~~~~~
+ucurr.cpp: In function ‘const void* ucurr_register_70(const UChar*, const char*, UErrorCode*)’:
+cstring.h:37:57: note: length computed here
+   37 | #define uprv_strlen(str) U_STANDARD_CPP_NAMESPACE strlen(str)
+ucurr.cpp:381:32: note: in expansion of macro ‘uprv_strlen’
+  381 |         int32_t len = (int32_t)uprv_strlen(_id);
+      |                                ^~~~~~~~~~~
+```
+The warning originates from:
+```c
+/**                                                                             
+ * Useful constant for the maximum size of the whole locale ID                  
+ * (including the terminating NULL and all keywords).                           
+ * @stable ICU 2.0                                                              
+ */                                                                             
+#define ULOC_FULLNAME_CAPACITY 157 
+
+struct CReg : public icu::UMemory {
+    CReg *next;
+    UChar iso[ISO_CURRENCY_CODE_LENGTH+1];
+    char  id[ULOC_FULLNAME_CAPACITY];
+
+    CReg(const UChar* _iso, const char* _id) : next(0) {                                                                           
+        int32_t len = (int32_t)uprv_strlen(_id);
+        if (len > (int32_t)(sizeof(id)-1)) {
+            len = (sizeof(id)-1);
+        }
+        uprv_strncpy(id, _id, len);
+        id[len] = 0;
+        u_memcpy(iso, _iso, ISO_CURRENCY_CODE_LENGTH);
+        iso[ISO_CURRENCY_CODE_LENGTH] = 0;
+    }
+```
+`upvr_strncpy` 
